@@ -28,6 +28,8 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import nyc.c4q.capstone.BottomNavFragment.DashBoardFragment;
 import nyc.c4q.capstone.BottomNavFragment.DocsFragment;
 import nyc.c4q.capstone.BottomNavFragment.MaintanceFragment;
@@ -36,49 +38,48 @@ import nyc.c4q.capstone.BottomNavFragment.PaymentFragment;
 public class MainActivity extends AppCompatActivity
         implements GoogleApiClient.OnConnectionFailedListener {
 
-    private AHBottomNavigation bottom;
+    @BindView(R.id.container)ViewPager viewPager;
+    @BindView(R.id.bottom_navigation)AHBottomNavigation bottom;
+
     private ArrayList<AHBottomNavigationItem> items = new ArrayList<>();
-
-    ViewPager viewPager;
-
 
     private static final String TAG = "MainActivity";
     public static final String ANONYMOUS = "anonymous";
-    private FirebaseAuth mFirebaseAuth;
-    private FirebaseUser mFirebaseUser;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
     private String mUsername;
     private String mPhotoUrl;
-    private SharedPreferences mSharedPreferences;
-    private GoogleApiClient mGoogleApiClient;
+    private SharedPreferences preferences;
+    private GoogleApiClient googleApiClient;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        ButterKnife.bind(this);
         bottom = findViewById(R.id.bottom_navigation);
-        viewPager = findViewById(R.id.container);
         setBottomNav();
-
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
         mUsername = ANONYMOUS;
-        mFirebaseAuth = FirebaseAuth.getInstance();
-        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
         checkSignIn();
     }
 
     public void checkSignIn() {
-        if (mFirebaseUser == null) {
+        if (firebaseUser == null) {
             startActivity(new Intent(this, SignInActivity.class));
             finish();
             return;
         } else {
-            mUsername = mFirebaseUser.getDisplayName();
-            if (mFirebaseUser.getPhotoUrl() != null) {
-                mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
+            mUsername = firebaseUser.getDisplayName();
+            if (firebaseUser.getPhotoUrl() != null) {
+                mPhotoUrl = firebaseUser.getPhotoUrl().toString();
             }
         }
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
+        googleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API)
                 .build();
@@ -119,7 +120,6 @@ public class MainActivity extends AppCompatActivity
         viewPager.setAdapter(adapter);
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -131,8 +131,8 @@ public class MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.sign_out_menu:
-                mFirebaseAuth.signOut();
-                Auth.GoogleSignInApi.signOut(mGoogleApiClient);
+                firebaseAuth.signOut();
+                Auth.GoogleSignInApi.signOut(googleApiClient);
                 mUsername = ANONYMOUS;
                 startActivity(new Intent(this, SignInActivity.class));
                 finish();
