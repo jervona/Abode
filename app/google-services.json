@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "191947527009",
+    "firebase_url": "https://codeplay-f4909.firebaseio.com",
+    "project_id": "codeplay-f4909",
+    "storage_bucket": "codeplay-f4909.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:191947527009:android:fce738f29e61bc64",
+        "android_client_info": {
+          "package_name": "nyc.c4q.capstone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "191947527009-4tpqj2g1b029ikr8pvsuh2m909epm8he.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "nyc.c4q.capstone",
+            "certificate_hash": "a0d368d206624803c98fbb0ddb888f9257ee505c"
+          }
+        },
+        {
+          "client_id": "191947527009-8q3c09ifbl597qleboet4c674dtr5td6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9fyaNwy5wb_sn2YVSb-fvKz_F7yxCHbI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "191947527009-8q3c09ifbl597qleboet4c674dtr5td6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
