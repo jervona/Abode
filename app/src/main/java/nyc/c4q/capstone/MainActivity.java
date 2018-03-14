@@ -15,6 +15,11 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import java.util.ArrayList;
 import java.util.List;
 
+import nyc.c4q.capstone.BottomNavFragment.DashBoardFragment;
+import nyc.c4q.capstone.BottomNavFragment.DocsFragment;
+import nyc.c4q.capstone.BottomNavFragment.MaintanceFragment;
+import nyc.c4q.capstone.BottomNavFragment.PaymentFragment;
+
 public class MainActivity extends AppCompatActivity {
 
     private AHBottomNavigation bottom;
@@ -30,23 +35,21 @@ public class MainActivity extends AppCompatActivity {
         bottom = findViewById(R.id.bottom_navigation);
         viewPager = findViewById(R.id.container);
         setBottomNav();
-
-
-
-
     }
 
 
     public void setBottomNav() {
         setupViewPager(viewPager);
-        AHBottomNavigationItem item1 = new AHBottomNavigationItem("Stuff", R.drawable.ic_location_searching_black_24dp);
-        AHBottomNavigationItem item2 = new AHBottomNavigationItem("List", R.drawable.blank_heart);
-        AHBottomNavigationItem item3 = new AHBottomNavigationItem("Favorites", R.drawable.headline);
+        AHBottomNavigationItem item1 = new AHBottomNavigationItem("DashBoard", R.drawable.ic_location_searching_black_24dp);
+        AHBottomNavigationItem item2 = new AHBottomNavigationItem("Payment", R.drawable.blank_heart);
+        AHBottomNavigationItem item3 = new AHBottomNavigationItem("Maintenance", R.drawable.headline);
+        AHBottomNavigationItem item4 = new AHBottomNavigationItem("Docs", R.drawable.ic_launcher_foreground);
         items.add(item1);
         items.add(item2);
         items.add(item3);
+        items.add(item4);
         bottom.addItems(items);
-        bottom.setCurrentItem(1);
+        bottom.setCurrentItem(0);
         bottom.setDefaultBackgroundColor(Color.LTGRAY);
         bottom.setAccentColor(Color.parseColor("#52c7b8"));
 //        bottom.setColoredModeColors(Color.LTGRAY,Color.parseColor("#52c7b8"));
@@ -63,16 +66,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
+        adapter.addFragment(new DashBoardFragment());
+        adapter.addFragment(new PaymentFragment());
+        adapter.addFragment(new MaintanceFragment());
+        adapter.addFragment(new DocsFragment());
         viewPager.setAdapter(adapter);
     }
 
     private class SectionsPageAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
 
-        public void addFragment(Fragment fragment, String title) {
+        public void addFragment(Fragment fragment) {
             mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
+
         }
 
         public SectionsPageAdapter(FragmentManager fm) {
@@ -81,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
+            return null;
         }
 
         @Override
