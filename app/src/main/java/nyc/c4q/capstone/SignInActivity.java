@@ -68,16 +68,23 @@ public class SignInActivity extends AppCompatActivity implements
                 .setMessage("Are You Signing as a Tenant or PropertyManager")
                 .setPositiveButton("Tenant", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(SignInActivity.this, "Lunch Tenant Sign up", Toast.LENGTH_SHORT).show();
-//                                // This is where with put an intent to lunch Tenant Sign Up
+                        Toast.makeText(SignInActivity.this, "Launch Tenant Sign up", Toast.LENGTH_SHORT).show();
+
+
+                        Intent intent = new Intent(SignInActivity.this, TenantSignUpActivity.class); startActivity(intent);
+
+//                                // This is where with put an intent to launch Tenant Sign Up
 //                                startActivity(new Intent(SignInActivity.this, ));
 //                                SignInActivity.this.finish();
                     }
                 })
                 .setNegativeButton("PropertyManager", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(SignInActivity.this, "Lunch PropertyManager Sign up", Toast.LENGTH_SHORT).show();
-                        // This is where with put an intent to lunch PropertyManager Log in
+                        Toast.makeText(SignInActivity.this, "Launch PropertyManager Sign up", Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent(SignInActivity.this, LandLordSignUpActivity.class); startActivity(intent);
+
+                        // This is where with put an intent to launch PropertyManager Log in
 //                                startActivity(new Intent(SignInActivity.this,));
 //                                SignInActivity.this.finish();
                     }
@@ -169,5 +176,6 @@ public class SignInActivity extends AppCompatActivity implements
         InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(SignInActivity.this.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(password.getWindowToken(), 0);
     }
+
 
 }

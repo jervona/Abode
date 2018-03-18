@@ -87,10 +87,10 @@ public class MainActivity extends AppCompatActivity
 
     public void setBottomNav() {
         setupViewPager(viewPager);
-        AHBottomNavigationItem item1 = new AHBottomNavigationItem("DashBoard", R.drawable.ic_location_searching_black_24dp);
-        AHBottomNavigationItem item2 = new AHBottomNavigationItem("Payment", R.drawable.blank_heart);
-        AHBottomNavigationItem item3 = new AHBottomNavigationItem("Maintenance", R.drawable.headline);
-        AHBottomNavigationItem item4 = new AHBottomNavigationItem("Docs", R.drawable.ic_launcher_foreground);
+        AHBottomNavigationItem item1 = new AHBottomNavigationItem("DashBoard", R.drawable.dash);
+        AHBottomNavigationItem item2 = new AHBottomNavigationItem("Payment", R.drawable.payment);
+        AHBottomNavigationItem item3 = new AHBottomNavigationItem("Maintenance", R.drawable.maintenance);
+        AHBottomNavigationItem item4 = new AHBottomNavigationItem("Docs", R.drawable.docs);
         items.add(item1);
         items.add(item2);
         items.add(item3);
