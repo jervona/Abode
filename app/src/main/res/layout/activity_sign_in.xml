@@ -5,19 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="nyc.c4q.capstone.SignInActivity">
+    tools:context="nyc.c4q.capstone.SignInActivity"
+    android:background="#A2C4F6">
 
     <LinearLayout
-        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="460dp"
+        android:background="@drawable/nyc">
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:id="@+id/container"
+        android:layout_width="275dp"
+        android:layout_height="400dp"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/bottom_navigation_elevation"
+        android:background="#FFFFFF">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="10dp"
             android:text="@string/sign_in"
             android:textSize="30sp"
             android:textStyle="bold" />
@@ -54,7 +66,8 @@
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
             android:text="@string/sign_up"
-            android:textAllCaps="true" />
+            android:textAllCaps="true"
+            android:onClick="signUp"/>
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/google_sign_in_button"
