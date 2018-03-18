@@ -12,7 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".splash.SplashScreen">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,8 +28,10 @@
                     android:scheme="http" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".SignInActivity"></activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".SignInActivity" />
+        <activity android:name=".LandLordSignUpActivity" />
+        <activity android:name=".TenantSignUpActivity"></activity>
     </application>
 
 </manifest>
