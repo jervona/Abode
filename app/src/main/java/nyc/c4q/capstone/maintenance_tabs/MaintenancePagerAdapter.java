@@ -4,39 +4,39 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by c4q on 3/18/18.
  */
 
 public class MaintenancePagerAdapter extends FragmentPagerAdapter{
 
-    int numOfTabs;
-
-    public MaintenancePagerAdapter(FragmentManager fm, int numOfTabs) {
+    private final List<Fragment> fragList = new ArrayList<>();
+    private final List<String> tabTitles = new ArrayList<>();
+    public MaintenancePagerAdapter(FragmentManager fm) {
         super(fm);
-        this.numOfTabs = numOfTabs;
     }
 
     @Override
     public Fragment getItem(int position) {
-
-        switch (position) {
-            case 0:
-                PendingFragment penTab = new PendingFragment();
-                return penTab;
-            case 1:
-                SubmittedFragment subTab = new SubmittedFragment();
-                return subTab;
-            case 2:
-                CompletedFragment compFrag = new CompletedFragment();
-                return compFrag;
-            default:
-                return null;
-        }
+        return fragList.get(position);
     }
 
     @Override
     public int getCount() {
-        return numOfTabs;
+        return fragList.size();
     }
+
+    public void addFragment(Fragment fragment, String title) {
+        fragList.add(fragment);
+        tabTitles.add(title);
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return tabTitles.get(position);
+    }
+
 }

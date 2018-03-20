@@ -3,19 +3,22 @@ package nyc.c4q.capstone.maintenance_tabs;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
+import butterknife.BindAnim;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import nyc.c4q.capstone.R;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class SubmittedFragment extends Fragment {
-
-    View rootView;
-
 
     public SubmittedFragment() {
         // Required empty public constructor
@@ -26,7 +29,10 @@ public class SubmittedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootView = inflater.inflate(R.layout.fragment_submitted, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_submitted, container, false);
+
+        ButterKnife.bind(this, rootView);
+
         return rootView;
     }
 
