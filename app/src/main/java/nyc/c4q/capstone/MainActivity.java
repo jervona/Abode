@@ -33,13 +33,15 @@ import butterknife.ButterKnife;
 import nyc.c4q.capstone.BottomNavFragment.DashBoardFragment;
 import nyc.c4q.capstone.BottomNavFragment.DocsFragment;
 import nyc.c4q.capstone.BottomNavFragment.MaintanceFragment;
-import nyc.c4q.capstone.BottomNavFragment.PaymentFragment;
+import nyc.c4q.capstone.payment_history_package.PaymentFragment;
 
 public class MainActivity extends AppCompatActivity
         implements GoogleApiClient.OnConnectionFailedListener {
 
-    @BindView(R.id.container)ViewPager viewPager;
-    @BindView(R.id.bottom_navigation)AHBottomNavigation bottom;
+    @BindView(R.id.container)
+    ViewPager viewPager;
+    @BindView(R.id.bottom_navigation)
+    AHBottomNavigation bottom;
 
     private ArrayList<AHBottomNavigationItem> items = new ArrayList<>();
 
@@ -51,7 +53,6 @@ public class MainActivity extends AppCompatActivity
     private String mPhotoUrl;
     private SharedPreferences preferences;
     private GoogleApiClient googleApiClient;
-
 
 
     @Override
@@ -104,8 +105,13 @@ public class MainActivity extends AppCompatActivity
         bottom.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
             public boolean onTabSelected(int position, boolean wasSelected) {
-                viewPager.setCurrentItem(position);
-                bottom.setCurrentItem(position, wasSelected);
+                try {
+                    viewPager.setCurrentItem(position);
+                    bottom.setCurrentItem(position, wasSelected);
+                }catch (StackOverflowError e){
+
+                }
+
                 return false;
             }
         });

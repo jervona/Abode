@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/payment_frag_item_layout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <TextView
+        android:id="@+id/month"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="month"
+        android:background="@color/colorAccent"/>
+
+    <TextView
+        android:id="@+id/amount_paid"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Amount paid"/>
+
+
+
+</LinearLayout>
