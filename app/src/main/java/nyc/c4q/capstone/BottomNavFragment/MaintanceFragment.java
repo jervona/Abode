@@ -49,9 +49,8 @@ public class MaintanceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootView = inflater.inflate(R.layout.fragment_maintance, container, false);
-        ButterKnife.bind(this, rootView);
-
+        rootView = inflater.inflate(R.layout.maintenance_repairs_itemview, container, false);
+        ButterKnife.bind(this,rootView);
 
         return rootView;
     }

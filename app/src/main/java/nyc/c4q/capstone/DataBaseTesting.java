@@ -11,6 +11,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
+import nyc.c4q.capstone.datamodels.Tickets;
 import nyc.c4q.capstone.datamodels.UserApartmentInfo;
 
 import static android.content.ContentValues.TAG;
