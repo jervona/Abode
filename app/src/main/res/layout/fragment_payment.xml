@@ -7,7 +7,7 @@
     card_view:cardCornerRadius = "4dp"
     android:layout_margin="5dp"
     android:padding="16dp"
-    tools:context="nyc.c4q.capstone.payment_history_package.PaymentFragment">
+    tools:context="nyc.c4q.capstone.BottomNavFragment.PaymentFragment">
 
     <LinearLayout
         android:id="@+id/container"
