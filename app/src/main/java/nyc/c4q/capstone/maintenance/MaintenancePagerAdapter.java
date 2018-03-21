@@ -1,4 +1,4 @@
-package nyc.c4q.capstone.maintenance_tabs;
+package nyc.c4q.capstone.maintenance;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

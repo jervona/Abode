@@ -1,4 +1,4 @@
-package nyc.c4q.capstone.maintenance_tabs;
+package nyc.c4q.capstone.maintenance;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,7 +22,7 @@ public class SubmittedAdapter extends RecyclerView.Adapter<SubmittedViewHolder> 
 
     @Override
     public SubmittedViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View cv = LayoutInflater.from(parent.getContext()).inflate(R.layout.submitted_repairs_itemview, parent, false);
+        View cv = LayoutInflater.from(parent.getContext()).inflate(R.layout.maintenance_repairs_itemview, parent, false);
         return new SubmittedViewHolder(cv);
     }
 
