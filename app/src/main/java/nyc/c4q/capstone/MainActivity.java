@@ -12,11 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
@@ -26,25 +22,20 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import nyc.c4q.capstone.BottomNavFragment.DashBoardFragment;
 import nyc.c4q.capstone.BottomNavFragment.DocsFragment;
 import nyc.c4q.capstone.BottomNavFragment.MaintanceFragment;
 
-import nyc.c4q.capstone.payment_history_package.PaymentFragment;
+import nyc.c4q.capstone.BottomNavFragment.PaymentFragment;
 
 public class MainActivity extends AppCompatActivity
         implements GoogleApiClient.OnConnectionFailedListener {
@@ -58,7 +49,7 @@ public class MainActivity extends AppCompatActivity
 
     private static final String TAG = "MainActivity";
     public static final String ANONYMOUS = "anonymous";
-    private FirebaseAuth firebaseAuth;
+    private static FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
     private String mUsername;
     private String mPhotoUrl;
@@ -160,27 +151,6 @@ public class MainActivity extends AppCompatActivity
         viewPager.setAdapter(adapter);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.sign_out_menu:
-                firebaseAuth.signOut();
-                Auth.GoogleSignInApi.signOut(googleApiClient);
-                mUsername = ANONYMOUS;
-                startActivity(new Intent(this, SignInActivity.class));
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
@@ -203,5 +173,14 @@ public class MainActivity extends AppCompatActivity
         notificationManager.notify(NOTIFICATION_ID, builder.build());
     }
 
+
+    @OnClick(R.id.sign_out)
+    public void SignOut(){
+        firebaseAuth.signOut();
+        Auth.GoogleSignInApi.signOut(googleApiClient);
+        mUsername = ANONYMOUS;
+        startActivity(new Intent(this, SignInActivity.class));
+        finish();
+    }
 
 }

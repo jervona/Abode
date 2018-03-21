@@ -1,13 +1,20 @@
 package nyc.c4q.capstone.BottomNavFragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.firebase.auth.FirebaseAuth;
+
 import nyc.c4q.capstone.R;
+import nyc.c4q.capstone.SignInActivity;
+
+import static nyc.c4q.capstone.MainActivity.ANONYMOUS;
 
 
 /**
@@ -16,6 +23,7 @@ import nyc.c4q.capstone.R;
 public class DocsFragment extends Fragment {
 
     View rootview;
+
 
     public DocsFragment() {
         // Required empty public constructor
@@ -29,5 +37,6 @@ public class DocsFragment extends Fragment {
         rootview=  inflater.inflate(R.layout.fragment_docs, container, false);
         return rootview;
     }
+
 
 }

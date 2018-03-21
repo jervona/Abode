@@ -1,4 +1,4 @@
-package nyc.c4q.capstone.payment_history_package;
+package nyc.c4q.capstone.BottomNavFragment;
 
 
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import nyc.c4q.capstone.R;
+import nyc.c4q.capstone.payment_history_package.Payment_History_Fragment;
 
 
 /**
