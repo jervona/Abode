@@ -1,13 +1,47 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/payment_frag"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="nyc.c4q.capstone.BottomNavFragment.PaymentFragment">
+    card_view:cardCornerRadius = "4dp"
+    android:layout_margin="5dp"
+    android:padding="16dp"
+    tools:context="nyc.c4q.capstone.payment_history_package.PaymentFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:id="@+id/container"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Fragment Payment" />
+        android:layout_height="match_parent">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/balance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="balance"
+            />
+
+        <EditText
+            android:id="@+id/payment_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="payment amount"
+            android:inputType="numberDecimal"/>
+
+        <Button
+            android:id="@+id/pay_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="pay"/>
+
+        <Button
+            android:id="@+id/payment_history_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Payment history"/>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
