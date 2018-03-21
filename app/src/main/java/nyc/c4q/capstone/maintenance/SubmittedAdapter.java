@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import nyc.c4q.capstone.R;
+import nyc.c4q.capstone.datamodels.Tickets;
 
 /**
  * Created by c4q on 3/19/18.

@@ -9,6 +9,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import nyc.c4q.capstone.R;
+import nyc.c4q.capstone.datamodels.Tickets;
 
 /**
  * Created by c4q on 3/19/18.
