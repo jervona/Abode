@@ -34,10 +34,7 @@ import nyc.c4q.capstone.maintenance.MaintenancePagerAdapter;
 public class MaintanceFragment extends Fragment {
 
     View rootView;
-    @BindView(R.id.maintenance_tabs)
-    TabLayout maintenanceTabs;
-    @BindView(R.id.maintenance_pager)
-    ViewPager viewPager;
+
 
 
     public MaintanceFragment() {
