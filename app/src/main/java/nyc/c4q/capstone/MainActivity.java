@@ -1,13 +1,15 @@
 package nyc.c4q.capstone;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,15 +26,24 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import nyc.c4q.capstone.BottomNavFragment.DashBoardFragment;
 import nyc.c4q.capstone.BottomNavFragment.DocsFragment;
 import nyc.c4q.capstone.BottomNavFragment.MaintanceFragment;
+
 import nyc.c4q.capstone.payment_history_package.PaymentFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -55,6 +66,22 @@ public class MainActivity extends AppCompatActivity
     private GoogleApiClient googleApiClient;
 
 
+    private static final int NOTIFICATION_ID = 555;
+    String NOTIFICATION_CHANNEL = "C4Q Notifications";
+    String tenanetsData = "Tenanets";
+    String maintenanceData = "Maintenance";
+    String propertiesData = "Properties";
+    String userData = "user";
+    SectionsPageAdapter adapter;
+
+
+    FirebaseDatabase database =FirebaseDatabase.getInstance();
+    DatabaseReference tenanets = database.getReference(tenanetsData);
+    DatabaseReference maintenance = database.getReference(maintenanceData);
+    DatabaseReference users = database.getReference(userData);
+    DataBaseTesting db;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,11 +89,17 @@ public class MainActivity extends AppCompatActivity
         ButterKnife.bind(this);
         bottom = findViewById(R.id.bottom_navigation);
         setBottomNav();
+        adapter = new SectionsPageAdapter(getSupportFragmentManager());
+        db = DataBaseTesting.getInstance(database);
+
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         mUsername = ANONYMOUS;
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
         checkSignIn();
+
+
+        long unixTime = System.currentTimeMillis() / 1000L;
     }
 
     public void checkSignIn() {
@@ -76,6 +109,7 @@ public class MainActivity extends AppCompatActivity
             return;
         } else {
             mUsername = firebaseUser.getDisplayName();
+            db.getUserInfoFromDataBase(firebaseUser.getUid());
             if (firebaseUser.getPhotoUrl() != null) {
                 mPhotoUrl = firebaseUser.getPhotoUrl().toString();
             }
@@ -108,10 +142,10 @@ public class MainActivity extends AppCompatActivity
                 try {
                     viewPager.setCurrentItem(position);
                     bottom.setCurrentItem(position, wasSelected);
-                }catch (StackOverflowError e){
-
+                    Log.e(TAG, adapter.getCount() + "");
+                } catch (StackOverflowError e) {
+                    Log.e("Caught Error", e.getMessage());
                 }
-
                 return false;
             }
         });
@@ -154,31 +188,20 @@ public class MainActivity extends AppCompatActivity
         Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
     }
 
-    private class SectionsPageAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-
-        public void addFragment(Fragment fragment) {
-            mFragmentList.add(fragment);
-
-        }
-
-        public SectionsPageAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return null;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
+    public void sendNotification(String a) {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), NOTIFICATION_ID, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), NOTIFICATION_CHANNEL)
+                .setSmallIcon(R.mipmap.ic_launcher_round)
+                .setContentTitle("You've been notified!")
+                .setContentIntent(pendingIntent)
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setContentText(a);
+        assert notificationManager != null;
+        notificationManager.notify(NOTIFICATION_ID, builder.build());
     }
+
+
 }

@@ -1,6 +1,5 @@
 package nyc.c4q.capstone;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
@@ -9,12 +8,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
 import nyc.c4q.capstone.datamodels.UserApartmentInfo;
-import nyc.c4q.capstone.maintenance_tabs.Tickets;
 
 import static android.content.ContentValues.TAG;
 
@@ -79,7 +76,6 @@ public class DataBaseTesting {
             }
         });
     }
-
 
     public UserApartmentInfo getUser() {
         return user;

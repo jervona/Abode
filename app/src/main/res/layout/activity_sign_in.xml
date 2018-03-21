@@ -67,7 +67,7 @@
             android:layout_marginTop="5dp"
             android:text="@string/sign_up"
             android:textAllCaps="true"
-            android:onClick="signUp"/>
+            />
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/google_sign_in_button"
