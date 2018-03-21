@@ -51,10 +51,10 @@ public class MainActivity extends AppCompatActivity
     public static final String ANONYMOUS = "anonymous";
     private static FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
-    private String mUsername;
+    public static String mUsername;
     private String mPhotoUrl;
     private SharedPreferences preferences;
-    private GoogleApiClient googleApiClient;
+    public static GoogleApiClient googleApiClient;
 
 
     private static final int NOTIFICATION_ID = 555;
@@ -171,16 +171,6 @@ public class MainActivity extends AppCompatActivity
                 .setContentText(a);
         assert notificationManager != null;
         notificationManager.notify(NOTIFICATION_ID, builder.build());
-    }
-
-
-    @OnClick(R.id.sign_out)
-    public void SignOut(){
-        firebaseAuth.signOut();
-        Auth.GoogleSignInApi.signOut(googleApiClient);
-        mUsername = ANONYMOUS;
-        startActivity(new Intent(this, SignInActivity.class));
-        finish();
     }
 
 }
