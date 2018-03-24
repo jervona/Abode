@@ -100,6 +100,7 @@ public class MainActivity extends AppCompatActivity
             return;
         } else {
             mUsername = firebaseUser.getDisplayName();
+
             db.getUserInfoFromDataBase(firebaseUser.getUid());
             if (firebaseUser.getPhotoUrl() != null) {
                 mPhotoUrl = firebaseUser.getPhotoUrl().toString();
