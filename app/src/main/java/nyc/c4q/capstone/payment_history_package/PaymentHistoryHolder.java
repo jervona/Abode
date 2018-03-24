@@ -1,11 +1,11 @@
 package nyc.c4q.capstone.payment_history_package;
 
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
 import nyc.c4q.capstone.R;
+import nyc.c4q.capstone.datamodels.PaymentHistoryModel;
 
 /**
  * Created by D on 3/18/18.

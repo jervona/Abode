@@ -71,7 +71,7 @@ public class MaintenanceFragment extends Fragment {
             ticketsList = new ArrayList<>();
         } else {
             ticketsList = db.getMessages();
-            StorageReference storageReference = storage.getReferenceFromUrl(ticketsList.get(1).getImageUrl());
+ //           StorageReference storageReference = storage.getReferenceFromUrl(ticketsList.get(1).getImageUrl());
 //            Glide.with(this /* context */)
 //                    .using(new FirebaseImageLoader())
 //                    .load(storageReference)
