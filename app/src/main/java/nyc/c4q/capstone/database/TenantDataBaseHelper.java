@@ -19,6 +19,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -58,18 +59,21 @@ public class TenantDataBaseHelper {
 
 
     public void getUserInfoFromDataBase(String uid) {
+        Log.e("user id", uid);
         Query query = database.getReference("user").child(uid);
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 user = dataSnapshot.getValue(UserApartmentInfo.class);
                 String id = String.valueOf(user.getBuilding_id());
+                Log.e("User", user.getBuilding_id() + "");
                 getMainInfo(id, user.getAPT());
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                databaseError.getMessage();
+
+                Log.e("Error", databaseError.getMessage());
             }
         });
     }
@@ -92,28 +96,20 @@ public class TenantDataBaseHelper {
     }
 
     public void createNewTicket(Intent data, final Tickets ticket) {
-        long time= Calendar.getInstance().getTimeInMillis();
         final Uri uri = data.getData();
         Log.e(TAG, "Uri: " + uri.toString());
-        Tickets tickets = new Tickets("1"
-                ,time
-                , ticket.getApt()
-                , ticket.getDescription()
-                , ticket.getDescription()
-                , "https://www.google.com/images/spin-32.gif");
         String buildingID = String.valueOf(user.getBuilding_id());
         database.getReference().child(maintenanceData).child(buildingID).child(user.getAPT()).push()
-                .setValue(tickets, new DatabaseReference.CompletionListener() {
+                .setValue(ticket, new DatabaseReference.CompletionListener() {
                     @Override
-                    public void onComplete(DatabaseError databaseError,
-                                           DatabaseReference databaseReference) {
+                    public void onComplete(DatabaseError databaseError,DatabaseReference databaseReference) {
                         if (databaseError == null) {
                             String key = databaseReference.getKey();
                             StorageReference storageReference = FirebaseStorage.getInstance()
-                                            .getReference(FirebaseAuth.getInstance().getUid())
-                                            .child(key)
-                                            .child(uri.getLastPathSegment());
-                            putImageInStorage(storageReference, uri, key,ticket);
+                                    .getReference(FirebaseAuth.getInstance().getUid())
+                                    .child(key)
+                                    .child(uri.getLastPathSegment());
+                            putImageInStorage(storageReference, uri, key, ticket);
                         } else {
                             Log.w(TAG, "Unable to write message to database.",
                                     databaseError.toException());
@@ -121,6 +117,28 @@ public class TenantDataBaseHelper {
                     }
                 });
     }
+
+
+    public void createNewTicket(final Tickets ticket) {
+//        Tickets tickets = new Tickets("1"
+//                , ticket.getTime()
+//                , ticket.getLocation()
+//                , ticket.getApt()
+//                , ticket.getDescription()
+//                , ticket.getDescription()
+//                , "https://www.google.com/images/spin-32.gif");
+        messages.add(ticket);
+        String buildingID = String.valueOf(user.getBuilding_id());
+        database.getReference().child(maintenanceData).child(buildingID).child(user.getAPT())
+                .setValue(messages, new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(DatabaseError databaseError,
+                                           DatabaseReference databaseReference) {
+
+                    }
+                });
+    }
+
 
     private void putImageInStorage(StorageReference storageReference, Uri uri, final String key, final Tickets ticket) {
         storageReference.putFile(uri).addOnCompleteListener(
@@ -130,6 +148,7 @@ public class TenantDataBaseHelper {
                         if (task.isSuccessful()) {
                             Tickets tickets = new Tickets(ticket.getTicket_number()
                                     , ticket.getTime()
+                                    , ticket.getLocation()
                                     , ticket.getApt()
                                     , ticket.getDescription()
                                     , ticket.getDescription()
