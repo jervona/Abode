@@ -48,5 +48,4 @@ public class LandlordPay {
         return date;
     }
 
-
 }

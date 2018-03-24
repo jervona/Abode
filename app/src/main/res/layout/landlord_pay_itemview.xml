@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/payment_card"
+        android:padding="@dimen/cardview_default_radius"
+        android:elevation="@dimen/cardview_default_radius"
+        app:cardMaxElevation="2sp"
+
+        app:cardElevation="2sp"
+        app:cardUseCompatPadding="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+       <TextView
+           android:id="@+id/tenant"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="tenant name"/>
+
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="address line 1" />
+
+        <TextView
+            android:id="@+id/address2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" address line 2 "/>
+
+        <TextView
+            android:id="@+id/landlord_pay_confirmation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="confirmation number"/>
+
+        <TextView
+            android:id="@+id/date_paid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Date paid"/>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+</LinearLayout>
