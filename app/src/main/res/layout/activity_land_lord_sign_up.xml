@@ -4,10 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="nyc.c4q.capstone.LandLordSignUpActivity"
+    tools:context="nyc.c4q.capstone.signupactivites.LandLordSignUpActivity"
     android:background="#A2F6B5">
-
-
 
     <LinearLayout
         android:layout_width="match_parent"

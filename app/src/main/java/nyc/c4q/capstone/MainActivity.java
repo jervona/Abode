@@ -22,7 +22,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
@@ -30,12 +29,12 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import nyc.c4q.capstone.BottomNavFragment.DashBoardFragment;
 import nyc.c4q.capstone.BottomNavFragment.DocsFragment;
-import nyc.c4q.capstone.BottomNavFragment.MaintanceFragment;
+import nyc.c4q.capstone.BottomNavFragment.MaintenanceFragment;
 
 import nyc.c4q.capstone.BottomNavFragment.PaymentFragment;
+import nyc.c4q.capstone.database.TenantDataBaseHelper;
 
 public class MainActivity extends AppCompatActivity
         implements GoogleApiClient.OnConnectionFailedListener {
@@ -52,26 +51,16 @@ public class MainActivity extends AppCompatActivity
     private static FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
     public static String mUsername;
-    private String mPhotoUrl;
     private SharedPreferences preferences;
     public static GoogleApiClient googleApiClient;
 
 
     private static final int NOTIFICATION_ID = 555;
     String NOTIFICATION_CHANNEL = "C4Q Notifications";
-    String tenanetsData = "Tenanets";
-    String maintenanceData = "Maintenance";
-    String propertiesData = "Properties";
-    String userData = "user";
     SectionsPageAdapter adapter;
 
-
     FirebaseDatabase database =FirebaseDatabase.getInstance();
-    DatabaseReference tenanets = database.getReference(tenanetsData);
-    DatabaseReference maintenance = database.getReference(maintenanceData);
-    DatabaseReference users = database.getReference(userData);
-    DataBaseTesting db;
-
+    TenantDataBaseHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,14 +70,12 @@ public class MainActivity extends AppCompatActivity
         bottom = findViewById(R.id.bottom_navigation);
         setBottomNav();
         adapter = new SectionsPageAdapter(getSupportFragmentManager());
-        db = DataBaseTesting.getInstance(database);
-
+        db = TenantDataBaseHelper.getInstance(database);
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         mUsername = ANONYMOUS;
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
         checkSignIn();
-
 
         long unixTime = System.currentTimeMillis() / 1000L;
     }
@@ -101,9 +88,6 @@ public class MainActivity extends AppCompatActivity
         } else {
             mUsername = firebaseUser.getDisplayName();
             db.getUserInfoFromDataBase(firebaseUser.getUid());
-            if (firebaseUser.getPhotoUrl() != null) {
-                mPhotoUrl = firebaseUser.getPhotoUrl().toString();
-            }
         }
         googleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
@@ -146,11 +130,10 @@ public class MainActivity extends AppCompatActivity
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
         adapter.addFragment(new DashBoardFragment());
         adapter.addFragment(new PaymentFragment());
-        adapter.addFragment(new MaintanceFragment());
+        adapter.addFragment(new MaintenanceFragment());
         adapter.addFragment(new DocsFragment());
         viewPager.setAdapter(adapter);
     }
-
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {

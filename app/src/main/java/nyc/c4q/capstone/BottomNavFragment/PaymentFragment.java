@@ -73,7 +73,7 @@ public class PaymentFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("Amount paid", editText.getText().toString());
                 bundle.putString("confirmation#",confirmation);
-                Log.e("number,",confirmation+","+editText.getText().toString());
+                Log.e("number,",confirmation+","+ editText.getText().toString());
                 payFragment.setArguments(bundle);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
