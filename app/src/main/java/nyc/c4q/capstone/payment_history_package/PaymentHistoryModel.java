@@ -19,17 +19,12 @@ public class PaymentHistoryModel {
         return month;
     }
 
-//    public void setMonth(String month) {
-//        this.month = month;
-//    }
 
     public String getAmount_paid() {
         return amount_paid;
     }
 
-//    public void setAmount_paid(String amount_paid) {
-//        this.amount_paid = amount_paid;
-//    }
+
 }
 
 

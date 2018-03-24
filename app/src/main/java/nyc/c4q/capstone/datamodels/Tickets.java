@@ -8,18 +8,34 @@ import java.util.ArrayList;
 
 public class Tickets {
 
-   String APT;
+   String apt;
    long time;
    String subject;
    String status;
 
-    public Tickets(String APT, long time, String subject, String status) {
-        this.APT = APT;
+    public Tickets() {
+    }
+
+    public Tickets(String apt, long time, String subject, String status) {
+        this.apt = apt;
         this.time = time;
         this.subject = subject;
         this.status = status;
     }
 
-    public Tickets() {
+    public String getapt() {
+        return apt;
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public String getStatus() {
+        return status;
     }
 }

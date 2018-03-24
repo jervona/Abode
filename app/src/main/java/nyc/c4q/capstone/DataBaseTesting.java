@@ -22,12 +22,12 @@ import static android.content.ContentValues.TAG;
 
 public class DataBaseTesting {
 
-      private FirebaseDatabase database;
+    private FirebaseDatabase database;
 
-      private UserApartmentInfo user;
-      private List<Tickets> messages;
+    private UserApartmentInfo user;
+    private List<Tickets> messages;
 
-      private static DataBaseTesting instance;
+    private static DataBaseTesting instance;
 
 
     private DataBaseTesting(FirebaseDatabase database) {
@@ -47,7 +47,7 @@ public class DataBaseTesting {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-               user =  dataSnapshot.getValue(UserApartmentInfo.class);
+                user = dataSnapshot.getValue(UserApartmentInfo.class);
                 String id = String.valueOf(user.getBuilding_id());
                 getMainInfo(id, user.getAPT());
 
