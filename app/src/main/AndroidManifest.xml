@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-feature android:name="android.hardware.camera2"/>
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -31,8 +32,8 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".SignInActivity" />
-        <activity android:name=".LandLordSignUpActivity" />
-        <activity android:name=".TenantSignUpActivity"></activity>
+        <activity android:name=".signupactivites.LandLordSignUpActivity" />
+        <activity android:name=".signupactivites.TenantSignUpActivity"></activity>
     </application>
 
 </manifest>

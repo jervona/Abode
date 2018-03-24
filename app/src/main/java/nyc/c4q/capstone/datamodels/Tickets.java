@@ -1,5 +1,8 @@
 package nyc.c4q.capstone.datamodels;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by jervon.arnoldd on 3/16/18.
  */

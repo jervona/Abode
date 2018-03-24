@@ -12,11 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="460dp"
         android:background="@drawable/nyc">
-
     </LinearLayout>
 
     <LinearLayout
-
         android:id="@+id/container"
         android:layout_width="275dp"
         android:layout_height="400dp"
@@ -75,7 +73,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="50dp"
-            android:onClick="onClick"
             android:visibility="visible" />
     </LinearLayout>
 </FrameLayout>
