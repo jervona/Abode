@@ -31,8 +31,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import nyc.c4q.capstone.BottomNavFragment.DashBoardFragment;
 import nyc.c4q.capstone.BottomNavFragment.DocsFragment;
-import nyc.c4q.capstone.BottomNavFragment.MaintenanceFragment;
 
+import nyc.c4q.capstone.BottomNavFragment.MaintanceFragment;
 import nyc.c4q.capstone.BottomNavFragment.PaymentFragment;
 import nyc.c4q.capstone.database.TenantDataBaseHelper;
 
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity
             return;
         } else {
             mUsername = firebaseUser.getDisplayName();
-
+            Log.e("User",firebaseUser.getUid());
             db.getUserInfoFromDataBase(firebaseUser.getUid());
         }
         googleApiClient = new GoogleApiClient.Builder(this)
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
         adapter.addFragment(new DashBoardFragment());
         adapter.addFragment(new PaymentFragment());
-        adapter.addFragment(new MaintenanceFragment());
+        adapter.addFragment(new MaintanceFragment());
         adapter.addFragment(new DocsFragment());
         viewPager.setAdapter(adapter);
     }
