@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity
             return;
         } else {
             mUsername = firebaseUser.getDisplayName();
+
             db.getUserInfoFromDataBase(firebaseUser.getUid());
         }
         googleApiClient = new GoogleApiClient.Builder(this)

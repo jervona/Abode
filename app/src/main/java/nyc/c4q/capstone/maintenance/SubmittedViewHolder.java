@@ -43,6 +43,8 @@ public class SubmittedViewHolder extends RecyclerView.ViewHolder {
 
 
     public void onBind(Tickets tix) {
+        ticketNumView.setText("Ticket Num: " + tix.getTicket_number());
+        statusView.setText("Status: " + tix.getStatus());
 
     }
 }
