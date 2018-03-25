@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="nyc.c4q.capstone.BottomNavFragment.Landlord_Pay_Fragment">
+    tools:context="nyc.c4q.capstone.payment_history_package.landlord_pay_package.LandlordPay_Fragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
