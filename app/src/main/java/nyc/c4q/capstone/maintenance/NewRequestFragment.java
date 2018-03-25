@@ -106,8 +106,6 @@ public class NewRequestFragment extends Fragment {
 
             }
         });
-
-
         return rootView;
     }
 
@@ -165,9 +163,7 @@ public class NewRequestFragment extends Fragment {
                     , userDescription.getText().toString()
                     , "Pending"
                     , "");
-            db.createNewTicket(data, new Tickets());
+            db.createNewTicket(data, tickets);
         }
     }
-
-
 }

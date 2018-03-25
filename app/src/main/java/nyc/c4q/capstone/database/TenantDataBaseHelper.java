@@ -59,14 +59,12 @@ public class TenantDataBaseHelper {
 
 
     public void getUserInfoFromDataBase(String uid) {
-        Log.e("user id", uid);
         Query query = database.getReference("user").child(uid);
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 user = dataSnapshot.getValue(UserApartmentInfo.class);
                 String id = String.valueOf(user.getBuilding_id());
-                Log.e("User", user.getBuilding_id() + "");
                 getMainInfo(id, user.getAPT());
             }
 
@@ -96,6 +94,7 @@ public class TenantDataBaseHelper {
     }
 
     public void createNewTicket(Intent data, final Tickets ticket) {
+
         final Uri uri = data.getData();
         Log.e(TAG, "Uri: " + uri.toString());
         String buildingID = String.valueOf(user.getBuilding_id());
