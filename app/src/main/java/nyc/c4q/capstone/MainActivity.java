@@ -13,6 +13,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
@@ -31,8 +32,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import nyc.c4q.capstone.BottomNavFragment.DashBoardFragment;
 import nyc.c4q.capstone.BottomNavFragment.DocsFragment;
-import nyc.c4q.capstone.BottomNavFragment.MaintenanceFragment;
 
+import nyc.c4q.capstone.BottomNavFragment.MaintanceFragment;
 import nyc.c4q.capstone.BottomNavFragment.PaymentFragment;
 import nyc.c4q.capstone.database.TenantDataBaseHelper;
 
@@ -87,6 +88,7 @@ public class MainActivity extends AppCompatActivity
             return;
         } else {
             mUsername = firebaseUser.getDisplayName();
+            Log.e("User",firebaseUser.getUid());
             db.getUserInfoFromDataBase(firebaseUser.getUid());
         }
         googleApiClient = new GoogleApiClient.Builder(this)
@@ -128,10 +130,7 @@ public class MainActivity extends AppCompatActivity
 
     private void setupViewPager(ViewPager viewPager) {
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
-        adapter.addFragment(new DashBoardFragment());
-        adapter.addFragment(new PaymentFragment());
-        adapter.addFragment(new MaintenanceFragment());
-        adapter.addFragment(new DocsFragment());
+        adapter.initTenanetBottomNav();
         viewPager.setAdapter(adapter);
     }
 
@@ -140,20 +139,4 @@ public class MainActivity extends AppCompatActivity
         Log.d(TAG, "onConnectionFailed:" + connectionResult);
         Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
     }
-
-    public void sendNotification(String a) {
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), NOTIFICATION_ID, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), NOTIFICATION_CHANNEL)
-                .setSmallIcon(R.mipmap.ic_launcher_round)
-                .setContentTitle("You've been notified!")
-                .setContentIntent(pendingIntent)
-                .setDefaults(NotificationCompat.DEFAULT_ALL)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setContentText(a);
-        assert notificationManager != null;
-        notificationManager.notify(NOTIFICATION_ID, builder.build());
-    }
-
 }

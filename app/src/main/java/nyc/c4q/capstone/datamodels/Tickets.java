@@ -9,29 +9,26 @@ import java.util.List;
 
 public class Tickets {
 
-
     private String ticket_number;
     private long time;
-
+    private String location;
     private String apt;
     private String description;
     private String status;
     private String imageUrl;
-    List<String> imageUrlList;
 
-    public Tickets() {
-    }
-
-    public Tickets(String ticket_number, long time,  String apt, String description, String status, String imageUrl) {
+    public Tickets(String ticket_number, long time, String location, String apt, String description, String status, String imageUrl){
         this.ticket_number = ticket_number;
         this.time = time;
-
+        this.location = location;
         this.apt = apt;
         this.description = description;
         this.status = status;
         this.imageUrl = imageUrl;
     }
 
+    public Tickets() {
+    }
 
     public String getTicket_number() {
         return ticket_number;
@@ -41,6 +38,9 @@ public class Tickets {
         return time;
     }
 
+    public String getLocation() {
+        return location;
+    }
 
     public String getApt() {
         return apt;
@@ -56,14 +56,5 @@ public class Tickets {
 
     public String getImageUrl() {
         return imageUrl;
-    }
-
-
-    public List<String> getImageUrlList() {
-        return imageUrlList;
-    }
-
-    public void setImageUrlList(List<String> imageUrlList) {
-        this.imageUrlList = imageUrlList;
     }
 }

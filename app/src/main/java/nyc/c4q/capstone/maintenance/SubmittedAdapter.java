@@ -34,6 +34,14 @@ public class SubmittedAdapter extends RecyclerView.Adapter<SubmittedViewHolder> 
 
     }
 
+    public void swap(List<Tickets> list){
+        submittedRequests.clear();
+        submittedRequests=list;
+        notifyDataSetChanged();
+    }
+
+
+
     @Override
     public int getItemCount() {
         return submittedRequests.size();
