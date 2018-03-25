@@ -1,4 +1,4 @@
-package nyc.c4q.capstone.payment_history_package;
+package nyc.c4q.capstone.datamodels;
 
 /**
  * Created by D on 3/19/18.

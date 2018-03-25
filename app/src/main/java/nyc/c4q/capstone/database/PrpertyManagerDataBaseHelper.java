@@ -5,4 +5,5 @@ package nyc.c4q.capstone.database;
  */
 
 public class PrpertyManagerDataBaseHelper {
+
 }

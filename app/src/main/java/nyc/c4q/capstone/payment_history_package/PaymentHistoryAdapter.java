@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import nyc.c4q.capstone.R;
+import nyc.c4q.capstone.datamodels.PaymentHistoryModel;
 
 /**
  * Created by D on 3/18/18.

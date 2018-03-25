@@ -13,8 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nyc.c4q.capstone.R;
-
-import static com.firebase.ui.auth.AuthUI.getApplicationContext;
+import nyc.c4q.capstone.datamodels.PaymentHistoryModel;
 
 /**
  * A simple {@link Fragment} subclass.
