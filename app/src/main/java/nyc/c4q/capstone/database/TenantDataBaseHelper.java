@@ -35,6 +35,7 @@ import static android.content.ContentValues.TAG;
 public class TenantDataBaseHelper {
 
     private FirebaseDatabase database;
+    private StorageReference storageReference;
     private String maintenanceData = "Maintenance";
     private String tenanetsData = "Tenanets";
     private String propertiesData = "Properties";
@@ -42,6 +43,7 @@ public class TenantDataBaseHelper {
 
     private UserApartmentInfo user;
     private List<Tickets> messages;
+    private List<String> listOfUrl = new ArrayList<>();
 
     private static TenantDataBaseHelper instance;
 
@@ -59,6 +61,7 @@ public class TenantDataBaseHelper {
 
 
     public void getUserInfoFromDataBase(String uid) {
+        messages=new ArrayList<>();
         Query query = database.getReference("user").child(uid);
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -70,7 +73,6 @@ public class TenantDataBaseHelper {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
                 Log.e("Error", databaseError.getMessage());
             }
         });
@@ -81,9 +83,9 @@ public class TenantDataBaseHelper {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<List<Tickets>> t = new GenericTypeIndicator<List<Tickets>>() {
+                GenericTypeIndicator<List<Tickets>> data = new GenericTypeIndicator<List<Tickets>>() {
                 };
-                messages = dataSnapshot.getValue(t);
+                messages = dataSnapshot.getValue(data);
             }
 
             @Override
@@ -94,9 +96,8 @@ public class TenantDataBaseHelper {
     }
 
     public void createNewTicket(Intent data, final Tickets ticket) {
-
         final Uri uri = data.getData();
-        Log.e(TAG, "Uri: " + uri.toString());
+//        Log.e(TAG, "Uri: " + uri.toString());
         String buildingID = String.valueOf(user.getBuilding_id());
         database.getReference().child(maintenanceData).child(buildingID).child(user.getAPT()).push()
                 .setValue(ticket, new DatabaseReference.CompletionListener() {
@@ -104,11 +105,13 @@ public class TenantDataBaseHelper {
                     public void onComplete(DatabaseError databaseError,DatabaseReference databaseReference) {
                         if (databaseError == null) {
                             String key = databaseReference.getKey();
-                            StorageReference storageReference = FirebaseStorage.getInstance()
-                                    .getReference(FirebaseAuth.getInstance().getUid())
-                                    .child(key)
-                                    .child(uri.getLastPathSegment());
-                            putImageInStorage(storageReference, uri, key, ticket);
+                                StorageReference storageReference = FirebaseStorage.getInstance()
+                                        .getReference(FirebaseAuth.getInstance().getUid())
+                                        .child(key)
+                                        .child(uri.getLastPathSegment());
+                                putImageInStorage(storageReference, uri, key, ticket);
+
+
                         } else {
                             Log.w(TAG, "Unable to write message to database.",
                                     databaseError.toException());
@@ -116,28 +119,6 @@ public class TenantDataBaseHelper {
                     }
                 });
     }
-
-
-    public void createNewTicket(final Tickets ticket) {
-//        Tickets tickets = new Tickets("1"
-//                , ticket.getTime()
-//                , ticket.getLocation()
-//                , ticket.getApt()
-//                , ticket.getDescription()
-//                , ticket.getDescription()
-//                , "https://www.google.com/images/spin-32.gif");
-        messages.add(ticket);
-        String buildingID = String.valueOf(user.getBuilding_id());
-        database.getReference().child(maintenanceData).child(buildingID).child(user.getAPT())
-                .setValue(messages, new DatabaseReference.CompletionListener() {
-                    @Override
-                    public void onComplete(DatabaseError databaseError,
-                                           DatabaseReference databaseReference) {
-
-                    }
-                });
-    }
-
 
     private void putImageInStorage(StorageReference storageReference, Uri uri, final String key, final Tickets ticket) {
         storageReference.putFile(uri).addOnCompleteListener(
@@ -147,7 +128,6 @@ public class TenantDataBaseHelper {
                         if (task.isSuccessful()) {
                             Tickets tickets = new Tickets(ticket.getTicket_number()
                                     , ticket.getTime()
-                                    , ticket.getLocation()
                                     , ticket.getApt()
                                     , ticket.getDescription()
                                     , ticket.getDescription()
@@ -165,6 +145,59 @@ public class TenantDataBaseHelper {
                     }
                 });
     }
+
+    public void upLoadPhoto(Intent data){
+        final Uri uri = data.getData();
+        long time = Calendar.getInstance().getTimeInMillis();
+        String key =  String.valueOf(time);
+        storageReference = FirebaseStorage.getInstance()
+                .getReference(FirebaseAuth.getInstance().getUid())
+                .child(key)
+                .child(uri.getLastPathSegment());
+        putImageInStorage(storageReference, uri, key);
+    }
+
+
+    private void putImageInStorage(StorageReference storageReference, Uri uri, final String key) {
+        storageReference.putFile(uri).addOnCompleteListener(
+                new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            listOfUrl.add(task.getResult().getMetadata().getDownloadUrl().toString());
+                        } else {
+                            Log.e(TAG, "Image upload task was not successful.", task.getException());
+                        }
+                    }
+                });
+    }
+
+    public void createNewTicket(final Tickets ticket) {
+        ticket.setImageURl(listOfUrl);
+        if (messages==null){
+            messages=new ArrayList<>();
+            messages.add(ticket);
+        } else {
+            messages.add(ticket);
+        }
+        String buildingID = String.valueOf(user.getBuilding_id());
+        database.getReference().child(maintenanceData).child(buildingID).child(user.getAPT())
+                .setValue(messages).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+
+            }
+        });
+    }
+
+    public void removePhotos(int postion){
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        StorageReference desertRef = storageRef.child(listOfUrl.get(postion));
+
+
+    }
+
 
     public UserApartmentInfo getUser() {
         return user;

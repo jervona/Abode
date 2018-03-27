@@ -1,13 +1,10 @@
 package nyc.c4q.capstone.BottomNavFragment;
 
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +12,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import nyc.c4q.capstone.R;
-import nyc.c4q.capstone.payment_history_package.PayFragment;
-import nyc.c4q.capstone.payment_history_package.Payment_History_Fragment;
+import nyc.c4q.capstone.datamodels.PaymentHistoryModel;
+import nyc.c4q.capstone.payment_history_package.PaymentHistoryAdapter;
 
 
 /**
@@ -33,6 +32,7 @@ public class PaymentFragment extends Fragment {
     private Button pay;
     private Button pay_history;
     private String confirmation;
+    RecyclerView recyclerView;
 
 
     public PaymentFragment() {
@@ -48,38 +48,13 @@ public class PaymentFragment extends Fragment {
         textView = rootView.findViewById(R.id.balance);
         editText = rootView.findViewById(R.id.payment_input);
         pay = rootView.findViewById(R.id.pay_button);
-        pay_history = rootView.findViewById(R.id.payment_history_button);
-
-
-        pay_history.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Payment_History_Fragment payment_history_fragment = new Payment_History_Fragment();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.payment_frag, payment_history_fragment);
-                fragmentTransaction.addToBackStack("stuff");
-                fragmentTransaction.commit();
-
-            }
-        });
+        recyclerView = rootView.findViewById(R.id.payment_history_rv);
+        mockPayHistoryScreen();
 
         pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 confirmation = confirmationNumber();
-                PayFragment payFragment = new PayFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("Amount paid", editText.getText().toString());
-                bundle.putString("confirmation#",confirmation);
-                Log.e("number,",confirmation+","+ editText.getText().toString());
-                payFragment.setArguments(bundle);
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.payment_frag,payFragment);
-                fragmentTransaction.addToBackStack("go Back");
-                fragmentTransaction.commit();
             }
         });
 
@@ -96,6 +71,33 @@ public class PaymentFragment extends Fragment {
             hello += random.nextInt(10);
         }
         return hello;
+    }
+
+
+
+    public void mockPayHistoryScreen(){
+        List<PaymentHistoryModel> paymentModelList = new ArrayList<>();
+        paymentModelList.add(new PaymentHistoryModel("June","$600"));
+        paymentModelList.add(new PaymentHistoryModel("Dec","$700"));
+        paymentModelList.add(new PaymentHistoryModel("Sept","$5700"));
+        paymentModelList.add(new PaymentHistoryModel("May","$5700"));
+        paymentModelList.add(new PaymentHistoryModel("Jan","$505350"));
+        paymentModelList.add(new PaymentHistoryModel("April","$5035350"));
+        paymentModelList.add(new PaymentHistoryModel("Feb","$503530"));
+        paymentModelList.add(new PaymentHistoryModel("Nov","$50350"));
+        paymentModelList.add(new PaymentHistoryModel("Dec","$50320"));
+        paymentModelList.add(new PaymentHistoryModel("May","$500"));
+        paymentModelList.add(new PaymentHistoryModel("Feb","$50230"));
+        paymentModelList.add(new PaymentHistoryModel("March","$50230"));
+        paymentModelList.add(new PaymentHistoryModel("Jan","$500"));
+        paymentModelList.add(new PaymentHistoryModel("Idk","$32500"));
+        paymentModelList.add(new PaymentHistoryModel("Idk","$500"));
+        paymentModelList.add(new PaymentHistoryModel("Hello","$23500"));
+
+        PaymentHistoryAdapter historyAdapter = new PaymentHistoryAdapter(paymentModelList);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(historyAdapter);
     }
 
 }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import nyc.c4q.capstone.R;
@@ -16,6 +17,10 @@ import nyc.c4q.capstone.datamodels.Tickets;
 
 public class SubmittedAdapter extends RecyclerView.Adapter<SubmittedViewHolder> {
     List<Tickets> submittedRequests;
+
+
+    public SubmittedAdapter() {
+    }
 
     public SubmittedAdapter(List<Tickets> submittedRequests) {
         this.submittedRequests = submittedRequests;
@@ -35,12 +40,14 @@ public class SubmittedAdapter extends RecyclerView.Adapter<SubmittedViewHolder> 
     }
 
     public void swap(List<Tickets> list){
-        submittedRequests.clear();
         submittedRequests=list;
         notifyDataSetChanged();
     }
 
-
+    public void cleatList(){
+        submittedRequests = new ArrayList<>();
+        notifyDataSetChanged();
+    }
 
     @Override
     public int getItemCount() {

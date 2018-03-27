@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +34,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import nyc.c4q.capstone.ImagiveAdapter;
 import nyc.c4q.capstone.R;
 import nyc.c4q.capstone.database.TenantDataBaseHelper;
 import nyc.c4q.capstone.datamodels.Tickets;
@@ -44,12 +47,7 @@ import static android.app.Activity.RESULT_OK;
 public class NewRequestFragment extends Fragment {
     View rootView;
 
-    @BindView(R.id.tix_num_display)
-    TextView tixNumDisplay;
-    @BindView(R.id.request_date_display)
-    TextView requestDateDisplay;
-    @BindView(R.id.date_scheduled_display)
-    TextView dateScheduledDisplay;
+
     @BindView(R.id.subject_title_view)
     EditText subjectTitle;
     @BindView(R.id.urgent_checkbox)
@@ -60,9 +58,9 @@ public class NewRequestFragment extends Fragment {
     Spinner locationSpinner;
     @BindView(R.id.user_description_view)
     EditText userDescription;
+    @BindView(R.id.image_request_rv)
+    RecyclerView rv;
 
-    @BindView(R.id.repair_image)
-    ImageView repairImage;
 
     TenantDataBaseHelper db;
     private ScrollView maintenanceScroll;
@@ -71,6 +69,10 @@ public class NewRequestFragment extends Fragment {
     private Uri imageUri;
     String TAG = "MaintenanceFragment";
     String location;
+    List<Intent> listOfPhotos;
+    List<Uri> hello = new ArrayList<>();
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+
 
     public NewRequestFragment() {
         // Required empty public constructor
@@ -82,46 +84,26 @@ public class NewRequestFragment extends Fragment {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_new_request, container, false);
         ButterKnife.bind(this, rootView);
-
-        final List<String> aptLocation = new ArrayList<>();
-        aptLocation.add("Bathroom");
-        aptLocation.add("Kitchen");
-        aptLocation.add("Living Room");
-        aptLocation.add("Bedroom");
-        aptLocation.add("Other");
-
-        ArrayAdapter<String> aptLocationAdapter = new ArrayAdapter<String>(rootView.getContext(), android.R.layout.simple_spinner_item, aptLocation);
-        aptLocationAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        locationSpinner.setAdapter(aptLocationAdapter);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(rootView.getContext(),R.array.location_options, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        locationSpinner.setAdapter(adapter);
         db = TenantDataBaseHelper.getInstance(FirebaseDatabase.getInstance());
+        rv.setLayoutManager(new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+
+
+
         locationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                location = aptLocation.get(position);
-                Log.e("i choose", aptLocation.get(position));
+                location = (String) parent.getItemAtPosition(position);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
         return rootView;
-    }
-
-    @OnClick(R.id.submit_request_button)
-    public void submitTicket() {
-        long time = Calendar.getInstance().getTimeInMillis();
-        Tickets tickets = new Tickets("1"
-                , time
-                , location
-                , db.getUser().getAPT()
-                , userDescription.getText().toString()
-                , "Pending"
-                , ""
-        );
-        db.createNewTicket(tickets);
-        getActivity().onBackPressed();
     }
 
     @OnClick(R.id.add_photo_button)
@@ -132,38 +114,46 @@ public class NewRequestFragment extends Fragment {
         startActivityForResult(intent, REQUEST_IMAGE);
     }
 
-    public void getPictureFromCamera() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File photo = new File(Environment.getExternalStorageDirectory(), "Pic.jpg");
-        intent.putExtra(MediaStore.EXTRA_OUTPUT,
-                Uri.fromFile(photo));
-        imageUri = Uri.fromFile(photo);
-        Log.e("Photo", imageUri.toString());
+    public void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(rootView.getContext().getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
     }
 
-    public void takePhoto() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File photo = new File(Environment.getExternalStorageDirectory(), "Pic.jpg");
-        intent.putExtra(MediaStore.EXTRA_OUTPUT,
-                Uri.fromFile(photo));
-        imageUri = Uri.fromFile(photo);
-        startActivityForResult(intent, TAKE_PICTURE);
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.e(TAG, "onActivityResult: requestCode=" + requestCode + ", resultCode=" + resultCode);
         if (requestCode == REQUEST_IMAGE && resultCode == RESULT_OK && data != null) {
-            long time = Calendar.getInstance().getTimeInMillis();
-            Tickets tickets = new Tickets("1"
-                    , time
-                    , location
-                    , db.getUser().getAPT()
-                    , userDescription.getText().toString()
-                    , "Pending"
-                    , "");
-            db.createNewTicket(data, tickets);
+            db.upLoadPhoto(data);
+           Uri uri = data.getData();
+            hello.add(uri);
+           rv.setAdapter(new ImagiveAdapter(hello));
+        }
+
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK && data != null){
+            Uri uri = data.getData();
+            hello.add(uri);
+            rv.setAdapter(new ImagiveAdapter(hello));
         }
     }
+
+    @OnClick(R.id.submit_request_button)
+    public void newTicketWithPhones() {
+        long time = Calendar.getInstance().getTimeInMillis();
+        Tickets tickets = new Tickets("1"
+                , time
+                , location
+                , db.getUser().getAPT()
+                , userDescription.getText().toString()
+                , "Pending");
+        db.createNewTicket(tickets);
+        getActivity().onBackPressed();
+    }
+
+
+
+
 }
