@@ -1,4 +1,4 @@
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/payment_frag"
@@ -30,11 +30,11 @@
             android:hint="payment amount"
             android:inputType="numberDecimal"/>
 
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
 
 
             <Button
@@ -48,8 +48,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Payment history"/>
-
         </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="History"
+            android:gravity="center"
+            android:textAlignment="center"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/payment_history_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+
     </LinearLayout>
 
-</android.support.v7.widget.CardView>
+</LinearLayout>

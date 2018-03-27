@@ -139,4 +139,14 @@ public class MainActivity extends AppCompatActivity
         Log.d(TAG, "onConnectionFailed:" + connectionResult);
         Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
     }
+
+
+
+    @Override
+    public void onBackPressed() {
+        // This will get you total fragment in the backStack
+        int count = getFragmentManager().getBackStackEntryCount();
+        Log.e("back pressed",count+"");
+    }
+
 }

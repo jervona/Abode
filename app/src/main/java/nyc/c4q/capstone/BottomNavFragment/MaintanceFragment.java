@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -93,38 +94,27 @@ public class MaintanceFragment extends Fragment {
         scheduledLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         completedLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         setHasOptionsMenu(true);
-
         return rootView;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        pendingRV.setLayoutManager(pendingLayoutManager);
         db = TenantDataBaseHelper.getInstance(FirebaseDatabase.getInstance());
         if (db.getMessages() == null) {
             ticketsList = new ArrayList<>();
         } else {
             ticketsList = db.getMessages();
+            adapter = new SubmittedAdapter(ticketsList);
+            pendingRV.setAdapter(adapter);
         }
 
-        adapter = new SubmittedAdapter(ticketsList);
-        pendingRV.setLayoutManager(pendingLayoutManager);
-        pendingRV.setAdapter(adapter);
         scheduledRV.setLayoutManager(scheduledLayoutManager);
 //        scheduledRV.setAdapter(adapter);
         completedRV.setLayoutManager(completedLayoutManager);
 //        completedRV.setAdapter(adapter);
         updateList();
-
-//            ticketsList = db.getMessages();
-////            StorageReference storageReference = storage.getReferenceFromUrl(ticketsList.get(1).getImageUrl());
-//            Glide.with(this /* context */)
-//                    .using(new FirebaseImageLoader())
-//                    .load(storageReference)
-//                    .into(imageView);
-//        }
-
-
     }
 
     @Override
@@ -137,7 +127,6 @@ public class MaintanceFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add:
-                Toast.makeText(getActivity(), "New Repair Request ", Toast.LENGTH_SHORT).show();
                 NewRequestFragment requestFragment = new NewRequestFragment();
                 FragmentManager fragManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragManager.beginTransaction();
@@ -153,15 +142,22 @@ public class MaintanceFragment extends Fragment {
         data.getReference().child("Maintenance").child(String.valueOf(db.getUser().getBuilding_id())).child(db.getUser().getAPT()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<List<Tickets>> t = new GenericTypeIndicator<List<Tickets>>() {};
+                GenericTypeIndicator<List<Tickets>> t = new GenericTypeIndicator<List<Tickets>>() {
+                };
+                Log.e("Theres a change", "hello there");
                 ticketsList = dataSnapshot.getValue(t);
-                adapter.swap(ticketsList);
+                if (ticketsList != null) {
+                    adapter.swap(ticketsList);
+                }
+
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onCancelled(DatabaseError databaseError) {
+            }
         });
     }
+
     public void sendNotification(String a) {
         Intent intent = new Intent(rootView.getContext().getApplicationContext(), MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(rootView.getContext().getApplicationContext(), NOTIFICATION_ID, intent, PendingIntent.FLAG_CANCEL_CURRENT);

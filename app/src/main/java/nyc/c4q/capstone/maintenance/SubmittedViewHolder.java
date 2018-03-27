@@ -41,8 +41,8 @@ public class SubmittedViewHolder extends RecyclerView.ViewHolder {
     Button cancelView;
     @BindView(R.id.add_notes)
     Button addNotes;
-    @BindView(R.id.image)
-    ImageView repairImage;
+//    @BindView(R.id.image)
+//    ImageView repairImage;
 
     private FirebaseStorage storage;
 

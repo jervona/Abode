@@ -18,7 +18,7 @@ public class PaymentHistoryAdapter extends RecyclerView.Adapter<PaymentHistoryHo
 
 
 
-    List<PaymentHistoryModel> paymentModelList;
+    private List<PaymentHistoryModel> paymentModelList;
 
     public PaymentHistoryAdapter(List<PaymentHistoryModel> paymentModelList) {
         this.paymentModelList = paymentModelList;

@@ -8,7 +8,7 @@
     tools:context="nyc.c4q.capstone.MainActivity">
 
 
-    <android.support.v4.view.ViewPager
+    <nyc.c4q.capstone.CustomViewPager
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -9,4 +9,20 @@
     <string name="sign_up">Sign UP</string>
     <string name="sign_in">Sign In</string>
     <string name="sign_out">Sign Out</string>
+
+    <string-array name="location_options">
+        <item>Bathroom</item>
+        <item>Kitchen</item>
+        <item>Living Room</item>
+        <item>Bedroom</item>
+        <item>Other</item>
+    </string-array>
+
+
+
+
+
+
+
+
 </resources>
