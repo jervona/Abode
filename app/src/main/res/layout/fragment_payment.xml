@@ -4,58 +4,76 @@
     android:id="@+id/payment_frag"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    card_view:cardCornerRadius = "4dp"
     android:layout_margin="5dp"
     android:padding="16dp"
+    card_view:cardCornerRadius="4dp"
     tools:context="nyc.c4q.capstone.BottomNavFragment.PaymentFragment">
 
     <LinearLayout
         android:id="@+id/container"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
 
         <TextView
-            android:id="@+id/balance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="balance"
-            />
+            android:gravity="center"
+            android:text="Balance Due"
+            android:textSize="30sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/dollarSign"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:text="$"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/balance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1200"
+                android:textSize="30sp" />
+
+        </LinearLayout>
 
         <EditText
             android:id="@+id/payment_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="payment amount"
-            android:inputType="numberDecimal"/>
+            android:gravity="center"
+            android:hint="Enter Payment Amount"
+            android:inputType="numberDecimal" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
-
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/pay_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="pay"/>
+                android:text="pay" />
 
-            <Button
-                android:id="@+id/payment_history_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Payment history"/>
         </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:text="History"
             android:gravity="center"
-            android:textAlignment="center"/>
+            android:text="Payment History"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/payment_history_rv"

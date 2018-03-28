@@ -1,8 +1,12 @@
 package nyc.c4q.capstone.BottomNavFragment;
 
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,17 +54,27 @@ public class PaymentFragment extends Fragment {
         editText = rootView.findViewById(R.id.payment_input);
         pay = rootView.findViewById(R.id.pay_button);
         recyclerView = rootView.findViewById(R.id.payment_history_rv);
+        return rootView;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         mockPayHistoryScreen();
+
 
         pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 confirmation = confirmationNumber();
+
+                LayoutInflater inflater = getLayoutInflater();
+                AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+                alertDialog.setView(inflater.inflate(R.layout.dialog_layout, null));
+                alertDialog.show();
+
             }
         });
-
-
-        return rootView;
     }
 
     public static String confirmationNumber() {
@@ -72,27 +87,40 @@ public class PaymentFragment extends Fragment {
         }
         return hello;
     }
+    public static String ticketNumber() {
+        Random random = new Random();
+        char [] digits = new char[4];
+        String hello="";
+        digits[0] = (char) (random.nextInt(9) + '1');
+        for(int i=1; i<10; i++) {
+            hello += random.nextInt(10);
+        }
+        return hello;
+    }
+
+
+
 
 
 
     public void mockPayHistoryScreen(){
         List<PaymentHistoryModel> paymentModelList = new ArrayList<>();
-        paymentModelList.add(new PaymentHistoryModel("June","$600"));
-        paymentModelList.add(new PaymentHistoryModel("Dec","$700"));
-        paymentModelList.add(new PaymentHistoryModel("Sept","$5700"));
-        paymentModelList.add(new PaymentHistoryModel("May","$5700"));
-        paymentModelList.add(new PaymentHistoryModel("Jan","$505350"));
-        paymentModelList.add(new PaymentHistoryModel("April","$5035350"));
-        paymentModelList.add(new PaymentHistoryModel("Feb","$503530"));
-        paymentModelList.add(new PaymentHistoryModel("Nov","$50350"));
-        paymentModelList.add(new PaymentHistoryModel("Dec","$50320"));
-        paymentModelList.add(new PaymentHistoryModel("May","$500"));
-        paymentModelList.add(new PaymentHistoryModel("Feb","$50230"));
-        paymentModelList.add(new PaymentHistoryModel("March","$50230"));
-        paymentModelList.add(new PaymentHistoryModel("Jan","$500"));
-        paymentModelList.add(new PaymentHistoryModel("Idk","$32500"));
-        paymentModelList.add(new PaymentHistoryModel("Idk","$500"));
-        paymentModelList.add(new PaymentHistoryModel("Hello","$23500"));
+        paymentModelList.add(new PaymentHistoryModel("Jun","$1200","9268863064"));
+        paymentModelList.add(new PaymentHistoryModel("Jul","$1200","6784726008"));
+        paymentModelList.add(new PaymentHistoryModel("Aug","$1200","3075034981"));
+        paymentModelList.add(new PaymentHistoryModel("Sep","$1200","8925426011"));
+        paymentModelList.add(new PaymentHistoryModel("Oct","$1200","9076432267"));
+        paymentModelList.add(new PaymentHistoryModel("Nov","$1200","2581505430"));
+        paymentModelList.add(new PaymentHistoryModel("Dec","$1200","9411325325"));
+        paymentModelList.add(new PaymentHistoryModel("Jan","$1200","7495554878"));
+        paymentModelList.add(new PaymentHistoryModel("Feb","$1200","4813002897"));
+        paymentModelList.add(new PaymentHistoryModel("Mar","$1200","9974548592"));
+        paymentModelList.add(new PaymentHistoryModel("Apr","$1200","7474971228"));
+        paymentModelList.add(new PaymentHistoryModel("Jun","$1200","8860335417"));
+        paymentModelList.add(new PaymentHistoryModel("Jul","$1200","7140368486"));
+        paymentModelList.add(new PaymentHistoryModel("Aug","$1200","3120933002"));
+        paymentModelList.add(new PaymentHistoryModel("Sep","$1200","8671655665"));
+        paymentModelList.add(new PaymentHistoryModel("Oct","$1200","1735607548"));
 
         PaymentHistoryAdapter historyAdapter = new PaymentHistoryAdapter(paymentModelList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
