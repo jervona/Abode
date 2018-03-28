@@ -16,6 +16,7 @@ public class PaymentHistoryHolder extends RecyclerView.ViewHolder {
 
     private TextView month;
     private TextView amount_paid;
+    private TextView con;
 
 
     public PaymentHistoryHolder(View itemView) {
@@ -24,6 +25,7 @@ public class PaymentHistoryHolder extends RecyclerView.ViewHolder {
 
         amount_paid = itemView.findViewById(R.id.amount_paid);
         month = itemView.findViewById(R.id.month);
+        con = itemView.findViewById(R.id.con0);
 
     }
 
@@ -31,6 +33,7 @@ public class PaymentHistoryHolder extends RecyclerView.ViewHolder {
 
         month.setText(paymentModel.getMonth());
         amount_paid.setText(paymentModel.getAmount_paid());
+        con.setText(paymentModel.getConf());
 
 
     }
