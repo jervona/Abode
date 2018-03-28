@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="nyc.c4q.capstone.TenantSignUpActivity"
-    android:background="#F6BBA2">
+    android:background="@android:color/darker_gray">
 
 
 
