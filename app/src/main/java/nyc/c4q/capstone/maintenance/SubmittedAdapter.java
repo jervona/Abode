@@ -1,13 +1,15 @@
-package nyc.c4q.capstone.maintenance_tabs;
+package nyc.c4q.capstone.maintenance;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import nyc.c4q.capstone.R;
+import nyc.c4q.capstone.datamodels.Tickets;
 
 /**
  * Created by c4q on 3/19/18.
@@ -16,13 +18,17 @@ import nyc.c4q.capstone.R;
 public class SubmittedAdapter extends RecyclerView.Adapter<SubmittedViewHolder> {
     List<Tickets> submittedRequests;
 
+
+    public SubmittedAdapter() {
+    }
+
     public SubmittedAdapter(List<Tickets> submittedRequests) {
         this.submittedRequests = submittedRequests;
     }
 
     @Override
     public SubmittedViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View cv = LayoutInflater.from(parent.getContext()).inflate(R.layout.submitted_repairs_itemview, parent, false);
+        View cv = LayoutInflater.from(parent.getContext()).inflate(R.layout.maintenance_repairs_itemview, parent, false);
         return new SubmittedViewHolder(cv);
     }
 
@@ -31,6 +37,16 @@ public class SubmittedAdapter extends RecyclerView.Adapter<SubmittedViewHolder> 
         Tickets tix = submittedRequests.get(position);
         holder.onBind(tix);
 
+    }
+
+    public void swap(List<Tickets> list){
+        submittedRequests=list;
+        notifyDataSetChanged();
+    }
+
+    public void cleatList(){
+        submittedRequests = new ArrayList<>();
+        notifyDataSetChanged();
     }
 
     @Override

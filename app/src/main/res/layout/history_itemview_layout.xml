@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/payment_frag_item_layout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/payment_card"
+        android:padding="@dimen/cardview_default_radius"
+        android:elevation="@dimen/cardview_default_radius"
+        app:cardMaxElevation="2sp"
+        android:layout_weight="1"
+        app:cardElevation="2sp"
+        app:cardUseCompatPadding="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:id="@+id/month"
+            android:text="month"
+            android:textSize="50sp"
+            android:padding="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/amount_paid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="Amount paid"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/con0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:text="confirmation"
+            android:layout_gravity="bottom"/>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

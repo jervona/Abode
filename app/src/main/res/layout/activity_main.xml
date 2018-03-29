@@ -8,11 +8,14 @@
     tools:context="nyc.c4q.capstone.MainActivity">
 
 
-    <android.support.v4.view.ViewPager
+    <nyc.c4q.capstone.CustomViewPager
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@id/bottom_navigation"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
 
     <com.aurelhubert.ahbottomnavigation.AHBottomNavigation
         android:id="@+id/bottom_navigation"
@@ -20,5 +23,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:selectedBackgroundVisible="false" />
+
 
 </RelativeLayout>

@@ -2,14 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
-    tools:context="nyc.c4q.capstone.maintenance_tabs.SubmittedFragment">
+    tools:context="nyc.c4q.capstone.payment_history_package.landlord_pay_package.LandlordPay_Fragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:id="@+id/submitted_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Submitted Frag" />
+        android:text="@string/hello_blank_fragment" />
 
 </FrameLayout>

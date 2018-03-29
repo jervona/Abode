@@ -1,4 +1,4 @@
-package nyc.c4q.capstone.maintenance_tabs;
+package nyc.c4q.capstone.payment_history_package.landlord_pay_package;
 
 
 import android.os.Bundle;
@@ -12,12 +12,10 @@ import nyc.c4q.capstone.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PendingFragment extends Fragment {
-
-    View rootView;
+public class LandlordPay_Fragment extends Fragment {
 
 
-    public PendingFragment() {
+    public LandlordPay_Fragment() {
         // Required empty public constructor
     }
 
@@ -26,8 +24,7 @@ public class PendingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootView = inflater.inflate(R.layout.fragment_pending, container, false);
-        return rootView;
+        return inflater.inflate(R.layout.fragment_landlord_pay_, container, false);
     }
 
 }
