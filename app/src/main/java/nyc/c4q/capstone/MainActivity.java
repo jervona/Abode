@@ -1,19 +1,14 @@
 package nyc.c4q.capstone;
 
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
@@ -30,12 +25,10 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import nyc.c4q.capstone.BottomNavFragment.DashBoardFragment;
-import nyc.c4q.capstone.BottomNavFragment.DocsFragment;
 
-import nyc.c4q.capstone.BottomNavFragment.MaintanceFragment;
-import nyc.c4q.capstone.BottomNavFragment.PaymentFragment;
+import nyc.c4q.capstone.adapter.SectionsPageAdapter;
 import nyc.c4q.capstone.database.TenantDataBaseHelper;
+import nyc.c4q.capstone.signupactivites.SignInActivity;
 
 public class MainActivity extends AppCompatActivity
         implements GoogleApiClient.OnConnectionFailedListener {
@@ -99,19 +92,15 @@ public class MainActivity extends AppCompatActivity
 
     public void setBottomNav() {
         setupViewPager(viewPager);
-        AHBottomNavigationItem item1 = new AHBottomNavigationItem("DashBoard", R.drawable.dash);
-        AHBottomNavigationItem item2 = new AHBottomNavigationItem("Payment", R.drawable.payment);
-        AHBottomNavigationItem item3 = new AHBottomNavigationItem("Maintenance", R.drawable.maintenance);
-        AHBottomNavigationItem item4 = new AHBottomNavigationItem("Docs", R.drawable.docs);
-        items.add(item1);
-        items.add(item2);
-        items.add(item3);
-        items.add(item4);
+        items.add(new AHBottomNavigationItem("DashBoard", R.drawable.dash));
+        items.add(new AHBottomNavigationItem("Payment", R.drawable.payment));
+        items.add(new AHBottomNavigationItem("Maintenance", R.drawable.maintenance));
         bottom.addItems(items);
         bottom.setCurrentItem(0);
-        bottom.setDefaultBackgroundColor(Color.LTGRAY);
-        bottom.setAccentColor(Color.parseColor("#52c7b8"));
-//        bottom.setColoredModeColors(Color.LTGRAY,Color.parseColor("#52c7b8"));
+        bottom.setDefaultBackgroundColor(Color.WHITE);
+        bottom.setAccentColor(Color.BLACK);
+//        bottom.setAccentColor(Color.parseColor("#52c7b8"));
+//        bottom.setColoredModeColors(Color.WHITE,Color.BLACK);
 //        bottom.setAccentColor(Color.parseColor("#52c7b8"));
         bottom.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
@@ -139,14 +128,4 @@ public class MainActivity extends AppCompatActivity
         Log.d(TAG, "onConnectionFailed:" + connectionResult);
         Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
     }
-
-
-
-    @Override
-    public void onBackPressed() {
-        // This will get you total fragment in the backStack
-        int count = getFragmentManager().getBackStackEntryCount();
-        Log.e("back pressed",count+"");
-    }
-
 }

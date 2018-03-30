@@ -1,4 +1,4 @@
-package nyc.c4q.capstone;
+package nyc.c4q.capstone.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -26,8 +26,11 @@ public class SectionsPageAdapter extends FragmentPagerAdapter {
         mFragmentList.add(new DocsFragment());
     }
 
-    public void addFragment(Fragment fragment) {
-        mFragmentList.add(fragment);
+    public void initLPMBottomNav(){
+        mFragmentList.add(new DashBoardFragment());
+        mFragmentList.add(new PaymentFragment());
+        mFragmentList.add(new MaintanceFragment());
+        mFragmentList.add(new DocsFragment());
     }
 
     public SectionsPageAdapter(FragmentManager fm) {

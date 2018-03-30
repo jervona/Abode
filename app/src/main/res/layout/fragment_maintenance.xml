@@ -5,76 +5,10 @@
     android:orientation="vertical"
     android:id="@+id/maintenance_frag">
 
-    <ScrollView
-        android:id="@+id/maintenance_scroll"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/ticket_rv"
         android:layout_width="match_parent"
-        android:visibility="visible"
         android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/pending_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Pending"/>
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/pending_tix_rv"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                </android.support.v7.widget.RecyclerView>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/scheduled_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Scheduled"/>
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/scheduled_tix_rv"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                </android.support.v7.widget.RecyclerView>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/completed_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Completed"/>
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/completed_tix_rv"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                </android.support.v7.widget.RecyclerView>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </ScrollView>
+    </android.support.v7.widget.RecyclerView>
 
 </FrameLayout>

@@ -23,8 +23,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,9 +31,10 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import nyc.c4q.capstone.MainActivity;
 import nyc.c4q.capstone.R;
 import nyc.c4q.capstone.database.TenantDataBaseHelper;
@@ -50,16 +49,11 @@ import nyc.c4q.capstone.maintenance.SubmittedAdapter;
 public class MaintanceFragment extends Fragment {
 
     View rootView;
-    TextView pendingView;
-    TextView scheduledView;
-    TextView completedView;
-    RecyclerView pendingRV;
-    RecyclerView scheduledRV;
-    RecyclerView completedRV;
-    SubmittedAdapter adapter;
-    LinearLayoutManager pendingLayoutManager;
-    LinearLayoutManager scheduledLayoutManager;
-    LinearLayoutManager completedLayoutManager;
+
+    @BindView(R.id.ticket_rv)
+    RecyclerView recyclerView;
+    LinearLayoutManager layoutManager;
+
     private ScrollView maintenanceScroll;
     private static final int REQUEST_IMAGE = 2;
     private static final int TAKE_PICTURE = 1;
@@ -71,9 +65,9 @@ public class MaintanceFragment extends Fragment {
     private static final int NOTIFICATION_ID = 555;
     String NOTIFICATION_CHANNEL = "C4Q Notifications";
     FirebaseStorage storage = FirebaseStorage.getInstance();
+    SubmittedAdapter adapter;
     TenantDataBaseHelper db;
-    String id;
-//    DataBaseTesting db;
+
 
     public MaintanceFragment() {
     }
@@ -82,38 +76,19 @@ public class MaintanceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_maintenance, container, false);
-//        ButterKnife.bind(this,rootView);
-        pendingView = rootView.findViewById(R.id.pending_view);
-        scheduledView = rootView.findViewById(R.id.scheduled_view);
-        completedView = rootView.findViewById(R.id.completed_view);
-        maintenanceScroll = rootView.findViewById(R.id.maintenance_scroll);
-        pendingRV = rootView.findViewById(R.id.pending_tix_rv);
-        scheduledRV = rootView.findViewById(R.id.scheduled_tix_rv);
-        completedRV = rootView.findViewById(R.id.completed_tix_rv);
-        pendingLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        scheduledLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        completedLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         setHasOptionsMenu(true);
+        ButterKnife.bind(this, rootView);
+        layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
         return rootView;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        pendingRV.setLayoutManager(pendingLayoutManager);
         db = TenantDataBaseHelper.getInstance(FirebaseDatabase.getInstance());
-        if (db.getMessages() == null) {
-            ticketsList = new ArrayList<>();
-        } else {
-            ticketsList = db.getMessages();
-            adapter = new SubmittedAdapter(ticketsList);
-            pendingRV.setAdapter(adapter);
-        }
-
-        scheduledRV.setLayoutManager(scheduledLayoutManager);
-//        scheduledRV.setAdapter(adapter);
-        completedRV.setLayoutManager(completedLayoutManager);
-//        completedRV.setAdapter(adapter);
+        adapter = new SubmittedAdapter(ticketsList);
+        recyclerView.setAdapter(adapter);
         updateList();
     }
 
@@ -142,14 +117,11 @@ public class MaintanceFragment extends Fragment {
         data.getReference().child("Maintenance").child(String.valueOf(db.getUser().getBuilding_id())).child(db.getUser().getAPT()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<List<Tickets>> t = new GenericTypeIndicator<List<Tickets>>() {
-                };
-                Log.e("Theres a change", "hello there");
+                GenericTypeIndicator<List<Tickets>> t = new GenericTypeIndicator<List<Tickets>>() {};
                 ticketsList = dataSnapshot.getValue(t);
                 if (ticketsList != null) {
-                    adapter.swap(ticketsList);
+                    adapter.updateTicketListItems(ticketsList);
                 }
-
             }
 
             @Override
@@ -172,5 +144,4 @@ public class MaintanceFragment extends Fragment {
         assert notificationManager != null;
         notificationManager.notify(NOTIFICATION_ID, builder.build());
     }
-
 }

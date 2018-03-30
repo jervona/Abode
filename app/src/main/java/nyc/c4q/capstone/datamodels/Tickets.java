@@ -16,9 +16,11 @@ public class Tickets {
     private String description;
     private String status;
     List<String> imageURl;
+    private String title;
 
 
-    public Tickets(String ticket_number, long time, String location, String apt, String description, String status){
+    public Tickets(String ticket_number, long time, String location, String apt, String title,String description, String status){
+       this.title=title;
         this.ticket_number = ticket_number;
         this.time = time;
         this.location = location;
@@ -56,6 +58,10 @@ public class Tickets {
 
     public List<String> getImageURl() {
         return imageURl;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public void setImageURl(List<String> imageURl) {

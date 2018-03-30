@@ -15,9 +15,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import nyc.c4q.capstone.MainActivity;
 import nyc.c4q.capstone.R;
-import nyc.c4q.capstone.SignInActivity;
-
-import static nyc.c4q.capstone.MainActivity.ANONYMOUS;
+import nyc.c4q.capstone.signupactivites.SignInActivity;
 
 
 /**

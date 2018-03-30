@@ -43,6 +43,10 @@ public class TenantDataBaseHelper {
 
     private UserApartmentInfo user;
     private List<Tickets> messages;
+    private List<Tickets> submittedList = new ArrayList<>();
+    private List<Tickets> pendingList = new ArrayList<>();
+    private List<Tickets> completedList = new ArrayList<>();
+
     private List<String> listOfUrl = new ArrayList<>();
 
     private static TenantDataBaseHelper instance;
@@ -83,8 +87,7 @@ public class TenantDataBaseHelper {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<List<Tickets>> data = new GenericTypeIndicator<List<Tickets>>() {
-                };
+                GenericTypeIndicator<List<Tickets>> data = new GenericTypeIndicator<List<Tickets>>() {};
                 messages = dataSnapshot.getValue(data);
             }
 
@@ -95,56 +98,55 @@ public class TenantDataBaseHelper {
         });
     }
 
-    public void createNewTicket(Intent data, final Tickets ticket) {
-        final Uri uri = data.getData();
-//        Log.e(TAG, "Uri: " + uri.toString());
-        String buildingID = String.valueOf(user.getBuilding_id());
-        database.getReference().child(maintenanceData).child(buildingID).child(user.getAPT()).push()
-                .setValue(ticket, new DatabaseReference.CompletionListener() {
-                    @Override
-                    public void onComplete(DatabaseError databaseError,DatabaseReference databaseReference) {
-                        if (databaseError == null) {
-                            String key = databaseReference.getKey();
-                                StorageReference storageReference = FirebaseStorage.getInstance()
-                                        .getReference(FirebaseAuth.getInstance().getUid())
-                                        .child(key)
-                                        .child(uri.getLastPathSegment());
-                                putImageInStorage(storageReference, uri, key, ticket);
+//    public void createNewTicket(Intent data, final Tickets ticket) {
+//        final Uri uri = data.getData();
+//        String buildingID = String.valueOf(user.getBuilding_id());
+//        database.getReference().child(maintenanceData).child(buildingID).child(user.getAPT()).push()
+//                .setValue(ticket, new DatabaseReference.CompletionListener() {
+//                    @Override
+//                    public void onComplete(DatabaseError databaseError,DatabaseReference databaseReference) {
+//                        if (databaseError == null) {
+//                            String key = databaseReference.getKey();
+//                                StorageReference storageReference = FirebaseStorage.getInstance()
+//                                        .getReference(FirebaseAuth.getInstance().getUid())
+//                                        .child(key)
+//                                        .child(uri.getLastPathSegment());
+//                                putImageInStorage(storageReference, uri, key, ticket);
+//
+//
+//                        } else {
+//                            Log.w(TAG, "Unable to write message to database.",
+//                                    databaseError.toException());
+//                        }
+//                    }
+//                });
+//    }
 
-
-                        } else {
-                            Log.w(TAG, "Unable to write message to database.",
-                                    databaseError.toException());
-                        }
-                    }
-                });
-    }
-
-    private void putImageInStorage(StorageReference storageReference, Uri uri, final String key, final Tickets ticket) {
-        storageReference.putFile(uri).addOnCompleteListener(
-                new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            Tickets tickets = new Tickets(ticket.getTicket_number()
-                                    , ticket.getTime()
-                                    , ticket.getApt()
-                                    , ticket.getDescription()
-                                    , ticket.getDescription()
-                                    , task.getResult().getMetadata().getDownloadUrl().toString());
-                            messages.add(tickets);
-                            String buildingID = String.valueOf(user.getBuilding_id());
-                            database.getReference().child(maintenanceData)
-                                    .child(buildingID)
-                                    .child(user.getAPT())
-                                    .setValue(messages);
-                        } else {
-                            Log.w(TAG, "Image upload task was not successful.",
-                                    task.getException());
-                        }
-                    }
-                });
-    }
+//    private void putImageInStorage(StorageReference storageReference, Uri uri, final String key, final Tickets ticket) {
+//        storageReference.putFile(uri).addOnCompleteListener(
+//                new OnCompleteListener<UploadTask.TaskSnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+//                        if (task.isSuccessful()) {
+//                            Tickets tickets = new Tickets(ticket.getTicket_number()
+//                                    , ticket.getTime()
+//                                    , ticket.getApt()
+//                                    , ticket.getDescription()
+//                                    , ticket.getDescription()
+//                                    , task.getResult().getMetadata().getDownloadUrl().toString());
+//                            messages.add(tickets);
+//                            String buildingID = String.valueOf(user.getBuilding_id());
+//                            database.getReference().child(maintenanceData)
+//                                    .child(buildingID)
+//                                    .child(user.getAPT())
+//                                    .setValue(messages);
+//                        } else {
+//                            Log.w(TAG, "Image upload task was not successful.",
+//                                    task.getException());
+//                        }
+//                    }
+//                });
+//    }
 
     public void upLoadPhoto(Intent data){
         final Uri uri = data.getData();
@@ -199,6 +201,7 @@ public class TenantDataBaseHelper {
     }
 
 
+
     public UserApartmentInfo getUser() {
         return user;
     }
@@ -206,4 +209,5 @@ public class TenantDataBaseHelper {
     public List<Tickets> getMessages() {
         return messages;
     }
+
 }

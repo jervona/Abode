@@ -1,4 +1,4 @@
-package nyc.c4q.capstone;
+package nyc.c4q.capstone.custum;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;
