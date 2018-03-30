@@ -3,7 +3,6 @@ package nyc.c4q.capstone.maintenance;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,19 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.google.firebase.database.FirebaseDatabase;
 
-import org.w3c.dom.Text;
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -34,7 +27,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import nyc.c4q.capstone.ImagiveAdapter;
+import nyc.c4q.capstone.adapter.ImagiveAdapter;
 import nyc.c4q.capstone.R;
 import nyc.c4q.capstone.database.TenantDataBaseHelper;
 import nyc.c4q.capstone.datamodels.Tickets;
@@ -84,13 +77,11 @@ public class NewRequestFragment extends Fragment {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_new_request, container, false);
         ButterKnife.bind(this, rootView);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(rootView.getContext(),R.array.location_options, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(rootView.getContext(), R.array.location_options, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         locationSpinner.setAdapter(adapter);
         db = TenantDataBaseHelper.getInstance(FirebaseDatabase.getInstance());
         rv.setLayoutManager(new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.HORIZONTAL, false));
-
-
 
 
         locationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -128,12 +119,11 @@ public class NewRequestFragment extends Fragment {
         Log.e(TAG, "onActivityResult: requestCode=" + requestCode + ", resultCode=" + resultCode);
         if (requestCode == REQUEST_IMAGE && resultCode == RESULT_OK && data != null) {
             db.upLoadPhoto(data);
-           Uri uri = data.getData();
+            Uri uri = data.getData();
             hello.add(uri);
-           rv.setAdapter(new ImagiveAdapter(hello));
+            rv.setAdapter(new ImagiveAdapter(hello));
         }
-
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK && data != null){
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK && data != null) {
             Uri uri = data.getData();
             hello.add(uri);
             rv.setAdapter(new ImagiveAdapter(hello));
@@ -147,13 +137,12 @@ public class NewRequestFragment extends Fragment {
                 , time
                 , location
                 , db.getUser().getAPT()
+                , subjectTitle.getText().toString()
                 , userDescription.getText().toString()
                 , "Pending");
         db.createNewTicket(tickets);
         getActivity().onBackPressed();
     }
-
-
 
 
 }

@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 
 import nyc.c4q.capstone.R;
-import nyc.c4q.capstone.SignInActivity;
 
 public class TenantSignUpActivity extends AppCompatActivity {
 

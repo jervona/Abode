@@ -1,5 +1,6 @@
 package nyc.c4q.capstone.maintenance;
 
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nyc.c4q.capstone.R;
+import nyc.c4q.capstone.TicketsDiffCallback;
 import nyc.c4q.capstone.datamodels.Tickets;
 
 /**
@@ -16,14 +18,19 @@ import nyc.c4q.capstone.datamodels.Tickets;
  */
 
 public class SubmittedAdapter extends RecyclerView.Adapter<SubmittedViewHolder> {
-    List<Tickets> submittedRequests;
+    List<Tickets> requestsList;
 
 
     public SubmittedAdapter() {
     }
 
-    public SubmittedAdapter(List<Tickets> submittedRequests) {
-        this.submittedRequests = submittedRequests;
+    public SubmittedAdapter(List<Tickets> requestsList) {
+
+        if (requestsList == null) {
+           this.requestsList = new ArrayList<>();
+        } else {
+            this.requestsList = requestsList;
+        }
     }
 
     @Override
@@ -34,23 +41,31 @@ public class SubmittedAdapter extends RecyclerView.Adapter<SubmittedViewHolder> 
 
     @Override
     public void onBindViewHolder(SubmittedViewHolder holder, int position) {
-        Tickets tix = submittedRequests.get(position);
+        Tickets tix = requestsList.get(position);
         holder.onBind(tix);
-
     }
 
     public void swap(List<Tickets> list){
-        submittedRequests=list;
+        requestsList =list;
         notifyDataSetChanged();
     }
 
+
+    public void updateTicketListItems(List<Tickets> tickets) {
+        final TicketsDiffCallback diffCallback = new TicketsDiffCallback(this.requestsList, tickets);
+        final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
+        this.requestsList.clear();
+        this.requestsList.addAll(tickets);
+        diffResult.dispatchUpdatesTo(this);
+    }
+
     public void cleatList(){
-        submittedRequests = new ArrayList<>();
+        requestsList = new ArrayList<>();
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return submittedRequests.size();
+        return requestsList.size();
     }
 }

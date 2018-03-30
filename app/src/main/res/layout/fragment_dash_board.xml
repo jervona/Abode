@@ -9,9 +9,6 @@
     android:background="#fcfcfc"
     android:gravity="center">
 
-    <!-- TODO: Update blank fragment layout -->
-
-
 
     <LinearLayout
         android:clipToPadding="false"

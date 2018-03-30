@@ -1,4 +1,4 @@
-package nyc.c4q.capstone;
+package nyc.c4q.capstone.signupactivites;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,17 +28,17 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import nyc.c4q.capstone.signupactivites.LandLordSignUpActivity;
-import nyc.c4q.capstone.signupactivites.TenantSignUpActivity;
+import nyc.c4q.capstone.MainActivity;
+import nyc.c4q.capstone.R;
 
 public class SignInActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener {
 
 
-    @BindView(R.id.email)
-    EditText email;
-    @BindView(R.id.password)
-    EditText password;
+//    @BindView(R.id.email)
+//    EditText email;
+//    @BindView(R.id.password)
+//    EditText password;
     private FirebaseAuth firebaseAuth;
     private GoogleApiClient googleApiClient;
     private static final int RC_SIGN_IN = 9001;
@@ -69,33 +69,35 @@ public class SignInActivity extends AppCompatActivity implements
                 .setPositiveButton("Tenant", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(SignInActivity.this, "Launch Tenant Sign up", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(SignInActivity.this, TenantSignUpActivity.class); startActivity(intent);
-
                     }
                 })
                 .setNegativeButton("PropertyManager", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(SignInActivity.this, "Launch PropertyManager Sign up", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(SignInActivity.this, LandLordSignUpActivity.class); startActivity(intent);
                     }
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
 
-    @OnClick(R.id.google_sign_in_button)
+    @OnClick(R.id.login_button)
+    public void login(){
+
+    }
+
+//    @OnClick(R.id.google_sign_in_button)
     public void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-    @OnClick(R.id.sign_in_button)
-    public void userSignIn() {
-        if (!email.getText().toString().isEmpty() && !password.getText().toString().isEmpty()) {
-            signUser(email.getText().toString(), password.getText().toString());
-            hideSoftKeyboard();
-        }
-    }
+//    @OnClick(R.id.sign_in_button)
+//    public void userSignIn() {
+//        if (!email.getText().toString().isEmpty() && !password.getText().toString().isEmpty()) {
+//            signUser(email.getText().toString(), password.getText().toString());
+//            hideSoftKeyboard();
+//        }
+//    }
 
     private void signUser(String email, String password) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
@@ -150,8 +152,8 @@ public class SignInActivity extends AppCompatActivity implements
                 });
     }
 
-    public void hideSoftKeyboard() {
-        InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(SignInActivity.this.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(password.getWindowToken(), 0);
-    }
+//    public void hideSoftKeyboard() {
+//        InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(SignInActivity.this.INPUT_METHOD_SERVICE);
+//        imm.hideSoftInputFromWindow(password.getWindowToken(), 0);
+//    }
 }

@@ -1,7 +1,5 @@
-package nyc.c4q.capstone;
+package nyc.c4q.capstone.adapter;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +10,8 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
+
+import nyc.c4q.capstone.R;
 
 /**
  * Created by jervon.arnoldd on 3/26/18.

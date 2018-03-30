@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 
 import nyc.c4q.capstone.R;
-import nyc.c4q.capstone.SignInActivity;
 
 public class LandLordSignUpActivity extends AppCompatActivity {
 
@@ -25,7 +24,6 @@ public class LandLordSignUpActivity extends AppCompatActivity {
         LandlordSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent intent = new Intent(LandLordSignUpActivity.this, SignInActivity.class);
                 startActivity(intent);
 
