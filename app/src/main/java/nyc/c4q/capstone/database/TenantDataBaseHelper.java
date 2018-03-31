@@ -10,7 +10,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.Query;
@@ -23,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import nyc.c4q.capstone.BottomNavFragment.DashBoardFragment;
 import nyc.c4q.capstone.datamodels.Tickets;
 import nyc.c4q.capstone.datamodels.UserApartmentInfo;
 
@@ -43,9 +43,9 @@ public class TenantDataBaseHelper {
 
     private UserApartmentInfo user;
     private List<Tickets> messages;
-    private List<Tickets> submittedList = new ArrayList<>();
-    private List<Tickets> pendingList = new ArrayList<>();
-    private List<Tickets> completedList = new ArrayList<>();
+
+
+
 
     private List<String> listOfUrl = new ArrayList<>();
 
@@ -65,7 +65,7 @@ public class TenantDataBaseHelper {
 
 
     public void getUserInfoFromDataBase(String uid) {
-        messages=new ArrayList<>();
+        messages = new ArrayList<>();
         Query query = database.getReference("user").child(uid);
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -87,8 +87,10 @@ public class TenantDataBaseHelper {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<List<Tickets>> data = new GenericTypeIndicator<List<Tickets>>() {};
+                GenericTypeIndicator<List<Tickets>> data = new GenericTypeIndicator<List<Tickets>>() {
+                };
                 messages = dataSnapshot.getValue(data);
+                DashBoardFragment.giveStuff(messages,user);
             }
 
             @Override
@@ -148,17 +150,16 @@ public class TenantDataBaseHelper {
 //                });
 //    }
 
-    public void upLoadPhoto(Intent data){
+    public void upLoadPhoto(Intent data) {
         final Uri uri = data.getData();
         long time = Calendar.getInstance().getTimeInMillis();
-        String key =  String.valueOf(time);
+        String key = String.valueOf(time);
         storageReference = FirebaseStorage.getInstance()
                 .getReference(FirebaseAuth.getInstance().getUid())
                 .child(key)
                 .child(uri.getLastPathSegment());
         putImageInStorage(storageReference, uri, key);
     }
-
 
     private void putImageInStorage(StorageReference storageReference, Uri uri, final String key) {
         storageReference.putFile(uri).addOnCompleteListener(
@@ -176,8 +177,8 @@ public class TenantDataBaseHelper {
 
     public void createNewTicket(final Tickets ticket) {
         ticket.setImageURl(listOfUrl);
-        if (messages==null){
-            messages=new ArrayList<>();
+        if (messages == null) {
+            messages = new ArrayList<>();
             messages.add(ticket);
         } else {
             messages.add(ticket);
@@ -192,14 +193,11 @@ public class TenantDataBaseHelper {
         });
     }
 
-    public void removePhotos(int postion){
+    public void removePhotos(int postion) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
         StorageReference desertRef = storageRef.child(listOfUrl.get(postion));
-
-
     }
-
 
 
     public UserApartmentInfo getUser() {
