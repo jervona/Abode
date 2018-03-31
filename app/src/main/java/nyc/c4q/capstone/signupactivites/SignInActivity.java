@@ -1,5 +1,6 @@
 package nyc.c4q.capstone.signupactivites;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -35,10 +36,10 @@ public class SignInActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener {
 
 
-//    @BindView(R.id.email)
-//    EditText email;
-//    @BindView(R.id.password)
-//    EditText password;
+    @BindView(R.id.email)
+    EditText email;
+    @BindView(R.id.password)
+    EditText password;
     private FirebaseAuth firebaseAuth;
     private GoogleApiClient googleApiClient;
     private static final int RC_SIGN_IN = 9001;
@@ -80,10 +81,10 @@ public class SignInActivity extends AppCompatActivity implements
                 .show();
     }
 
-    @OnClick(R.id.login_button)
-    public void login(){
-
-    }
+//    @OnClick(R.id.login_button)
+//    public void login(){
+//
+//    }
 
 //    @OnClick(R.id.google_sign_in_button)
     public void signIn() {
@@ -91,13 +92,13 @@ public class SignInActivity extends AppCompatActivity implements
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-//    @OnClick(R.id.sign_in_button)
-//    public void userSignIn() {
-//        if (!email.getText().toString().isEmpty() && !password.getText().toString().isEmpty()) {
-//            signUser(email.getText().toString(), password.getText().toString());
-//            hideSoftKeyboard();
-//        }
-//    }
+    @OnClick(R.id.login_button)
+    public void userSignIn() {
+        if (!email.getText().toString().isEmpty() && !password.getText().toString().isEmpty()) {
+            signUser(email.getText().toString(), password.getText().toString());
+            hideSoftKeyboard();
+        }
+    }
 
     private void signUser(String email, String password) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
@@ -152,8 +153,9 @@ public class SignInActivity extends AppCompatActivity implements
                 });
     }
 
-//    public void hideSoftKeyboard() {
-//        InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(SignInActivity.this.INPUT_METHOD_SERVICE);
-//        imm.hideSoftInputFromWindow(password.getWindowToken(), 0);
-//    }
+    public void hideSoftKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(INPUT_METHOD_SERVICE);
+        assert imm != null;
+        imm.hideSoftInputFromWindow(password.getWindowToken(), 0);
+    }
 }

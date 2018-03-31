@@ -24,7 +24,7 @@ import nyc.c4q.capstone.signupactivites.SignInActivity;
 public class DocsFragment extends Fragment {
 
     View rootview;
-    FirebaseAuth firebaseAuth;
+
 
     public DocsFragment() {
         // Required empty public constructor
@@ -36,18 +36,10 @@ public class DocsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootview = inflater.inflate(R.layout.fragment_docs, container, false);
-        ButterKnife.bind(this, rootview);
 
-        firebaseAuth = FirebaseAuth.getInstance();
+
         return rootview;
     }
 
-    @OnClick(R.id.sign_out)
-    public void SignOut() {
-        firebaseAuth.signOut();
-        Auth.GoogleSignInApi.signOut(MainActivity.googleApiClient);
-        MainActivity.mUsername = MainActivity.ANONYMOUS;
-        startActivity(new Intent(getActivity(), SignInActivity.class));
-        getActivity().finish();
-    }
+
 }
