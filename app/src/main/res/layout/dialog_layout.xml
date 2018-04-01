@@ -29,8 +29,8 @@
             android:id="@+id/amount_dialog"
             android:layout_width="335dp"
             android:layout_height="75dp"
-            android:text=" 1,200"
-            android:textSize="32sp" />
+            android:text=" 1200"
+            android:textSize="40sp" />
 
     </LinearLayout>
 
@@ -40,14 +40,14 @@
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:text="93094028476"
-        android:textSize="32sp" />
+        android:textSize="40sp" />
 
 
     <TextView
         android:id="@+id/thank_you"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Thank your payment of $,1200 has been received."
-        android:textSize="25sp" />
+        android:text="Thanks for your payment"
+        android:textSize="40sp" />
 
 </LinearLayout>
