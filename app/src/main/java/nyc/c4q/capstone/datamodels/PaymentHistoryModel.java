@@ -11,7 +11,10 @@ public class PaymentHistoryModel {
     private String conf;
 
 
-    public PaymentHistoryModel(String month, String amount_paid,String conf) {
+    public PaymentHistoryModel() {
+    }
+
+    public PaymentHistoryModel(String month, String amount_paid, String conf) {
         this.month = month;
         this.amount_paid = amount_paid;
         this.conf=conf;

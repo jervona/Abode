@@ -9,6 +9,10 @@
     <string name="sign_up">Sign UP</string>
     <string name="sign_in">Sign In</string>
     <string name="sign_out">Sign Out</string>
+    <string name="thank_you">Thank You!</string>
+    <string name="confirmation">Confirmation</string>
+    <string name="amount_paid">Amount Paid</string>
+    <string name="payment_history">Payment History</string>
 
     <string-array name="location_options">
         <item>Bathroom</item>

@@ -23,6 +23,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import nyc.c4q.capstone.BottomNavFragment.DashBoardFragment;
+import nyc.c4q.capstone.datamodels.PaymentHistoryModel;
 import nyc.c4q.capstone.datamodels.Tickets;
 import nyc.c4q.capstone.datamodels.UserApartmentInfo;
 
@@ -42,7 +43,8 @@ public class TenantDataBaseHelper {
     private String userData = "user";
 
     private UserApartmentInfo user;
-    private List<Tickets> messages;
+    private List<Tickets> ticketsList;
+    private List<PaymentHistoryModel> paymentsList;
 
 
 
@@ -65,14 +67,14 @@ public class TenantDataBaseHelper {
 
 
     public void getUserInfoFromDataBase(String uid) {
-        messages = new ArrayList<>();
+        ticketsList = new ArrayList<>();
         Query query = database.getReference("user").child(uid);
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 user = dataSnapshot.getValue(UserApartmentInfo.class);
                 String id = String.valueOf(user.getBuilding_id());
-                getMainInfo(id, user.getAPT());
+                getMaintenance(id, user.getAPT());
             }
 
             @Override
@@ -82,15 +84,31 @@ public class TenantDataBaseHelper {
         });
     }
 
-    private void getMainInfo(String building_id, String apt) {
+    private void getMaintenance(String building_id, String apt) {
         Query query = database.getReference("Maintenance").child(building_id).child(apt);
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<List<Tickets>> data = new GenericTypeIndicator<List<Tickets>>() {
-                };
-                messages = dataSnapshot.getValue(data);
-                DashBoardFragment.giveStuff(messages,user);
+                GenericTypeIndicator<List<Tickets>> data = new GenericTypeIndicator<List<Tickets>>() {};
+                ticketsList = dataSnapshot.getValue(data);
+                DashBoardFragment.giveStuff(ticketsList,user);
+                getPayments(user.getAPT());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void getPayments(String apt){
+        Query query = database.getReference("Rent").child(user.getAPT());
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                GenericTypeIndicator<List<PaymentHistoryModel>> data = new GenericTypeIndicator<List<PaymentHistoryModel>>() {};
+                paymentsList = dataSnapshot.getValue(data);
             }
 
             @Override
@@ -136,12 +154,12 @@ public class TenantDataBaseHelper {
 //                                    , ticket.getDescription()
 //                                    , ticket.getDescription()
 //                                    , task.getResult().getMetadata().getDownloadUrl().toString());
-//                            messages.add(tickets);
+//                            ticketsList.add(tickets);
 //                            String buildingID = String.valueOf(user.getBuilding_id());
 //                            database.getReference().child(maintenanceData)
 //                                    .child(buildingID)
 //                                    .child(user.getAPT())
-//                                    .setValue(messages);
+//                                    .setValue(ticketsList);
 //                        } else {
 //                            Log.w(TAG, "Image upload task was not successful.",
 //                                    task.getException());
@@ -161,6 +179,22 @@ public class TenantDataBaseHelper {
         putImageInStorage(storageReference, uri, key);
     }
 
+    public void upLoadRent(PaymentHistoryModel rent){
+        if (paymentsList == null) {
+            paymentsList = new ArrayList<>();
+            paymentsList.add(rent);
+        } else {
+            paymentsList.add(rent);
+        }
+        database.getReference().child("Rent").child(user.getAPT()).setValue(paymentsList).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+
+            }
+        });
+
+    }
+
     private void putImageInStorage(StorageReference storageReference, Uri uri, final String key) {
         storageReference.putFile(uri).addOnCompleteListener(
                 new OnCompleteListener<UploadTask.TaskSnapshot>() {
@@ -177,15 +211,15 @@ public class TenantDataBaseHelper {
 
     public void createNewTicket(final Tickets ticket) {
         ticket.setImageURl(listOfUrl);
-        if (messages == null) {
-            messages = new ArrayList<>();
-            messages.add(ticket);
+        if (ticketsList == null) {
+            ticketsList = new ArrayList<>();
+            ticketsList.add(ticket);
         } else {
-            messages.add(ticket);
+            ticketsList.add(ticket);
         }
         String buildingID = String.valueOf(user.getBuilding_id());
         database.getReference().child(maintenanceData).child(buildingID).child(user.getAPT())
-                .setValue(messages).addOnCompleteListener(new OnCompleteListener<Void>() {
+                .setValue(ticketsList).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
 
@@ -204,8 +238,16 @@ public class TenantDataBaseHelper {
         return user;
     }
 
-    public List<Tickets> getMessages() {
-        return messages;
+    public List<Tickets> getTicketsList() {
+        return ticketsList;
     }
+
+    public List<PaymentHistoryModel> getPayments() {
+        return paymentsList;
+    }
+
+
+
+
 
 }

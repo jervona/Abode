@@ -1,6 +1,7 @@
 package nyc.c4q.capstone.payment_history_package;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -21,20 +22,14 @@ public class PaymentHistoryHolder extends RecyclerView.ViewHolder {
 
     public PaymentHistoryHolder(View itemView) {
         super(itemView);
-
-
         amount_paid = itemView.findViewById(R.id.amount_paid);
         month = itemView.findViewById(R.id.month);
         con = itemView.findViewById(R.id.con0);
-
     }
 
     public void onBind(PaymentHistoryModel paymentModel) {
-
         month.setText(paymentModel.getMonth());
         amount_paid.setText(paymentModel.getAmount_paid());
         con.setText(paymentModel.getConf());
-
-
     }
 }
