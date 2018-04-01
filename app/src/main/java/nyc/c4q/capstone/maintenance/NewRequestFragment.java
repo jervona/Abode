@@ -19,6 +19,7 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,7 +28,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import nyc.c4q.capstone.adapter.ImagiveAdapter;
+import nyc.c4q.capstone.adapter.ImageAdapter;
 import nyc.c4q.capstone.R;
 import nyc.c4q.capstone.database.TenantDataBaseHelper;
 import nyc.c4q.capstone.datamodels.Tickets;
@@ -65,6 +66,7 @@ public class NewRequestFragment extends Fragment {
     List<Intent> listOfPhotos;
     List<Uri> hello = new ArrayList<>();
     static final int REQUEST_IMAGE_CAPTURE = 1;
+    Bundle bundle;
 
 
     public NewRequestFragment() {
@@ -77,6 +79,9 @@ public class NewRequestFragment extends Fragment {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_new_request, container, false);
         ButterKnife.bind(this, rootView);
+        bundle = getArguments();
+
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(rootView.getContext(), R.array.location_options, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         locationSpinner.setAdapter(adapter);
@@ -94,7 +99,26 @@ public class NewRequestFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
+        getTixRequestData();
+
         return rootView;
+    }
+
+    public void getTixRequestData() {
+        if (bundle != null) {
+            String tixData =bundle.getString("Tix_data");
+            Gson gson = new Gson();
+            Tickets data = gson.fromJson(tixData, Tickets.class);
+            subjectTitle.setText(data.getTitle());
+            userDescription.setText(data.getDescription());
+//            if (!data.getImageURl().isEmpty()) {
+//                Log.e("Size",data.getImageURl()+"");
+//                rv.setAdapter(new ImageAdapter(data.getImageURl()));
+//            }
+
+        }
+
     }
 
     @OnClick(R.id.add_photo_button)
@@ -121,12 +145,12 @@ public class NewRequestFragment extends Fragment {
             db.upLoadPhoto(data);
             Uri uri = data.getData();
             hello.add(uri);
-            rv.setAdapter(new ImagiveAdapter(hello));
+            rv.setAdapter(new ImageAdapter(hello));
         }
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK && data != null) {
             Uri uri = data.getData();
             hello.add(uri);
-            rv.setAdapter(new ImagiveAdapter(hello));
+            rv.setAdapter(new ImageAdapter(hello));
         }
     }
 
