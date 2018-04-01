@@ -68,4 +68,5 @@ public class SubmittedAdapter extends RecyclerView.Adapter<SubmittedViewHolder> 
     public int getItemCount() {
         return requestsList.size();
     }
+
 }
