@@ -74,6 +74,7 @@ public class TenantDataBaseHelper {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 user = dataSnapshot.getValue(UserApartmentInfo.class);
+                assert user != null;
                 String id = String.valueOf(user.getBuilding_id());
                 getMaintenance(id, user.getAPT());
             }

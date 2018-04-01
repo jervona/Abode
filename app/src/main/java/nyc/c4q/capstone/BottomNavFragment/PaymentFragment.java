@@ -157,10 +157,6 @@ public class PaymentFragment extends Fragment {
         confirmation.setText(num);
         amount.setText(s);
         dialog.show();
-//        LayoutInflater inflater = getLayoutInflater();
-//        AlertDialog alertDialog = new AlertDialog.Builder(rootView.getContext()).create();
-//        alertDialog.setView(inflater.inflate(R.layout.dialog_layout, null));
-//        alertDialog.show();
     }
 
 
