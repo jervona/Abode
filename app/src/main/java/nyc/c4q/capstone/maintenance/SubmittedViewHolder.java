@@ -1,12 +1,17 @@
 package nyc.c4q.capstone.maintenance;
 
+import android.app.Activity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.graphics.Color;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
@@ -38,6 +43,8 @@ public class SubmittedViewHolder extends RecyclerView.ViewHolder {
     TextView date;
     @BindView(R.id.status)
     Button status;
+    @BindView(R.id.card_view)
+    CardView card;
 
 
     private FirebaseStorage storage;
@@ -48,7 +55,6 @@ public class SubmittedViewHolder extends RecyclerView.ViewHolder {
         storage = FirebaseStorage.getInstance();
 
     }
-
 
     public void onBind(Tickets tix) {
 
@@ -71,6 +77,19 @@ public class SubmittedViewHolder extends RecyclerView.ViewHolder {
                 status.setBackgroundColor(Color.GREEN);
                 break;
         }
+
+        card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(itemView.getContext(), "Your request details", Toast.LENGTH_SHORT).show();
+                NewRequestFragment requestFragment = new NewRequestFragment();
+                FragmentManager manager = ((AppCompatActivity) itemView.getContext()).getSupportFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.replace(R.id.maintenance_frag, requestFragment).addToBackStack("maintenance tix");
+                transaction.commit();
+            }
+        });
+
 //        if (tix.getImageUrl() !=null || !tix.getImageUrl().isEmpty()) {
 //            StorageReference storageReference = storage.getReferenceFromUrl(tix.getImageUrl());
 //            Glide.with(itemView.getContext())
@@ -80,4 +99,5 @@ public class SubmittedViewHolder extends RecyclerView.ViewHolder {
 //        }
 
     }
+
 }
