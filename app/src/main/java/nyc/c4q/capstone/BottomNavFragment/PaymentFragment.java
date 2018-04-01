@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,8 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -96,7 +99,10 @@ public class PaymentFragment extends Fragment {
     public void makePayment() {
         String num = confirmationNumber();
         if (!editText.getText().toString().isEmpty()) {
-            PaymentHistoryModel payment = new PaymentHistoryModel("Month", "$" + editText.getText().toString(), num);
+            Date date= Calendar.getInstance().getTime();
+            String month = date.toString().substring(4,7);
+            Log.d("date", date.toString().substring(4,7));
+            PaymentHistoryModel payment = new PaymentHistoryModel(month, "$" + editText.getText().toString(), num);
             db.upLoadRent(payment);
             popUp(editText.getText().toString(), num);
         } else {
