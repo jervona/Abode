@@ -5,11 +5,22 @@
     tools:context="nyc.c4q.capstone.BottomNavFragment.DocsFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/lease">
+
+    </LinearLayout>
+
+
     <Button
         android:id="@+id/sign_out"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
+
+
 
 
 </FrameLayout>
