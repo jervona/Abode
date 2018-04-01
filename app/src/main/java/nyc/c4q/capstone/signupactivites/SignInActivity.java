@@ -8,7 +8,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -29,6 +31,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import nyc.c4q.capstone.BottomNavFragment.DashBoardFragment;
 import nyc.c4q.capstone.MainActivity;
 import nyc.c4q.capstone.R;
 
@@ -36,10 +39,10 @@ public class SignInActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener {
 
 
-    @BindView(R.id.email)
-    EditText email;
-    @BindView(R.id.password)
-    EditText password;
+//    @BindView(R.id.email)
+//    EditText email;
+//    @BindView(R.id.password)
+//    EditText password;
     private FirebaseAuth firebaseAuth;
     private GoogleApiClient googleApiClient;
     private static final int RC_SIGN_IN = 9001;
@@ -49,6 +52,42 @@ public class SignInActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+
+        Button login = (Button) findViewById(R.id.login_button);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View view){
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(SignInActivity.this);
+                View mView = getLayoutInflater().inflate(R.layout.login, null);
+                final EditText email = (EditText) mView.findViewById(R.id.editText_email);
+                final EditText password = (EditText)mView.findViewById(R.id.editText_password);
+                Button button = (Button) mView.findViewById(R.id.login_button);
+                button.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View view) {
+                        if(!email.getText().toString().isEmpty() && !password.getText().toString().isEmpty()){
+                            signUser(email.getText().toString(),password.getText().toString());
+
+
+                    }else{
+                            Toast.makeText(SignInActivity.this,"Please fill any empty fields",Toast.LENGTH_LONG).show();
+
+
+                            }
+                        }
+                });
+
+                mBuilder.setView(mView);
+                AlertDialog dialog = mBuilder.create();
+                dialog.show();
+
+
+
+
+
+            }
+        });
+
         ButterKnife.bind(this);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -84,7 +123,9 @@ public class SignInActivity extends AppCompatActivity implements
 //    @OnClick(R.id.login_button)
 //    public void login(){
 //
-//    }
+//        }
+
+
 
 //    @OnClick(R.id.google_sign_in_button)
     public void signIn() {
@@ -92,13 +133,6 @@ public class SignInActivity extends AppCompatActivity implements
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-    @OnClick(R.id.login_button)
-    public void userSignIn() {
-        if (!email.getText().toString().isEmpty() && !password.getText().toString().isEmpty()) {
-            signUser(email.getText().toString(), password.getText().toString());
-            hideSoftKeyboard();
-        }
-    }
 
     private void signUser(String email, String password) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
@@ -156,6 +190,6 @@ public class SignInActivity extends AppCompatActivity implements
     public void hideSoftKeyboard() {
         InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(INPUT_METHOD_SERVICE);
         assert imm != null;
-        imm.hideSoftInputFromWindow(password.getWindowToken(), 0);
+//        imm.hideSoftInputFromWindow(password.getWindowToken(), 0);
     }
 }

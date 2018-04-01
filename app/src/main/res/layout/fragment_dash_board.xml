@@ -34,8 +34,8 @@
                 android:gravity="center">
 
                 <ImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:background="@drawable/payment"
                 android:padding="10dp"/>
 
@@ -54,7 +54,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Click here for more payment information"
+                    android:text="Current Balance Due: $1,200 "
+                    android:padding="5dp"
+                    android:textColor="@android:color/darker_gray"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Previous payment received:$1,200"
                     android:padding="5dp"
                     android:textColor="@android:color/darker_gray"/>
 
