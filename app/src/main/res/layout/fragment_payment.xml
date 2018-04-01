@@ -70,7 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:gravity="center"
-            android:text="Payment History"
+            android:text="@string/payment_history"
             android:textAlignment="center"
             android:textSize="20sp"
             android:textStyle="bold" />
