@@ -50,6 +50,7 @@ public class PaymentFragment extends Fragment {
     FirebaseDatabase data = FirebaseDatabase.getInstance();
     List<PaymentHistoryModel> payments;
     PaymentHistoryAdapter adapter;
+    static String id;
 
     public PaymentFragment() {
         // Required empty public constructor
@@ -82,7 +83,7 @@ public class PaymentFragment extends Fragment {
 
     }
 
-    public  String confirmationNumber() {
+    public String confirmationNumber() {
         Random random = new Random();
         String confirmation = "";
         for (int i = 1; i < 10; i++) {
@@ -95,32 +96,31 @@ public class PaymentFragment extends Fragment {
     public void makePayment() {
         String num = confirmationNumber();
         if (!editText.getText().toString().isEmpty()) {
-            PaymentHistoryModel payment = new PaymentHistoryModel("Month", "$"+editText.getText().toString(), num);
+            PaymentHistoryModel payment = new PaymentHistoryModel("Month", "$" + editText.getText().toString(), num);
             db.upLoadRent(payment);
             popUp(editText.getText().toString(), num);
-            editText.setText("Your Payment Is");
         } else {
             Toast.makeText(rootView.getContext(), "Please Enter an Amount", Toast.LENGTH_SHORT).show();
         }
     }
 
 
-    public void updateList() {
-        data.getReference().child("Rent").child("7M").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<List<PaymentHistoryModel>> t = new GenericTypeIndicator<List<PaymentHistoryModel>>() {
-                };
-                payments = dataSnapshot.getValue(t);
-                if (payments != null) {
-                    adapter.updateTicketListItems(payments);
+    public void updateList() throws NullPointerException {
+            data.getReference().child("Rent").child("7M").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    GenericTypeIndicator<List<PaymentHistoryModel>> t = new GenericTypeIndicator<List<PaymentHistoryModel>>() {
+                    };
+                    payments = dataSnapshot.getValue(t);
+                    if (payments != null) {
+                        adapter.updateTicketListItems(payments);
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
     }
 
     public void mockPayHistoryScreen() {
@@ -151,7 +151,7 @@ public class PaymentFragment extends Fragment {
     public void popUp(String s, String num) {
         Dialog dialog = new Dialog(rootView.getContext());
         dialog.setContentView(R.layout.fragment_pay);
-        dialog.setTitle("");
+        dialog.setTitle("Your Payment Is");
         TextView confirmation = (TextView) dialog.findViewById(R.id.confirmation);
         TextView amount = (TextView) dialog.findViewById(R.id.amount_paid);
         confirmation.setText(num);
@@ -164,4 +164,7 @@ public class PaymentFragment extends Fragment {
     }
 
 
+    public static void sendUser(String apt) {
+
+    }
 }

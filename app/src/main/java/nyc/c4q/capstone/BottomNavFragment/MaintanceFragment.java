@@ -78,7 +78,8 @@ public class MaintanceFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_maintenance, container, false);
         setHasOptionsMenu(true);
         ButterKnife.bind(this, rootView);
-        layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setReverseLayout(true);
         recyclerView.setLayoutManager(layoutManager);
         return rootView;
     }
