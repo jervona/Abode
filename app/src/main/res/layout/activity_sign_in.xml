@@ -51,6 +51,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="50dp"
             android:hint="@string/email_address"
+            android:text="testingotto@gmail.com"
             android:inputType="textEmailAddress"
             android:background="@color/hello"/>
 
@@ -60,6 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:hint="@string/password"
+            android:text="testing1234"
             android:inputType="textPassword"
             android:background="@color/hello"/>
 

@@ -8,10 +8,17 @@ public class Dash_Rv_Model {
 
     private int resource_icon;
     private String resource_name;
+    private String url;
 
-    public Dash_Rv_Model(int resource_icon, String resource_name) {
+
+    public Dash_Rv_Model(int resource_icon, String resource_name, String url) {
         this.resource_icon = resource_icon;
         this.resource_name = resource_name;
+        this.url = url;
+    }
+
+    public String getUrl() {
+        return url;
     }
 
     public int getResource_icon() {
