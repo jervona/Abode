@@ -17,7 +17,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.firebase.auth.FirebaseAuth;
@@ -49,8 +51,9 @@ public class DashBoardFragment extends Fragment {
 
     View rootView;
     TenantDataBaseHelper db;
+    LinearLayout clickable;
     UserApartmentInfo user;
-
+    int position = 0;
 
 
     public DashBoardFragment() {
@@ -66,10 +69,11 @@ public class DashBoardFragment extends Fragment {
 
         RecyclerView recyclerView = rootView.findViewById(R.id.my_recycler_view);
         List<Dash_Rv_Model> models = new ArrayList<>();
-        models.add(new Dash_Rv_Model(R.drawable.recycle2,"Recycling Info"));
-        models.add(new Dash_Rv_Model(R.drawable.no_smoking,"NYC Smoking Resource"));
-        models.add(new Dash_Rv_Model(R.drawable.housingcourtanswerslogo,"Housing Court Questions"));
-        models.add(new Dash_Rv_Model(R.drawable.nyc_logo,"NYC Rent Increase Info"));
+        models.add(new Dash_Rv_Model(R.drawable.recycle2,"Recycling Info","http://www1.nyc.gov/site/hpd/renters/harassment.page"));
+        models.add(new Dash_Rv_Model(R.drawable.no_smoking,"NYC Smoking Resource","http://www1.nyc.gov/nyc-resources/service/2493/smoking"));
+        models.add(new Dash_Rv_Model(R.drawable.housingcourtanswerslogo,"Housing Court Questions","http://housingcourtanswers.org/"));
+        models.add(new Dash_Rv_Model(R.drawable.nyc_logo,"NYC Rent Increase Info","http://www1.nyc.gov/nyc-resources/service/2069/new-york-city-rent-increase"));
+        models.add(new Dash_Rv_Model(R.drawable.nyc_logo,"Are you Being Harassedd","http://www1.nyc.gov/site/hpd/renters/harassment.page"));
 
         DashAdapter dashAdapter = new DashAdapter(models);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
@@ -77,11 +81,9 @@ public class DashBoardFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
 
 
-
-
-
         return rootView;
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
