@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,8 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -50,6 +53,7 @@ public class PaymentFragment extends Fragment {
     FirebaseDatabase data = FirebaseDatabase.getInstance();
     List<PaymentHistoryModel> payments;
     PaymentHistoryAdapter adapter;
+    static String id;
 
     public PaymentFragment() {
         // Required empty public constructor
@@ -82,7 +86,7 @@ public class PaymentFragment extends Fragment {
 
     }
 
-    public  String confirmationNumber() {
+    public String confirmationNumber() {
         Random random = new Random();
         String confirmation = "";
         for (int i = 1; i < 10; i++) {
@@ -95,32 +99,34 @@ public class PaymentFragment extends Fragment {
     public void makePayment() {
         String num = confirmationNumber();
         if (!editText.getText().toString().isEmpty()) {
-            PaymentHistoryModel payment = new PaymentHistoryModel("Month", "$"+editText.getText().toString(), num);
+            Date date= Calendar.getInstance().getTime();
+            String month = date.toString().substring(4,7);
+            Log.d("date", date.toString().substring(4,7));
+            PaymentHistoryModel payment = new PaymentHistoryModel(month, "$" + editText.getText().toString(), num);
             db.upLoadRent(payment);
             popUp(editText.getText().toString(), num);
-            editText.setText("Your Payment Is");
         } else {
             Toast.makeText(rootView.getContext(), "Please Enter an Amount", Toast.LENGTH_SHORT).show();
         }
     }
 
 
-    public void updateList() {
-        data.getReference().child("Rent").child("7M").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<List<PaymentHistoryModel>> t = new GenericTypeIndicator<List<PaymentHistoryModel>>() {
-                };
-                payments = dataSnapshot.getValue(t);
-                if (payments != null) {
-                    adapter.updateTicketListItems(payments);
+    public void updateList() throws NullPointerException {
+            data.getReference().child("Rent").child("7M").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    GenericTypeIndicator<List<PaymentHistoryModel>> t = new GenericTypeIndicator<List<PaymentHistoryModel>>() {
+                    };
+                    payments = dataSnapshot.getValue(t);
+                    if (payments != null) {
+                        adapter.updateTicketListItems(payments);
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
     }
 
     public void mockPayHistoryScreen() {
@@ -151,17 +157,16 @@ public class PaymentFragment extends Fragment {
     public void popUp(String s, String num) {
         Dialog dialog = new Dialog(rootView.getContext());
         dialog.setContentView(R.layout.fragment_pay);
-        dialog.setTitle("");
+        dialog.setTitle("Your Payment Is");
         TextView confirmation = (TextView) dialog.findViewById(R.id.confirmation);
         TextView amount = (TextView) dialog.findViewById(R.id.amount_paid);
         confirmation.setText(num);
         amount.setText(s);
         dialog.show();
-//        LayoutInflater inflater = getLayoutInflater();
-//        AlertDialog alertDialog = new AlertDialog.Builder(rootView.getContext()).create();
-//        alertDialog.setView(inflater.inflate(R.layout.dialog_layout, null));
-//        alertDialog.show();
     }
 
 
+    public static void sendUser(String apt) {
+
+    }
 }

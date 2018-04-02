@@ -1,6 +1,7 @@
 package nyc.c4q.capstone.maintenance;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.graphics.Color;
@@ -17,10 +18,12 @@ import com.bumptech.glide.Glide;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.gson.Gson;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,6 +51,7 @@ public class SubmittedViewHolder extends RecyclerView.ViewHolder {
 
 
     private FirebaseStorage storage;
+    private static final String TIX_KEY = "Tix data";
 
     public SubmittedViewHolder(View itemView) {
         super(itemView);
@@ -56,7 +60,7 @@ public class SubmittedViewHolder extends RecyclerView.ViewHolder {
 
     }
 
-    public void onBind(Tickets tix) {
+    public void onBind(final Tickets tix) {
 
         Date cal = new Date(tix.getTime());
         DateFormat df = new SimpleDateFormat("MM:dd:yy");
@@ -76,6 +80,7 @@ public class SubmittedViewHolder extends RecyclerView.ViewHolder {
             case "Submitted":
                 status.setBackgroundColor(Color.GREEN);
                 break;
+
         }
 
         card.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +89,11 @@ public class SubmittedViewHolder extends RecyclerView.ViewHolder {
                 Toast.makeText(itemView.getContext(), "Your request details", Toast.LENGTH_SHORT).show();
                 NewRequestFragment requestFragment = new NewRequestFragment();
                 FragmentManager manager = ((AppCompatActivity) itemView.getContext()).getSupportFragmentManager();
+                Bundle bundle = new Bundle();
+                Gson gson = new Gson();
+                String tixToString = gson.toJson(tix);
+                bundle.putString("Tix_data", tixToString);
+                requestFragment.setArguments(bundle);
                 FragmentTransaction transaction = manager.beginTransaction();
                 transaction.replace(R.id.maintenance_frag, requestFragment).addToBackStack("maintenance tix");
                 transaction.commit();

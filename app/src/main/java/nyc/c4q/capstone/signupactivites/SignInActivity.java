@@ -1,5 +1,6 @@
 package nyc.c4q.capstone.signupactivites;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -19,6 +21,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -39,10 +42,7 @@ public class SignInActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener {
 
 
-//    @BindView(R.id.email)
-//    EditText email;
-//    @BindView(R.id.password)
-//    EditText password;
+    Dialog loginBuilder;
     private FirebaseAuth firebaseAuth;
     private GoogleApiClient googleApiClient;
     private static final int RC_SIGN_IN = 9001;
@@ -52,43 +52,12 @@ public class SignInActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-
-        Button login = (Button) findViewById(R.id.login_button);
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick (View view){
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(SignInActivity.this);
-                View mView = getLayoutInflater().inflate(R.layout.login, null);
-                final EditText email = (EditText) mView.findViewById(R.id.editText_email);
-                final EditText password = (EditText)mView.findViewById(R.id.editText_password);
-                Button button = (Button) mView.findViewById(R.id.login_button);
-                button.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View view) {
-                        if(!email.getText().toString().isEmpty() && !password.getText().toString().isEmpty()){
-                            signUser(email.getText().toString(),password.getText().toString());
-
-
-                    }else{
-                            Toast.makeText(SignInActivity.this,"Please fill any empty fields",Toast.LENGTH_LONG).show();
-
-
-                            }
-                        }
-                });
-
-                mBuilder.setView(mView);
-                AlertDialog dialog = mBuilder.create();
-                dialog.show();
-
-
-
-
-
-            }
-        });
-
         ButterKnife.bind(this);
+        setupGoogleSignIn();
+        hideSoftKeyboard();
+    }
+
+    public void setupGoogleSignIn() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -120,19 +89,38 @@ public class SignInActivity extends AppCompatActivity implements
                 .show();
     }
 
-//    @OnClick(R.id.login_button)
-//    public void login(){
-//
-//        }
+    @OnClick(R.id.login_button)
+    public void login() {
+        loginBuilder = new Dialog(SignInActivity.this);
+        View view = getLayoutInflater().inflate(R.layout.login, null);
+        final EditText email = (EditText) view.findViewById(R.id.editText_email);
+        final EditText password = (EditText) view.findViewById(R.id.editText_password);
+        Button button = (Button) view.findViewById(R.id.login_button);
+        SignInButton googleSignIn = (SignInButton) view.findViewById(R.id.google_sign_in_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!email.getText().toString().isEmpty() && !password.getText().toString().isEmpty()) {
+                    signUser(email.getText().toString(), password.getText().toString());
+                } else {
+                    Toast.makeText(SignInActivity.this, "Please fill any empty fields", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+        googleSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signIn();
+            }
+        });
+        loginBuilder.setContentView(view);
+        loginBuilder.show();
+    }
 
-
-
-//    @OnClick(R.id.google_sign_in_button)
     public void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
-
 
     private void signUser(String email, String password) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
@@ -142,6 +130,7 @@ public class SignInActivity extends AppCompatActivity implements
                         if (task.isSuccessful()) {
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = firebaseAuth.getCurrentUser();
+                            loginBuilder.dismiss();
                             startActivity(new Intent(SignInActivity.this, MainActivity.class));
                             finish();
                         } else {
@@ -178,8 +167,9 @@ public class SignInActivity extends AppCompatActivity implements
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "signInWithCredential", task.getException());
-                            Toast.makeText(SignInActivity.this, "Authentication failed.",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignInActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                         } else {
+                            loginBuilder.dismiss();
                             startActivity(new Intent(SignInActivity.this, MainActivity.class));
                             finish();
                         }
