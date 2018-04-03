@@ -8,6 +8,10 @@
     android:orientation="vertical"
     tools:context="nyc.c4q.capstone.maintenance.NewRequestFragment">
 
+
+
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,7 +21,7 @@
             android:id="@+id/subject_title_view"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:hint="Subject Title"
+            android:hint="@string/subject_title"
             android:maxLines="1"
             android:background="@color/transparent"
             android:elevation="2dp"/>

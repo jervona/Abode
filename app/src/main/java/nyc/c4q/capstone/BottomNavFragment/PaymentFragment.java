@@ -21,11 +21,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.braintreepayments.api.dropin.DropInActivity;
+import com.braintreepayments.api.dropin.DropInRequest;
+import com.braintreepayments.api.dropin.DropInResult;
+import com.braintreepayments.api.dropin.utils.PaymentMethodType;
+import com.braintreepayments.api.models.PaymentMethodNonce;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.TextHttpResponseHandler;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
@@ -42,8 +51,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cz.msebera.android.httpclient.Header;
 import nyc.c4q.capstone.R;
 import nyc.c4q.capstone.database.TenantDataBaseHelper;
 import nyc.c4q.capstone.datamodels.PaymentHistoryModel;
@@ -57,15 +68,22 @@ import nyc.c4q.capstone.payment_history_package.PaymentHistoryAdapter;
 public class PaymentFragment extends Fragment {
 
     private View rootView;
-    private TextView textView;
-    private EditText editText;
+
+    @BindView(R.id.balance)
+    TextView textView;
+    @BindView(R.id.payment_input)
+    EditText editText;
+    @BindView(R.id.payment_history_rv)
     RecyclerView recyclerView;
+
+
     TenantDataBaseHelper db;
     FirebaseDatabase data = FirebaseDatabase.getInstance();
     List<PaymentHistoryModel> payments;
     PaymentHistoryAdapter adapter;
     static String id;
     private static PayPalConfiguration config;
+    private static final int REQUEST_CODE = 94;
 
     public PaymentFragment() {
         // Required empty public constructor
@@ -75,12 +93,9 @@ public class PaymentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_payment, container, false);
         ButterKnife.bind(this, rootView);
-        textView = rootView.findViewById(R.id.balance);
-        editText = rootView.findViewById(R.id.payment_input);
-        recyclerView = rootView.findViewById(R.id.payment_history_rv);
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         config = new PayPalConfiguration()
@@ -97,6 +112,7 @@ public class PaymentFragment extends Fragment {
         adapter = new PaymentHistoryAdapter(db.getPayments());
         recyclerView.setAdapter(adapter);
         updateList();
+//        vault();
 
     }
 
@@ -154,51 +170,114 @@ public class PaymentFragment extends Fragment {
         dialog.show();
     }
 
-    public static void sendUser(String apt) {
+    public void testing() {
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get("https://your-server/client_token", new TextHttpResponseHandler() {
+            public Object clientToken;
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, String responseString, Throwable throwable) {
+
+            }
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, String responseString) {
+                this.clientToken = clientToken;
+            }
+        });
 
     }
 
     @OnClick(R.id.paypal_button)
-    public void beginPayment() {
-        Intent serviceConfig = new Intent(rootView.getContext(), PayPalService.class);
-        serviceConfig.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
-        rootView.getContext().startService(serviceConfig);
-
-        PayPalPayment payment = new PayPalPayment(new BigDecimal("5.65"),
-                "USD", "My Awesome Item", PayPalPayment.PAYMENT_INTENT_SALE);
-
-        Intent paymentConfig = new Intent(rootView.getContext(), PaymentActivity.class);
-        paymentConfig.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
-        paymentConfig.putExtra(PaymentActivity.EXTRA_PAYMENT, payment);
-        startActivityForResult(paymentConfig, 0);
+    public void onBraintreeSubmit() {
+        DropInRequest dropInRequest = new DropInRequest()
+                .clientToken("eyJ2ZXJzaW9uIjoyLCJhdXRob3JpemF0aW9uRmluZ2VycHJpbnQiOiI2YjdhZTdlMjQ1NDNjZjZmN2ViOTdkOTUwYmEyZWZiZGQ1ZDNiY2QxN2Q2YTQ4Y2IxMDVjOTcyNzgyNzQxMDU4fGNyZWF0ZWRfYXQ9MjAxOC0wNC0wM1QxNDoyOToyMC4zNzM4Mjg5MDgrMDAwMFx1MDAyNm1lcmNoYW50X2lkPTM0OHBrOWNnZjNiZ3l3MmJcdTAwMjZwdWJsaWNfa2V5PTJuMjQ3ZHY4OWJxOXZtcHIiLCJjb25maWdVcmwiOiJodHRwczovL2FwaS5zYW5kYm94LmJyYWludHJlZWdhdGV3YXkuY29tOjQ0My9tZXJjaGFudHMvMzQ4cGs5Y2dmM2JneXcyYi9jbGllbnRfYXBpL3YxL2NvbmZpZ3VyYXRpb24iLCJjaGFsbGVuZ2VzIjpbXSwiZW52aXJvbm1lbnQiOiJzYW5kYm94IiwiY2xpZW50QXBpVXJsIjoiaHR0cHM6Ly9hcGkuc2FuZGJveC5icmFpbnRyZWVnYXRld2F5LmNvbTo0NDMvbWVyY2hhbnRzLzM0OHBrOWNnZjNiZ3l3MmIvY2xpZW50X2FwaSIsImFzc2V0c1VybCI6Imh0dHBzOi8vYXNzZXRzLmJyYWludHJlZWdhdGV3YXkuY29tIiwiYXV0aFVybCI6Imh0dHBzOi8vYXV0aC52ZW5tby5zYW5kYm94LmJyYWludHJlZWdhdGV3YXkuY29tIiwiYW5hbHl0aWNzIjp7InVybCI6Imh0dHBzOi8vY2xpZW50LWFuYWx5dGljcy5zYW5kYm94LmJyYWludHJlZWdhdGV3YXkuY29tLzM0OHBrOWNnZjNiZ3l3MmIifSwidGhyZWVEU2VjdXJlRW5hYmxlZCI6dHJ1ZSwicGF5cGFsRW5hYmxlZCI6dHJ1ZSwicGF5cGFsIjp7ImRpc3BsYXlOYW1lIjoiQWNtZSBXaWRnZXRzLCBMdGQuIChTYW5kYm94KSIsImNsaWVudElkIjpudWxsLCJwcml2YWN5VXJsIjoiaHR0cDovL2V4YW1wbGUuY29tL3BwIiwidXNlckFncmVlbWVudFVybCI6Imh0dHA6Ly9leGFtcGxlLmNvbS90b3MiLCJiYXNlVXJsIjoiaHR0cHM6Ly9hc3NldHMuYnJhaW50cmVlZ2F0ZXdheS5jb20iLCJhc3NldHNVcmwiOiJodHRwczovL2NoZWNrb3V0LnBheXBhbC5jb20iLCJkaXJlY3RCYXNlVXJsIjpudWxsLCJhbGxvd0h0dHAiOnRydWUsImVudmlyb25tZW50Tm9OZXR3b3JrIjp0cnVlLCJlbnZpcm9ubWVudCI6Im9mZmxpbmUiLCJ1bnZldHRlZE1lcmNoYW50IjpmYWxzZSwiYnJhaW50cmVlQ2xpZW50SWQiOiJtYXN0ZXJjbGllbnQzIiwiYmlsbGluZ0FncmVlbWVudHNFbmFibGVkIjp0cnVlLCJtZXJjaGFudEFjY291bnRJZCI6ImFjbWV3aWRnZXRzbHRkc2FuZGJveCIsImN1cnJlbmN5SXNvQ29kZSI6IlVTRCJ9LCJtZXJjaGFudElkIjoiMzQ4cGs5Y2dmM2JneXcyYiIsInZlbm1vIjoib2ZmIn0=");
+        startActivityForResult(dropInRequest.getIntent(rootView.getContext()), REQUEST_CODE);
     }
 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_OK) {
-            PaymentConfirmation confirm = data.getParcelableExtra(
-                    PaymentActivity.EXTRA_RESULT_CONFIRMATION);
-            if (confirm != null) {
-                try {
-                    Log.i("sampleapp", confirm.toJSONObject().toString(4));
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                DropInResult result = data.getParcelableExtra(DropInResult.EXTRA_DROP_IN_RESULT);
+                PaymentMethodNonce nonce = result.getPaymentMethodNonce();
+                String stringNonce = nonce.getNonce();
+                Log.e("mylog", "Result: " + stringNonce);
 
-                    // TODO: send 'confirm' to your server for verification
+                String num = confirmationNumber();
+                Date date = Calendar.getInstance().getTime();
+                String month = date.toString().substring(4, 7);
+                PaymentHistoryModel payment = new PaymentHistoryModel(month, "$" + textView.getText().toString(), num);
+                db.upLoadRent(payment);
+                popUp(editText.getText().toString(), num);
 
-                } catch (JSONException e) {
-                    Log.e("sampleapp", "no confirmation data: ", e);
-                }
+                // use the result to update your UI and send the payment method nonce to your server
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                // the user canceled
+                Toast.makeText(rootView.getContext(), "Payment Canceled", Toast.LENGTH_SHORT).show();
+            } else {
+                // handle errors here, an exception may be available in
+                Exception error = (Exception) data.getSerializableExtra(DropInActivity.EXTRA_ERROR);
+                Log.e("Error", error.getMessage());
             }
-        } else if (resultCode == Activity.RESULT_CANCELED) {
-            Log.i("sampleapp", "The user canceled.");
-        } else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
-            Log.i("sampleapp", "Invalid payment / config set");
         }
     }
 
+    void postNonceToServer(String nonce) {
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.put("payment_method_nonce", nonce);
+        client.post("http://your-server/checkout", params,
+                new AsyncHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                    }
+                    // Your implementation here
+                }
+        );
+    }
+
+//    void vault() {
+//        DropInResult.fetchDropInResult(rootView.getContext(), clientToken, new DropInResult.DropInResultListener() {
+//            @Override
+//            public void onError(Exception exception) {
+//                // an error occurred
+//            }
+//
+//            @Override
+//            public void onResult(DropInResult result) {
+//                if (result.getPaymentMethodType() != null) {
+//                    // use the icon and name to show in your UI
+//                    int icon = result.getPaymentMethodType().getDrawable();
+//                    int name = result.getPaymentMethodType().getLocalizedName();
+//
+//                    PaymentMethodType paymentMethodType = result.getPaymentMethodType();
+//                    if (paymentMethodType == PaymentMethodType.ANDROID_PAY || paymentMethodType == PaymentMethodType.GOOGLE_PAYMENT) {
+//                        // The last payment method the user used was Android Pay or Google Pay.
+//                        // The Android/Google Pay flow will need to be performed by the
+//                        // user again at the time of checkout.
+//                    } else {
+//                        // Use the payment method show in your UI and charge the user
+//                        // at the time of checkout.
+//                        PaymentMethodNonce paymentMethod = result.getPaymentMethodNonce();
+//                    }
+//                } else {
+//                    // there was no existing payment method
+//                }
+//            }
+//        });
+//    }
+
+
     @Override
-    public void onDestroy(){
-        rootView.getContext().stopService(new Intent(rootView.getContext(), PayPalService.class));
+    public void onDestroy() {
         super.onDestroy();
     }
 }

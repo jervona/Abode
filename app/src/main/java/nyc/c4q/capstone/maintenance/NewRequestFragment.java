@@ -5,10 +5,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -54,6 +60,7 @@ public class NewRequestFragment extends Fragment {
     EditText userDescription;
     @BindView(R.id.image_request_rv)
     RecyclerView rv;
+    ActionBar actionBar;
 
 
     TenantDataBaseHelper db;
@@ -80,7 +87,8 @@ public class NewRequestFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_new_request, container, false);
         ButterKnife.bind(this, rootView);
         bundle = getArguments();
-
+        setHasOptionsMenu(true);
+        setupActionBar();
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(rootView.getContext(), R.array.location_options, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -105,20 +113,30 @@ public class NewRequestFragment extends Fragment {
         return rootView;
     }
 
-    public void getTixRequestData() {
-        if (bundle != null) {
-            String tixData =bundle.getString("Tix_data");
-            Gson gson = new Gson();
-            Tickets data = gson.fromJson(tixData, Tickets.class);
-            subjectTitle.setText(data.getTitle());
-            userDescription.setText(data.getDescription());
-//            if (!data.getImageURl().isEmpty()) {
-//                Log.e("Size",data.getImageURl()+"");
-//                rv.setAdapter(new ImageAdapter(data.getImageURl()));
-//            }
 
+    public void setupActionBar() {
+        try {
+            actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+            }
+        } catch (Exception e) {
+            Log.e("testibg,", e.getMessage());
         }
+    }
 
+    @OnClick(R.id.submit_request_button)
+    public void newTicketWithPhones() {
+        long time = Calendar.getInstance().getTimeInMillis();
+        Tickets tickets = new Tickets("1"
+                , time
+                , location
+                , db.getUser().getAPT()
+                , subjectTitle.getText().toString()
+                , userDescription.getText().toString()
+                , "Pending");
+        db.createNewTicket(tickets);
+        getActivity().onBackPressed();
     }
 
     @OnClick(R.id.add_photo_button)
@@ -129,6 +147,24 @@ public class NewRequestFragment extends Fragment {
         startActivityForResult(intent, REQUEST_IMAGE);
     }
 
+    public void getTixRequestData() {
+        if (bundle != null) {
+            String tixData = bundle.getString("Tix_data");
+            Gson gson = new Gson();
+            Tickets data = gson.fromJson(tixData, Tickets.class);
+            subjectTitle.setText(data.getTitle());
+            userDescription.setText(data.getDescription());
+            if (data.getImageURl() != null) {
+                ArrayList<String> storage = new ArrayList<>();
+                storage.addAll(data.getImageURl());
+                Log.e("data", storage.size() + "");
+                rv.setAdapter(new ImageAdapter(storage));
+            }
+
+        }
+
+    }
+
     public void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(rootView.getContext().getPackageManager()) != null) {
@@ -136,6 +172,16 @@ public class NewRequestFragment extends Fragment {
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                getActivity().onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -154,19 +200,10 @@ public class NewRequestFragment extends Fragment {
         }
     }
 
-    @OnClick(R.id.submit_request_button)
-    public void newTicketWithPhones() {
-        long time = Calendar.getInstance().getTimeInMillis();
-        Tickets tickets = new Tickets("1"
-                , time
-                , location
-                , db.getUser().getAPT()
-                , subjectTitle.getText().toString()
-                , userDescription.getText().toString()
-                , "Pending");
-        db.createNewTicket(tickets);
-        getActivity().onBackPressed();
+
+    @Override
+    public void onDestroy() {
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        super.onDestroy();
     }
-
-
 }
