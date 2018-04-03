@@ -4,14 +4,14 @@ package nyc.c4q.capstone.dash_controller;
  * Created by D on 3/31/18.
  */
 
-public class Dash_Rv_Model {
+public class DashRvModel {
 
     private int resource_icon;
     private String resource_name;
     private String url;
 
 
-    public Dash_Rv_Model(int resource_icon, String resource_name, String url) {
+    public DashRvModel(int resource_icon, String resource_name, String url) {
         this.resource_icon = resource_icon;
         this.resource_name = resource_name;
         this.url = url;

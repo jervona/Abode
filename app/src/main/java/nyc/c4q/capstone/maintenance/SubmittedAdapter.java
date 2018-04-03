@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nyc.c4q.capstone.R;
-import nyc.c4q.capstone.TicketsDiffCallback;
+import nyc.c4q.capstone.diffutilies.TicketsDiffCallback;
 import nyc.c4q.capstone.datamodels.Tickets;
 
 /**

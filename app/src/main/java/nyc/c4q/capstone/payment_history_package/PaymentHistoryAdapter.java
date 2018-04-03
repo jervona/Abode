@@ -9,11 +9,9 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import nyc.c4q.capstone.PaymentDiffCallback;
+import nyc.c4q.capstone.diffutilies.PaymentDiffCallback;
 import nyc.c4q.capstone.R;
-import nyc.c4q.capstone.TicketsDiffCallback;
 import nyc.c4q.capstone.datamodels.PaymentHistoryModel;
-import nyc.c4q.capstone.datamodels.Tickets;
 
 /**
  * Created by D on 3/18/18.

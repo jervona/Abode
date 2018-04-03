@@ -6,27 +6,19 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,12 +26,10 @@ import java.util.List;
 import nyc.c4q.capstone.MainActivity;
 import nyc.c4q.capstone.R;
 import nyc.c4q.capstone.dash_controller.DashAdapter;
-import nyc.c4q.capstone.dash_controller.Dash_Rv_Model;
+import nyc.c4q.capstone.dash_controller.DashRvModel;
 import nyc.c4q.capstone.database.TenantDataBaseHelper;
 import nyc.c4q.capstone.datamodels.Tickets;
 import nyc.c4q.capstone.datamodels.UserApartmentInfo;
-import nyc.c4q.capstone.maintenance.NewRequestFragment;
-import nyc.c4q.capstone.maintenance.SubmittedAdapter;
 import nyc.c4q.capstone.signupactivites.SignInActivity;
 
 
@@ -66,19 +56,7 @@ public class DashBoardFragment extends Fragment {
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_dash_board, container, false);
         setHasOptionsMenu(true);
-
-        RecyclerView recyclerView = rootView.findViewById(R.id.my_recycler_view);
-        List<Dash_Rv_Model> models = new ArrayList<>();
-        models.add(new Dash_Rv_Model(R.drawable.recycle2,"Recycling Info","http://www1.nyc.gov/site/hpd/renters/harassment.page"));
-        models.add(new Dash_Rv_Model(R.drawable.no_smoking,"NYC Smoking Resource","http://www1.nyc.gov/nyc-resources/service/2493/smoking"));
-        models.add(new Dash_Rv_Model(R.drawable.housingcourtanswerslogo,"Housing Court Questions","http://housingcourtanswers.org/"));
-        models.add(new Dash_Rv_Model(R.drawable.nyc_logo,"NYC Rent Increase Info","http://www1.nyc.gov/nyc-resources/service/2069/new-york-city-rent-increase"));
-        models.add(new Dash_Rv_Model(R.drawable.nyc_logo,"Are you Being Harassedd","http://www1.nyc.gov/site/hpd/renters/harassment.page"));
-
-        DashAdapter dashAdapter = new DashAdapter(models);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
-        recyclerView.setAdapter(dashAdapter);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        resources();
 
 
         return rootView;
@@ -89,7 +67,6 @@ public class DashBoardFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         db = TenantDataBaseHelper.getInstance(FirebaseDatabase.getInstance());
-
 
     }
 
@@ -115,7 +92,21 @@ public class DashBoardFragment extends Fragment {
     }
 
     public static void giveStuff(List<Tickets> messages, UserApartmentInfo user) {
-        Log.e("User",user.getAPT());
-        Log.e("mess",messages.size()+"");
+
+    }
+
+
+    public void resources() {
+        RecyclerView recyclerView = rootView.findViewById(R.id.my_recycler_view);
+        List<DashRvModel> models = new ArrayList<>();
+        models.add(new DashRvModel(R.drawable.recycle2, "Recycling Info", "http://www1.nyc.gov/site/hpd/renters/harassment.page"));
+        models.add(new DashRvModel(R.drawable.no_smoking, "NYC Smoking Resource", "http://www1.nyc.gov/nyc-resources/service/2493/smoking"));
+        models.add(new DashRvModel(R.drawable.housingcourtanswerslogo, "Housing Court Questions", "http://housingcourtanswers.org/"));
+        models.add(new DashRvModel(R.drawable.nyc_logo, "NYC Rent Increase Info", "http://www1.nyc.gov/nyc-resources/service/2069/new-york-city-rent-increase"));
+        models.add(new DashRvModel(R.drawable.nyc_logo, "Are you Being Harassedd", "http://www1.nyc.gov/site/hpd/renters/harassment.page"));
+        DashAdapter dashAdapter = new DashAdapter(models);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setAdapter(dashAdapter);
+        recyclerView.setLayoutManager(linearLayoutManager);
     }
 }
