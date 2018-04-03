@@ -7,11 +7,16 @@
     android:layout_height="wrap_content"
     card_view:cardCornerRadius="@dimen/cardview_default_radius"
     card_view:cardUseCompatPadding="true"
-    card_view:layout_constraintRight_toRightOf="parent">
+    card_view:layout_constraintRight_toRightOf="parent"
+
+    >
 
     <RelativeLayout
+        android:padding="20dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        >
 
         <TextView
             android:id="@+id/textView"

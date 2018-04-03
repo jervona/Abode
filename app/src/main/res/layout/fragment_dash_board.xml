@@ -6,7 +6,8 @@
     android:gravity="center"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:context="nyc.c4q.capstone.BottomNavFragment.DashBoardFragment">
+    tools:context="nyc.c4q.capstone.BottomNavFragment.DashBoardFragment"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +19,7 @@
         <android.support.v7.widget.CardView
             android:layout_width="340dp"
             android:layout_height="150dp"
-            android:layout_margin="10dp"
+            android:layout_margin="4dp"
             android:clickable="true">
 
 
@@ -31,8 +32,8 @@
                 <ImageView
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:background="@drawable/payment"
-                    android:padding="10dp" />
+                    android:background="@drawable/paydash"
+                    android:layout_margin="7dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -51,7 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:padding="5dp"
+
                     android:text="Current Balance Due: $1,200 "
                     android:textColor="@android:color/darker_gray" />
 
@@ -79,7 +80,7 @@
             android:id="@+id/maintenance_card"
             android:layout_width="160dp"
             android:layout_height="190dp"
-            android:layout_margin="10dp"
+            android:layout_margin="4dp"
             android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground">
 
@@ -92,7 +93,7 @@
                 <ImageView
                     android:layout_width="64dp"
                     android:layout_height="64dp"
-                    android:background="@drawable/maintenance"
+                    android:background="@drawable/maintdash"
                     android:padding="10dp" />
 
                 <TextView
@@ -136,7 +137,7 @@
                 <ImageView
                     android:layout_width="64dp"
                     android:layout_height="64dp"
-                    android:background="@drawable/docs"
+                    android:background="@drawable/docdash"
                     android:padding="10dp" />
 
                 <TextView
@@ -177,9 +178,9 @@
         android:orientation="horizontal">
 
         <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="190dp"
-            android:layout_margin="10dp"
+            android:layout_width="340dp"
+            android:layout_height="140dp"
+            android:layout_margin="4dp"
             android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground">
 
@@ -192,7 +193,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Building Resources"
+                    android:text="@string/building_resources"
                     android:textStyle="bold" />
 
             </LinearLayout>

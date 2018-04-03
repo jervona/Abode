@@ -157,7 +157,7 @@ public class PaymentFragment extends Fragment {
     public void popUp(String s, String num) {
         Dialog dialog = new Dialog(rootView.getContext());
         dialog.setContentView(R.layout.fragment_pay);
-        dialog.setTitle("Your Payment Is");
+        dialog.setTitle("    Payment Confirmation");
         TextView confirmation = (TextView) dialog.findViewById(R.id.confirmation);
         TextView amount = (TextView) dialog.findViewById(R.id.amount_paid);
         confirmation.setText(num);

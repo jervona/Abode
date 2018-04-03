@@ -13,7 +13,7 @@
     <string name="confirmation">Confirmation</string>
     <string name="amount_paid">Amount Paid</string>
     <string name="payment_history">Payment History</string>
-    <string name="resources">Resources</string>
+    <string name="building_resources">Building Resources</string>
 
     <string-array name="location_options">
         <item>Bathroom</item>
