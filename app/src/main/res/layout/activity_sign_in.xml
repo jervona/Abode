@@ -14,14 +14,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/eastharlem01">
+        android:background="@drawable/central2">
 
-        <!--<ImageView-->
-        <!--android:scaleType="centerCrop"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:background="@drawable/finallogo" />-->
+        <ImageView
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="110dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/finallogo"
+            />
 
     </LinearLayout>
 
@@ -35,14 +36,14 @@
         android:background="@color/transparent"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:text="@string/sign_in"
-            android:textSize="30sp"
-            android:textStyle="bold" />
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:text="@string/sign_in"-->
+            <!--android:textSize="30sp"-->
+            <!--android:textStyle="bold" />-->
 
         <Button
             android:id="@+id/login_button"
@@ -51,7 +52,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="360dp"
             android:text="@string/log_in" />
 
         <Button
@@ -64,13 +65,6 @@
             android:layout_marginTop="5dp"
             android:text="@string/sign_up" />
 
-        <!--<com.google.android.gms.common.SignInButton-->
-        <!--android:id="@+id/google_sign_in_button"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="center_horizontal"-->
-        <!--android:layout_marginTop="10dp"-->
-        <!--android:visibility="visible" />-->
 
     </LinearLayout>
 </FrameLayout>

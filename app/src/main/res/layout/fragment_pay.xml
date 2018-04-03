@@ -12,7 +12,7 @@
         android:layout_weight="1"
         android:elevation="@dimen/cardview_default_radius"
         android:padding="@dimen/cardview_default_radius"
-        app:cardElevation="2dp"
+        app:cardElevation="5dp"
         app:cardMaxElevation="2dp"
         app:cardUseCompatPadding="true">
 
@@ -39,10 +39,16 @@
                 android:textAlignment="center"
                 android:textSize="40sp" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="10dp"
+                android:background="@color/lightgray" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/thank_you"
+                android:text="Thank you for your payment"
                 android:gravity="center"
                 android:textAlignment="center"
                 android:textSize="40sp" />
