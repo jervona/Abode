@@ -16,9 +16,9 @@ import nyc.c4q.capstone.R;
 public class DashAdapter extends RecyclerView.Adapter<DashHolder> {
 
 
-    List<Dash_Rv_Model> dash_rv_modelList;
+    private List<DashRvModel> dash_rv_modelList;
 
-    public DashAdapter(List<Dash_Rv_Model> dash_rv_modelList) {
+    public DashAdapter(List<DashRvModel> dash_rv_modelList) {
         this.dash_rv_modelList = dash_rv_modelList;
     }
 
@@ -30,7 +30,7 @@ public class DashAdapter extends RecyclerView.Adapter<DashHolder> {
 
     @Override
     public void onBindViewHolder(DashHolder holder, int position) {
-        Dash_Rv_Model dash_rv_model = dash_rv_modelList.get(position);
+        DashRvModel dash_rv_model = dash_rv_modelList.get(position);
         holder.onBind(dash_rv_model);
 
     }

@@ -14,6 +14,15 @@
     <string name="amount_paid">Amount Paid</string>
     <string name="payment_history">Payment History</string>
     <string name="building_resources">Building Resources</string>
+    <string name="resources">Resources</string>
+    <string name="paypal_button">Pay with PayPal</string>
+    <string name="current_balance_due_1_200">Current Balance Due: $1,200</string>
+    <string name="click_here_for_lease_agreement">Click here for lease agreement</string>
+    <string name="documents">Documents</string>
+    <string name="click_here_to_submit_a_request">Click here to submit a request</string>
+    <string name="maintenance_requests">Maintenance Requests</string>
+    <string name="previous_payment_received_1_200">Previous payment received:$1,200</string>
+    <string name="payments">Payments</string>
 
     <string-array name="location_options">
         <item>Bathroom</item>

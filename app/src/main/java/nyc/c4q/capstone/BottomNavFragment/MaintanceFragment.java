@@ -31,6 +31,7 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -79,7 +80,6 @@ public class MaintanceFragment extends Fragment {
         setHasOptionsMenu(true);
         ButterKnife.bind(this, rootView);
         layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setReverseLayout(true);
         recyclerView.setLayoutManager(layoutManager);
         return rootView;
     }
@@ -121,6 +121,7 @@ public class MaintanceFragment extends Fragment {
                 GenericTypeIndicator<List<Tickets>> t = new GenericTypeIndicator<List<Tickets>>() {};
                 ticketsList = dataSnapshot.getValue(t);
                 if (ticketsList != null) {
+                    Collections.reverse(ticketsList);
                     adapter.updateTicketListItems(ticketsList);
                 }
             }

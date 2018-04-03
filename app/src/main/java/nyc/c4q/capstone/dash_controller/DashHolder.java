@@ -2,20 +2,13 @@ package nyc.c4q.capstone.dash_controller;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import nyc.c4q.capstone.R;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by D on 3/31/18.
@@ -26,7 +19,7 @@ public class DashHolder extends RecyclerView.ViewHolder {
     private ImageView resource_pic;
     private TextView resource_text;
     private Context context;
-    private Dash_Rv_Model dash_rv_model;
+    private DashRvModel dash_rv_model;
 
     public DashHolder(View itemView) {
         super(itemView);
@@ -35,7 +28,7 @@ public class DashHolder extends RecyclerView.ViewHolder {
         context = itemView.getContext();
     }
 
-    public void onBind(Dash_Rv_Model data) {
+    public void onBind(DashRvModel data) {
         this.dash_rv_model = data;
         resource_pic.setImageResource(dash_rv_model.getResource_icon());
         resource_text.setText(dash_rv_model.getResource_name());

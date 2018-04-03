@@ -1,4 +1,4 @@
-package nyc.c4q.capstone;
+package nyc.c4q.capstone.diffutilies;
 
 import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
