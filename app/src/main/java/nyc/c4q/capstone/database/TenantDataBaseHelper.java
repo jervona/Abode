@@ -24,9 +24,10 @@ import java.util.List;
 
 import nyc.c4q.capstone.BottomNavFragment.DashBoardFragment;
 import nyc.c4q.capstone.BottomNavFragment.PaymentFragment;
+import nyc.c4q.capstone.MainActivity;
 import nyc.c4q.capstone.datamodels.PaymentHistoryModel;
 import nyc.c4q.capstone.datamodels.Tickets;
-import nyc.c4q.capstone.datamodels.UserApartmentInfo;
+import nyc.c4q.capstone.datamodels.UserInfo;
 
 import static android.content.ContentValues.TAG;
 
@@ -43,7 +44,7 @@ public class TenantDataBaseHelper {
     private String propertiesData = "Properties";
     private String userData = "user";
 
-    private UserApartmentInfo user;
+    private UserInfo user;
     private List<Tickets> ticketsList;
     private List<PaymentHistoryModel> paymentsList;
 
@@ -73,7 +74,7 @@ public class TenantDataBaseHelper {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                user = dataSnapshot.getValue(UserApartmentInfo.class);
+                user = dataSnapshot.getValue(UserInfo.class);
                 assert user != null;
                 String id = String.valueOf(user.getBuilding_id());
                 getMaintenance(id, user.getAPT());
@@ -94,7 +95,6 @@ public class TenantDataBaseHelper {
                 GenericTypeIndicator<List<Tickets>> data = new GenericTypeIndicator<List<Tickets>>() {};
                 ticketsList = dataSnapshot.getValue(data);
                 DashBoardFragment.giveStuff(ticketsList,user);
-                PaymentFragment.sendUser(user.getAPT());
                 getPayments(user.getAPT());
             }
 
@@ -237,7 +237,7 @@ public class TenantDataBaseHelper {
     }
 
 
-    public UserApartmentInfo getUser() {
+    public UserInfo getUser() {
         return user;
     }
 

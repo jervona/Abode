@@ -23,6 +23,7 @@
     <string name="maintenance_requests">Maintenance Requests</string>
     <string name="previous_payment_received_1_200">Previous payment received:$1,200</string>
     <string name="payments">Payments</string>
+    <string name="subject_title">Subject Title</string>
 
     <string-array name="location_options">
         <item>Bathroom</item>
