@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -48,6 +49,8 @@ public class SubmittedViewHolder extends RecyclerView.ViewHolder {
     Button status;
     @BindView(R.id.card_view)
     CardView card;
+    @BindView(R.id.user_priority)
+    TextView userPriority;
 
 
     private FirebaseStorage storage;
@@ -70,6 +73,19 @@ public class SubmittedViewHolder extends RecyclerView.ViewHolder {
         title.setText(tix.getTitle());
         description.setText(tix.getDescription());
         date.setText(timeSTamp);
+
+        switch (tix.getPriority()){
+            case 0:
+                userPriority.setText(R.string.none);
+                break;
+            case 1:
+                userPriority.setText(R.string.urgent);
+                break;
+            case 2:
+                userPriority.setText(R.string.moderate);
+                break;
+        }
+
         switch (tix.getStatus()) {
             case "Pending":
                 status.setBackgroundColor(Color.YELLOW);
