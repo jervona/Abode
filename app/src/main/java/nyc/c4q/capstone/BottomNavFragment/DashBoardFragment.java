@@ -46,6 +46,7 @@ public class DashBoardFragment extends Fragment {
     int position = 0;
 
 
+
     public DashBoardFragment() {
         // Required empty public constructor
     }
@@ -60,6 +61,8 @@ public class DashBoardFragment extends Fragment {
 
 
         return rootView;
+
+
     }
 
 
@@ -99,9 +102,9 @@ public class DashBoardFragment extends Fragment {
     public void resources() {
         RecyclerView recyclerView = rootView.findViewById(R.id.my_recycler_view);
         List<DashRvModel> models = new ArrayList<>();
-        models.add(new DashRvModel(R.drawable.recycle2, "Recycling Info", "http://www1.nyc.gov/site/hpd/renters/harassment.page"));
-        models.add(new DashRvModel(R.drawable.no_smoking, "NYC Smoking Resource", "http://www1.nyc.gov/nyc-resources/service/2493/smoking"));
-        models.add(new DashRvModel(R.drawable.housingcourtanswerslogo, "Housing Court Questions", "http://housingcourtanswers.org/"));
+        models.add(new DashRvModel(R.drawable.recycling, "Recycling Info", "http://www1.nyc.gov/site/hpd/renters/harassment.page"));
+        models.add(new DashRvModel(R.drawable.smoke, "NYC Smoking Resource", "http://www1.nyc.gov/nyc-resources/service/2493/smoking"));
+        models.add(new DashRvModel(R.drawable.judge, "Housing Court Questions", "http://housingcourtanswers.org/"));
         models.add(new DashRvModel(R.drawable.nyc_logo, "NYC Rent Increase Info", "http://www1.nyc.gov/nyc-resources/service/2069/new-york-city-rent-increase"));
         models.add(new DashRvModel(R.drawable.nyc_logo, "Are you Being Harassedd", "http://www1.nyc.gov/site/hpd/renters/harassment.page"));
         DashAdapter dashAdapter = new DashAdapter(models);
@@ -109,4 +112,6 @@ public class DashBoardFragment extends Fragment {
         recyclerView.setAdapter(dashAdapter);
         recyclerView.setLayoutManager(linearLayoutManager);
     }
+
+
 }

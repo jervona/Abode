@@ -115,6 +115,7 @@ public class MaintanceFragment extends Fragment {
     }
 
     public void updateList() {
+        Log.e(TAG, "updateList: "+String.valueOf(db.getUser().getBuilding_id()));
         data.getReference().child("Maintenance").child(String.valueOf(db.getUser().getBuilding_id())).child(db.getUser().getAPT()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -128,6 +129,7 @@ public class MaintanceFragment extends Fragment {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "onCancelled: " + databaseError.getDetails());
             }
         });
     }
