@@ -19,19 +19,22 @@ import nyc.c4q.capstone.BottomNavFragment.PaymentFragment;
 public class SectionsPageAdapter extends FragmentPagerAdapter {
     private final List<Fragment> mFragmentList = new ArrayList<>();
 
-    public void initTenanetBottomNav(){
-        mFragmentList.add(new DashBoardFragment());
-        mFragmentList.add(new PaymentFragment());
-        mFragmentList.add(new MaintanceFragment());
-        mFragmentList.add(new DocsFragment());
+    public void initBottomNav(String key){
+        switch (key){
+            case "Tenant":
+                mFragmentList.add(new DashBoardFragment());
+                mFragmentList.add(new PaymentFragment());
+                mFragmentList.add(new MaintanceFragment());
+                break;
+            case "PM":
+                mFragmentList.add(new DashBoardFragment());
+                mFragmentList.add(new PaymentFragment());
+                mFragmentList.add(new MaintanceFragment());
+                mFragmentList.add(new DocsFragment());
+                break;
+        }
     }
 
-    public void initLPMBottomNav(){
-        mFragmentList.add(new DashBoardFragment());
-        mFragmentList.add(new PaymentFragment());
-        mFragmentList.add(new MaintanceFragment());
-        mFragmentList.add(new DocsFragment());
-    }
 
     public SectionsPageAdapter(FragmentManager fm) {
         super(fm);

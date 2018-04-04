@@ -29,7 +29,7 @@ import nyc.c4q.capstone.dash_controller.DashAdapter;
 import nyc.c4q.capstone.dash_controller.DashRvModel;
 import nyc.c4q.capstone.database.TenantDataBaseHelper;
 import nyc.c4q.capstone.datamodels.Tickets;
-import nyc.c4q.capstone.datamodels.UserApartmentInfo;
+import nyc.c4q.capstone.datamodels.UserInfo;
 import nyc.c4q.capstone.signupactivites.SignInActivity;
 
 
@@ -42,7 +42,7 @@ public class DashBoardFragment extends Fragment {
     View rootView;
     TenantDataBaseHelper db;
     LinearLayout clickable;
-    UserApartmentInfo user;
+    UserInfo user;
     int position = 0;
 
 
@@ -94,7 +94,7 @@ public class DashBoardFragment extends Fragment {
         }
     }
 
-    public static void giveStuff(List<Tickets> messages, UserApartmentInfo user) {
+    public static void giveStuff(List<Tickets> messages, UserInfo user) {
 
     }
 

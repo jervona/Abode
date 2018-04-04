@@ -12,6 +12,7 @@ import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import nyc.c4q.capstone.R;
@@ -33,9 +34,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageHolder>
         this.uriList = uriList;
     }
 
-//    public ImageAdapter(List<String> repairPhoto) {
-//        this.repairPhoto = repairPhoto;
-//    }
+    public ImageAdapter(ArrayList<String> repairPhoto) {
+        this.repairPhoto = repairPhoto;
+    }
 
     @Override
     public ImageHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -61,10 +62,12 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageHolder>
         notifyDataSetChanged();
     }
 
-
     @Override
     public int getItemCount() {
-        return uriList.size();
+        if (repairPhoto != null) {
+            return repairPhoto.size();
+        }
+         return uriList.size();
     }
 
     public class ImageHolder extends RecyclerView.ViewHolder {
