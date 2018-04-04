@@ -17,9 +17,10 @@ public class Tickets {
     private String status;
     List<String> imageURl;
     private String title;
+    private int priority;
 
 
-    public Tickets(String ticket_number, long time, String location, String apt, String title,String description, String status){
+    public Tickets(String ticket_number, long time, String location, String apt, String title,String description, String status, int priority){
        this.title=title;
         this.ticket_number = ticket_number;
         this.time = time;
@@ -27,6 +28,7 @@ public class Tickets {
         this.apt = apt;
         this.description = description;
         this.status = status;
+        this.priority = priority;
     }
 
     public Tickets() {
@@ -66,5 +68,9 @@ public class Tickets {
 
     public void setImageURl(List<String> imageURl) {
         this.imageURl = imageURl;
+    }
+
+    public int getPriority() {
+        return priority;
     }
 }

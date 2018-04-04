@@ -8,10 +8,6 @@
     android:orientation="vertical"
     tools:context="nyc.c4q.capstone.maintenance.NewRequestFragment">
 
-
-
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,28 +27,51 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Priority Level:" />
+            android:text="@string/priority_level" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal">-->
 
-            <android.support.v7.widget.AppCompatCheckBox
-                android:id="@+id/urgent_checkbox"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="Urgent"/>
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:id="@+id/radio_priority"
+                android:orientation="horizontal">
 
-            <android.support.v7.widget.AppCompatCheckBox
-                android:id="@+id/moderate_checkbox"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="Moderate"/>
+                <RadioButton
+                    android:id="@+id/radio_urgent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/urgent"/>
 
-        </LinearLayout>
+                <RadioButton
+                    android:id="@+id/radio_moderate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/moderate"/>
+
+            </RadioGroup>
+
+            <!--<android.support.v7.widget.AppCompatCheckBox-->
+                <!--android:id="@+id/urgent_checkbox"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="Urgent"/>-->
+
+            <!--<android.support.v7.widget.AppCompatCheckBox-->
+                <!--android:id="@+id/moderate_checkbox"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="Moderate"/>-->
+
+        <!--</LinearLayout>-->
 
         <LinearLayout
             android:layout_width="match_parent"

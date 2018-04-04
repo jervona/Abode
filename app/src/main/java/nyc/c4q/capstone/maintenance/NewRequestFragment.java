@@ -21,8 +21,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
@@ -50,10 +53,12 @@ public class NewRequestFragment extends Fragment {
 
     @BindView(R.id.subject_title_view)
     EditText subjectTitle;
-    @BindView(R.id.urgent_checkbox)
-    CheckBox urgentCheckBox;
-    @BindView(R.id.moderate_checkbox)
-    CheckBox moderateCheckBox;
+    @BindView((R.id.radio_priority))
+    RadioGroup priorityOptions;
+    @BindView(R.id.radio_urgent)
+    RadioButton urgentoption;
+    @BindView(R.id.radio_moderate)
+    RadioButton moderateOption;
     @BindView(R.id.location_spinner)
     Spinner locationSpinner;
     @BindView(R.id.user_description_view)
@@ -61,6 +66,7 @@ public class NewRequestFragment extends Fragment {
     @BindView(R.id.image_request_rv)
     RecyclerView rv;
     ActionBar actionBar;
+    int userPriority;
 
 
     TenantDataBaseHelper db;
@@ -96,6 +102,19 @@ public class NewRequestFragment extends Fragment {
         db = TenantDataBaseHelper.getInstance(FirebaseDatabase.getInstance());
         rv.setLayoutManager(new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.HORIZONTAL, false));
 
+        priorityOptions.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checked) {
+              switch (checked){
+                  case R.id.radio_urgent:
+                      userPriority = 1;
+                      break;
+                      case R.id.radio_moderate:
+                      userPriority = 2;
+                      break;
+              }
+            }
+        });
 
         locationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -112,7 +131,6 @@ public class NewRequestFragment extends Fragment {
 
         return rootView;
     }
-
 
     public void setupActionBar() {
         try {
@@ -134,7 +152,8 @@ public class NewRequestFragment extends Fragment {
                 , db.getUser().getAPT()
                 , subjectTitle.getText().toString()
                 , userDescription.getText().toString()
-                , "Pending");
+                , "Pending"
+                , userPriority);
         db.createNewTicket(tickets);
         getActivity().onBackPressed();
     }
@@ -154,6 +173,16 @@ public class NewRequestFragment extends Fragment {
             Tickets data = gson.fromJson(tixData, Tickets.class);
             subjectTitle.setText(data.getTitle());
             userDescription.setText(data.getDescription());
+
+            switch (data.getPriority()) {
+                case 1:
+                    urgentoption.setChecked(true);
+                    break;
+                case 2:
+                    moderateOption.setChecked(true);
+                    break;
+            }
+
             if (data.getImageURl() != null) {
                 ArrayList<String> storage = new ArrayList<>();
                 storage.addAll(data.getImageURl());
@@ -199,7 +228,6 @@ public class NewRequestFragment extends Fragment {
             rv.setAdapter(new ImageAdapter(hello));
         }
     }
-
 
     @Override
     public void onDestroy() {
