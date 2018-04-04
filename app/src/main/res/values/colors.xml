@@ -7,4 +7,5 @@
     <color name="hello">#939393</color>
     <color name="white">#ffff</color>
     <color name="transparent">#00000000</color>
+    <color name="colorPrimaryYellow">#FFC107</color>
 </resources>

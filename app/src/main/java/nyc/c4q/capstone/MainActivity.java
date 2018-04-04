@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity
     public static GoogleApiClient googleApiClient;
 
 
+
     private static final int NOTIFICATION_ID = 555;
     String NOTIFICATION_CHANNEL = "C4Q Notifications";
     SectionsPageAdapter adapter;

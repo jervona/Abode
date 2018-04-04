@@ -2,13 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:background="#fcfcfc"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="10dp"
     tools:context="nyc.c4q.capstone.BottomNavFragment.DashBoardFragment">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
@@ -16,10 +17,14 @@
         android:orientation="horizontal">
 
         <android.support.v7.widget.CardView
+            card_view:cardElevation="4dp"
             android:layout_width="340dp"
             android:layout_height="150dp"
             android:layout_margin="4dp"
-            android:clickable="true">
+            android:focusableInTouchMode="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground">
 
 
             <LinearLayout
@@ -28,18 +33,17 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_margin="7dp"
-                    android:background="@drawable/paydash" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/payments"
-                    android:textStyle="bold" />
+                    android:text="Payments"
+                    android:textStyle="bold"
+                    />
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/paydash" />
 
                 <View
                     android:layout_width="match_parent"
@@ -51,21 +55,28 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/current_balance_due_1_200"
-                    android:textColor="@android:color/darker_gray" />
+                    android:text="Current Balance Due May 1st: $1,200"
+                    android:textColor="#1DBFA1"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:text="@string/previous_payment_received_1_200"
+                    android:text="Previous Payment Received April 1st: $1,200"
                     android:textColor="@android:color/darker_gray" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pay Now"
+                    android:textColor="@color/colorPrimaryYellow"/>
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -78,28 +89,33 @@
             android:id="@+id/maintenance_card"
             android:layout_width="160dp"
             android:layout_height="190dp"
-            android:layout_margin="4dp"
+            android:layout_margin="10dp"
+            card_view:cardElevation="4dp"
+            android:focusableInTouchMode="true"
             android:clickable="true"
+            android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
                 android:orientation="vertical">
 
+                <TextView
+                    android:layout_margin="4dp"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/maintenance_requests"
+                    android:textStyle="bold" />
+
                 <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
+                    android:layout_gravity="center"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:background="@drawable/maintdash"
                     android:padding="10dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/maintenance_requests"
-                    android:textStyle="bold" />
 
                 <View
                     android:layout_width="match_parent"
@@ -107,43 +123,65 @@
                     android:layout_margin="10dp"
                     android:background="@color/lightgray" />
 
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:gravity="center"-->
+                    <!--android:padding="5dp"-->
+                    <!--android:text="@string/click_here_to_submit_a_request"-->
+                    <!--android:textColor="@android:color/darker_gray" />-->
+
                 <TextView
+
+                    android:layout_margin="8dp"
+                    android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:text="@string/click_here_to_submit_a_request"
-                    android:textColor="@android:color/darker_gray" />
+                    android:text="Pending Tickets"
+                    android:textColor="@android:color/darker_gray"/>
+
+                <TextView
+
+                    android:layout_margin="8dp"
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Scheduled Tickets"
+                    android:textColor="@android:color/darker_gray"/>
 
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
 
         <android.support.v7.widget.CardView
+            card_view:cardElevation="4dp"
             android:layout_width="160dp"
             android:layout_height="190dp"
             android:layout_margin="10dp"
+            android:focusableInTouchMode="true"
             android:clickable="true"
+            android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:background="@drawable/docdash"
-                    android:padding="10dp" />
-
                 <TextView
+                    android:layout_margin="4dp"
+                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:text="@string/documents"
                     android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/docdash"
+                    android:padding="10dp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -163,40 +201,277 @@
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/building_resources"
-        android:textStyle="bold" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:gravity="center">
 
-        <android.support.v7.widget.CardView
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:gravity="center"-->
+        <!--android:text="@string/building_resources"-->
+        <!--android:textStyle="bold" />-->
+
+
+    <android.support.v7.widget.CardView
             android:layout_width="340dp"
             android:layout_height="140dp"
             android:layout_margin="4dp"
             android:clickable="true"
+            card_view:cardElevation="4dp"
             android:foreground="?android:attr/selectableItemBackground">
 
-            <android.support.v7.widget.RecyclerView
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center">
+
+
+        <TextView
+            android:layout_marginTop="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/building_resources"
+            android:textStyle="bold" />
+
+</LinearLayout>
+
+
+        <android.support.v7.widget.RecyclerView
                 android:id="@+id/my_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:scrollbars="horizontal" />
-        </android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>
 
     </LinearLayout>
+
+
 
 
 </LinearLayout>
 
 
 
+
+
+
+
+
+
+
+
+
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--xmlns:tools="http://schemas.android.com/tools"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="match_parent"-->
+<!--android:background="#fcfcfc"-->
+<!--android:gravity="center"-->
+<!--android:orientation="vertical"-->
+<!--android:padding="10dp"-->
+<!--tools:context="nyc.c4q.capstone.BottomNavFragment.DashBoardFragment">-->
+
+<!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:clipToPadding="false"-->
+    <!--android:gravity="center"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<android.support.v7.widget.CardView-->
+        <!--android:layout_width="340dp"-->
+        <!--android:layout_height="150dp"-->
+        <!--android:layout_margin="4dp"-->
+        <!--android:focusableInTouchMode="true"-->
+        <!--android:clickable="true"-->
+        <!--android:focusable="true"-->
+        <!--android:foreground="?android:attr/selectableItemBackground">-->
+
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="vertical">-->
+
+            <!--<ImageView-->
+                <!--android:layout_width="60dp"-->
+                <!--android:layout_height="60dp"-->
+                <!--android:layout_margin="7dp"-->
+                <!--android:background="@drawable/paydash" />-->
+
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:text="@string/payments"-->
+                <!--android:textStyle="bold" />-->
+
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:layout_margin="10dp"-->
+                <!--android:background="@color/lightgray" />-->
+
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center"-->
+                <!--android:text="@string/current_balance_due_1_200"-->
+                <!--android:textColor="@android:color/darker_gray" />-->
+
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center"-->
+                <!--android:padding="5dp"-->
+                <!--android:text="@string/previous_payment_received_1_200"-->
+                <!--android:textColor="@android:color/darker_gray" />-->
+        <!--</LinearLayout>-->
+    <!--</android.support.v7.widget.CardView>-->
+
+
+<!--</LinearLayout>-->
+
+<!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:clipToPadding="false"-->
+    <!--android:gravity="center"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<android.support.v7.widget.CardView-->
+        <!--android:id="@+id/maintenance_card"-->
+        <!--android:layout_width="160dp"-->
+        <!--android:layout_height="190dp"-->
+        <!--android:layout_margin="10dp"-->
+        <!--android:focusableInTouchMode="true"-->
+        <!--android:clickable="true"-->
+        <!--android:focusable="true"-->
+        <!--android:foreground="?android:attr/selectableItemBackground">-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="vertical">-->
+
+            <!--<ImageView-->
+                <!--android:layout_width="64dp"-->
+                <!--android:layout_height="64dp"-->
+                <!--android:background="@drawable/maintdash"-->
+                <!--android:padding="10dp" />-->
+
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:text="@string/maintenance_requests"-->
+                <!--android:textStyle="bold" />-->
+
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:layout_margin="10dp"-->
+                <!--android:background="@color/lightgray" />-->
+
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center"-->
+                <!--android:padding="5dp"-->
+                <!--android:text="@string/click_here_to_submit_a_request"-->
+                <!--android:textColor="@android:color/darker_gray" />-->
+
+        <!--</LinearLayout>-->
+    <!--</android.support.v7.widget.CardView>-->
+
+
+    <!--<android.support.v7.widget.CardView-->
+        <!--android:layout_width="160dp"-->
+        <!--android:layout_height="190dp"-->
+        <!--android:layout_margin="10dp"-->
+        <!--android:focusableInTouchMode="true"-->
+        <!--android:clickable="true"-->
+        <!--android:focusable="true"-->
+        <!--android:foreground="?android:attr/selectableItemBackground">-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="vertical">-->
+
+            <!--<ImageView-->
+                <!--android:layout_width="64dp"-->
+                <!--android:layout_height="64dp"-->
+                <!--android:background="@drawable/docdash"-->
+                <!--android:padding="10dp" />-->
+
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:text="@string/documents"-->
+                <!--android:textStyle="bold" />-->
+
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:layout_margin="10dp"-->
+                <!--android:background="@color/lightgray" />-->
+
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center"-->
+                <!--android:padding="5dp"-->
+                <!--android:text="@string/click_here_for_lease_agreement"-->
+                <!--android:textColor="@android:color/darker_gray" />-->
+
+        <!--</LinearLayout>-->
+    <!--</android.support.v7.widget.CardView>-->
+
+<!--</LinearLayout>-->
+
+<!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:gravity="center"-->
+    <!--android:text="@string/building_resources"-->
+    <!--android:textStyle="bold" />-->
+
+<!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:clipToPadding="false"-->
+    <!--android:gravity="center"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<android.support.v7.widget.CardView-->
+        <!--android:layout_width="340dp"-->
+        <!--android:layout_height="140dp"-->
+        <!--android:layout_margin="4dp"-->
+        <!--android:clickable="true"-->
+        <!--android:foreground="?android:attr/selectableItemBackground">-->
+
+        <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:id="@+id/my_recycler_view"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:scrollbars="horizontal" />-->
+    <!--</android.support.v7.widget.CardView>-->
+
+<!--</LinearLayout>-->
+
+
+<!--</LinearLayout>-->
 
