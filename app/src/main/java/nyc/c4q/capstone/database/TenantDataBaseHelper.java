@@ -23,6 +23,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import nyc.c4q.capstone.BottomNavFragment.DashBoardFragment;
+import nyc.c4q.capstone.BottomNavFragment.MaintanceFragment;
 import nyc.c4q.capstone.BottomNavFragment.PaymentFragment;
 import nyc.c4q.capstone.datamodels.PaymentHistoryModel;
 import nyc.c4q.capstone.datamodels.Tickets;
@@ -75,6 +76,7 @@ public class TenantDataBaseHelper {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 user = dataSnapshot.getValue(UserApartmentInfo.class);
                 assert user != null;
+                Log.e("user",user.getBuilding_id()+"");
                 String id = String.valueOf(user.getBuilding_id());
                 getMaintenance(id, user.getAPT());
             }
