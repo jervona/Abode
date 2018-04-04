@@ -150,7 +150,6 @@ public class PaymentFragment extends Fragment {
                     Collections.reverse(payments);
                     adapter.updateTicketListItems(payments);
                 }
-
             }
 
             @Override
