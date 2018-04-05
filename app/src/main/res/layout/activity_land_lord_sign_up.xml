@@ -30,14 +30,22 @@
 
 
         <EditText
-            android:id="@+id/landlord_name"
+            android:id="@+id/landlord_firstname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="25sp"
-            android:hint="Enter Name"/>
+            android:hint="Enter First Name"/>
+
+        <EditText
+            android:id="@+id/landlord_lastname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:hint="Enter Last Name"/>
 
         <EditText
             android:id="@+id/landlord_email"
+            android:inputType="textEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="25sp"
@@ -45,26 +53,24 @@
 
         <EditText
             android:id="@+id/landlord_phone"
+            android:inputType="phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="25sp"
             android:hint="Phone Number"/>
 
-        <EditText
-            android:id="@+id/landlord_propertyName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="25sp"
-            android:hint="Property Name"/>
+
 
         <EditText
             android:id="@+id/landlordPW"
+            android:inputType="textVisiblePassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="25sp"
             android:hint="Enter Password"/>
 
         <EditText
+            android:inputType="textVisiblePassword"
             android:id="@+id/landlord_confirmPW"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

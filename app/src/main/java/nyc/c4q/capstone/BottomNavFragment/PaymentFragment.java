@@ -55,17 +55,20 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
+import nyc.c4q.capstone.MainActivity;
 import nyc.c4q.capstone.R;
+import nyc.c4q.capstone.TestingInterface;
 import nyc.c4q.capstone.database.TenantDataBaseHelper;
 import nyc.c4q.capstone.datamodels.PaymentHistoryModel;
 import nyc.c4q.capstone.datamodels.Tickets;
+import nyc.c4q.capstone.datamodels.UserInfo;
 import nyc.c4q.capstone.payment_history_package.PaymentHistoryAdapter;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PaymentFragment extends Fragment {
+public class PaymentFragment extends Fragment implements MainActivity.UserDBListener {
 
     private View rootView;
 
@@ -140,6 +143,8 @@ public class PaymentFragment extends Fragment {
     }
 
     public void updateList() throws NullPointerException {
+
+
         data.getReference().child("Rent").child("7M").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -150,6 +155,7 @@ public class PaymentFragment extends Fragment {
                     Collections.reverse(payments);
                     adapter.updateTicketListItems(payments);
                 }
+
             }
 
             @Override
@@ -278,5 +284,11 @@ public class PaymentFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+
+    @Override
+    public void delegateUser(UserInfo user) {
+        Log.e("payment",user.getFirst_name());
     }
 }
