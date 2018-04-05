@@ -1,6 +1,6 @@
 package nyc.c4q.capstone;
 
-import android.app.Activity;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -8,39 +8,25 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
-import com.braintreepayments.api.dropin.DropInActivity;
-import com.braintreepayments.api.dropin.DropInRequest;
-import com.braintreepayments.api.dropin.DropInResult;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.TextHttpResponseHandler;
 
 import java.util.ArrayList;
-
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import cz.msebera.android.httpclient.entity.mime.Header;
 import nyc.c4q.capstone.adapter.SectionsPageAdapter;
 import nyc.c4q.capstone.database.TenantDataBaseHelper;
 import nyc.c4q.capstone.datamodels.UserInfo;
@@ -49,11 +35,10 @@ import nyc.c4q.capstone.signupactivites.SignInActivity;
 public class MainActivity extends AppCompatActivity
         implements GoogleApiClient.OnConnectionFailedListener {
 
-    private static final int REQUEST_CODE = 94;
     @BindView(R.id.container)
     ViewPager viewPager;
     @BindView(R.id.bottom_navigation)
-    AHBottomNavigation bottom;
+    public AHBottomNavigation bottom;
     @BindView(R.id.progressBar)
     ProgressBar bar;
     private ArrayList<AHBottomNavigationItem> items = new ArrayList<>();
@@ -65,14 +50,9 @@ public class MainActivity extends AppCompatActivity
     public static String mUsername;
     private SharedPreferences preferences;
     public static GoogleApiClient googleApiClient;
-
-
-
-    private static final int NOTIFICATION_ID = 555;
-    String NOTIFICATION_CHANNEL = "C4Q Notifications";
     SectionsPageAdapter adapter;
 
-    FirebaseDatabase database =FirebaseDatabase.getInstance();
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
     TenantDataBaseHelper db;
 
 
@@ -82,7 +62,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         bottom = findViewById(R.id.bottom_navigation);
-        setBottomNav();
+
         adapter = new SectionsPageAdapter(getSupportFragmentManager());
         db = TenantDataBaseHelper.getInstance(database);
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -101,22 +81,23 @@ public class MainActivity extends AppCompatActivity
             return;
         } else {
             mUsername = firebaseUser.getDisplayName();
-            Log.e("User",firebaseUser.getUid());
-            db.getUserInfoFromDataBase(firebaseUser.getUid());
+            Log.e("User", firebaseUser.getUid());
+            db.getUserInfoFromDataBase(firebaseUser.getUid(), new UserDBListener() {
+                @Override
+                public void delegateUser(UserInfo user) {
+                    switch (user.getStatus()) {
+                        case "Tenant":
+                            setupViewPager(viewPager,user.getStatus());
+                            setBottomNav(setTenantBottomNav());
+                            break;
+                        case "PM":
+                            setupViewPager(viewPager,user.getStatus());
+                            setBottomNav(setPMBottomNav());
+                            break;
+                    }
+                }
+            });
 //            bar.setVisibility(View.VISIBLE);
-//            Query query = database.getReference("user").child(firebaseUser.getUid());
-//            query.addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//                }
-//
-//                @Override
-//                public void onCancelled(DatabaseError databaseError) {
-//                    Log.e("Error", databaseError.getMessage());
-//                }
-//            });
-
         }
         googleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
@@ -124,11 +105,11 @@ public class MainActivity extends AppCompatActivity
                 .build();
     }
 
-    public void setBottomNav() {
-        setupViewPager(viewPager);
-        items.add(new AHBottomNavigationItem("DashBoard", R.drawable.dash));
-        items.add(new AHBottomNavigationItem("Payment", R.drawable.payment));
-        items.add(new AHBottomNavigationItem("Maintenance", R.drawable.maintenance));
+    public interface UserDBListener {
+        void delegateUser(UserInfo user);
+    }
+
+    public void setBottomNav(ArrayList<AHBottomNavigationItem> items) {
         bottom.addItems(items);
         bottom.setCurrentItem(0);
         bottom.setDefaultBackgroundColor(Color.WHITE);
@@ -151,9 +132,9 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    private void setupViewPager(ViewPager viewPager) {
+    private void setupViewPager(ViewPager viewPager,String status) {
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
-        adapter.initBottomNav("Tenant");
+        adapter.initBottomNav(status);
         viewPager.setAdapter(adapter);
     }
 
@@ -162,6 +143,27 @@ public class MainActivity extends AppCompatActivity
         Log.d(TAG, "onConnectionFailed:" + connectionResult);
         Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
     }
+
+
+    private ArrayList<AHBottomNavigationItem> setTenantBottomNav(){
+        ArrayList<AHBottomNavigationItem> tenant = new ArrayList<>();
+        tenant.add(new AHBottomNavigationItem("DashBoard", R.drawable.dash));
+        tenant.add(new AHBottomNavigationItem("Payment", R.drawable.payment));
+        tenant.add(new AHBottomNavigationItem("Maintenance", R.drawable.maintenance));
+        return tenant;
+    }
+
+    private ArrayList<AHBottomNavigationItem> setPMBottomNav(){
+        ArrayList<AHBottomNavigationItem> pm = new ArrayList<>();
+        pm.add(new AHBottomNavigationItem("DashBoard", R.drawable.dash));
+        pm.add(new AHBottomNavigationItem("Payment", R.drawable.payment));
+        pm.add(new AHBottomNavigationItem("Maintenance", R.drawable.maintenance));
+        pm.add(new AHBottomNavigationItem("Docs", R.mipmap.building));
+        return pm;
+    }
+
+
+
 
 
 }

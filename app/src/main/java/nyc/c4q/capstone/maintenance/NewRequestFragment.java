@@ -37,6 +37,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import nyc.c4q.capstone.MainActivity;
 import nyc.c4q.capstone.adapter.ImageAdapter;
 import nyc.c4q.capstone.R;
 import nyc.c4q.capstone.database.TenantDataBaseHelper;
@@ -89,12 +90,13 @@ public class NewRequestFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_new_request, container, false);
         ButterKnife.bind(this, rootView);
         bundle = getArguments();
         setHasOptionsMenu(true);
         setupActionBar();
+
+
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(rootView.getContext(), R.array.location_options, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -126,7 +128,6 @@ public class NewRequestFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
         getTixRequestData();
 
         return rootView;
@@ -232,6 +233,7 @@ public class NewRequestFragment extends Fragment {
     @Override
     public void onDestroy() {
         actionBar.setDisplayHomeAsUpEnabled(false);
+
         super.onDestroy();
     }
 }

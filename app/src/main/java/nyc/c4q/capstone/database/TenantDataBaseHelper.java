@@ -50,8 +50,6 @@ public class TenantDataBaseHelper {
     private List<PaymentHistoryModel> paymentsList;
 
 
-
-
     private List<String> listOfUrl = new ArrayList<>();
 
     private static TenantDataBaseHelper instance;
@@ -69,7 +67,7 @@ public class TenantDataBaseHelper {
     }
 
 
-    public void getUserInfoFromDataBase(String uid) {
+    public void getUserInfoFromDataBase(String uid, final MainActivity.UserDBListener listener) {
         ticketsList = new ArrayList<>();
         Query query = database.getReference("user").child(uid);
         query.addValueEventListener(new ValueEventListener() {
@@ -77,9 +75,12 @@ public class TenantDataBaseHelper {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 user = dataSnapshot.getValue(UserInfo.class);
                 assert user != null;
-                Log.e("user",user.getBuilding_id()+"");
-                String id = String.valueOf(user.getBuilding_id());
-                getMaintenance(id, user.getAPT());
+                listener.delegateUser(user);
+
+              if(user.getStatus().equals("Tenant")) {
+                  String id = String.valueOf(user.getBuilding_id());
+                  getMaintenance(id, user.getAPT());
+              }
             }
 
             @Override
@@ -94,9 +95,10 @@ public class TenantDataBaseHelper {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<List<Tickets>> data = new GenericTypeIndicator<List<Tickets>>() {};
+                GenericTypeIndicator<List<Tickets>> data = new GenericTypeIndicator<List<Tickets>>() {
+                };
                 ticketsList = dataSnapshot.getValue(data);
-                DashBoardFragment.giveStuff(ticketsList,user);
+                DashBoardFragment.giveStuff(ticketsList, user);
                 getPayments(user.getAPT());
             }
 
@@ -107,12 +109,13 @@ public class TenantDataBaseHelper {
         });
     }
 
-    private void getPayments(String apt){
+    private void getPayments(String apt) {
         Query query = database.getReference("Rent").child(user.getAPT());
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<List<PaymentHistoryModel>> data = new GenericTypeIndicator<List<PaymentHistoryModel>>() {};
+                GenericTypeIndicator<List<PaymentHistoryModel>> data = new GenericTypeIndicator<List<PaymentHistoryModel>>() {
+                };
                 paymentsList = dataSnapshot.getValue(data);
             }
 
@@ -184,7 +187,7 @@ public class TenantDataBaseHelper {
         putImageInStorage(storageReference, uri, key);
     }
 
-    public void upLoadRent(PaymentHistoryModel rent){
+    public void upLoadRent(PaymentHistoryModel rent) {
         if (paymentsList == null) {
             paymentsList = new ArrayList<>();
             paymentsList.add(rent);
@@ -250,9 +253,6 @@ public class TenantDataBaseHelper {
     public List<PaymentHistoryModel> getPayments() {
         return paymentsList;
     }
-
-
-
 
 
 }

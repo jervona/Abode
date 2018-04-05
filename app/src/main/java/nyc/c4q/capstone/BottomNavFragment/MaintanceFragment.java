@@ -40,6 +40,7 @@ import nyc.c4q.capstone.MainActivity;
 import nyc.c4q.capstone.R;
 import nyc.c4q.capstone.database.TenantDataBaseHelper;
 import nyc.c4q.capstone.datamodels.Tickets;
+import nyc.c4q.capstone.datamodels.UserInfo;
 import nyc.c4q.capstone.maintenance.NewRequestFragment;
 import nyc.c4q.capstone.maintenance.SubmittedAdapter;
 
@@ -115,6 +116,13 @@ public class MaintanceFragment extends Fragment {
     }
 
     public void updateList() {
+       MainActivity.UserDBListener yoo = new MainActivity.UserDBListener() {
+           @Override
+           public void delegateUser(UserInfo user) {
+               Log.e("Main",user.getFirst_name());
+           }
+       };
+
         Log.e(TAG, "updateList: "+String.valueOf(db.getUser().getBuilding_id()));
         data.getReference().child("Maintenance").child(String.valueOf(db.getUser().getBuilding_id())).child(db.getUser().getAPT()).addValueEventListener(new ValueEventListener() {
             @Override

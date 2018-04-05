@@ -7,15 +7,15 @@ import java.util.List;
  */
 
 public class UserInfo {
-    String id;
-    long building_id;
-    String apt;
-    String first_name;
-    String last_name;
-    String phone_number;
-    String email_address;
-    String status;
-    List<Long> buidlingList;
+    private String id;
+    private long building_id;
+    private String apt;
+    private String first_name;
+    private String last_name;
+    private String phone_number;
+    private String email_address;
+    private String status;
+    private List<Long> buidlingList;
 
 
     public UserInfo() {
@@ -33,14 +33,13 @@ public class UserInfo {
         this.status = status;
     }
 
-    public UserInfo(String id, long building_id, String APT, String first_name, String last_name, String phone_number, String email_address) {
+    public UserInfo(String id, String first_name, String last_name, String phone_number, String email_address,String status) {
         this.id = id;
-        this.building_id = building_id;
-        this.apt = APT;
         this.first_name = first_name;
         this.last_name = last_name;
         this.phone_number = phone_number;
         this.email_address = email_address;
+        this.status = status;
     }
 
 

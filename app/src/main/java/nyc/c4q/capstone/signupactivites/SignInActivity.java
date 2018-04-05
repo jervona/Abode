@@ -78,11 +78,15 @@ public class SignInActivity extends AppCompatActivity implements
                 .setPositiveButton("Tenant", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(SignInActivity.this, "Launch Tenant Sign up", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(SignInActivity.this, TenantSignUpActivity.class));
+                        finish();
                     }
                 })
                 .setNegativeButton("PropertyManager", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(SignInActivity.this, "Launch PropertyManager Sign up", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(SignInActivity.this, LandLordSignUpActivity.class));
+                        finish();
                     }
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
