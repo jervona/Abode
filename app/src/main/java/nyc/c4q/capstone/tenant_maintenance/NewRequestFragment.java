@@ -68,7 +68,6 @@ public class NewRequestFragment extends Fragment {
     ActionBar actionBar;
     int userPriority;
 
-
     TenantDataBaseHelper db;
     private ScrollView maintenanceScroll;
     private static final int REQUEST_IMAGE = 2;

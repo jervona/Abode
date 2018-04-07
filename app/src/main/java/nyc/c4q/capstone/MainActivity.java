@@ -100,6 +100,7 @@ public class MainActivity extends AppCompatActivity
                             setBottomNav();
                             break;
                         case "PM":
+                            bar.setVisibility(View.GONE);
                             setupViewPager(viewPager, user.getStatus());
                             navigationAdapter = new AHBottomNavigationAdapter(MainActivity.this, R.menu.pm_bottom_nav);
                             navigationAdapter.setupWithBottomNavigation(bottom);
