@@ -1,20 +1,20 @@
-package nyc.c4q.capstone.datamodels;
+package tenant_data_models;
 
 /**
  * Created by D on 3/19/18.
  */
 
-public class PaymentHistoryModel {
+public class TenantPaymentHistoryModel {
 
     private String month;
     private String amount_paid;
     private String conf;
 
 
-    public PaymentHistoryModel() {
+    public TenantPaymentHistoryModel() {
     }
 
-    public PaymentHistoryModel(String month, String amount_paid, String conf) {
+    public TenantPaymentHistoryModel(String month, String amount_paid, String conf) {
         this.month = month;
         this.amount_paid = amount_paid;
         this.conf=conf;

@@ -1,4 +1,4 @@
-package nyc.c4q.capstone.payment_history_package;
+package nyc.c4q.capstone.payment_history_packages.tenant_pay_package;
 
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
@@ -11,18 +11,18 @@ import java.util.List;
 
 import nyc.c4q.capstone.diffutilies.PaymentDiffCallback;
 import nyc.c4q.capstone.R;
-import nyc.c4q.capstone.datamodels.PaymentHistoryModel;
+import tenant_data_models.TenantPaymentHistoryModel;
 
 /**
  * Created by D on 3/18/18.
  */
 
-public class PaymentHistoryAdapter extends RecyclerView.Adapter<PaymentHistoryHolder> {
+public class Tenant_Pay_Adapter extends RecyclerView.Adapter<Tenant_Pay_Holder> {
 
 
-    private List<PaymentHistoryModel> paymentModelList;
+    private List<TenantPaymentHistoryModel> paymentModelList;
 
-    public PaymentHistoryAdapter(List<PaymentHistoryModel> paymentModelList) {
+    public Tenant_Pay_Adapter(List<TenantPaymentHistoryModel> paymentModelList) {
         if (paymentModelList == null) {
             this.paymentModelList = new ArrayList<>();
         } else {
@@ -30,24 +30,24 @@ public class PaymentHistoryAdapter extends RecyclerView.Adapter<PaymentHistoryHo
         }
     }
 
-    public PaymentHistoryAdapter() {
+    public Tenant_Pay_Adapter() {
     }
 
     @Override
-    public PaymentHistoryHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public Tenant_Pay_Holder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.history_itemview_layout, parent, false);
-        return new PaymentHistoryHolder(view);
+        return new Tenant_Pay_Holder(view);
     }
 
     @Override
-    public void onBindViewHolder(PaymentHistoryHolder holder, int position) {
+    public void onBindViewHolder(Tenant_Pay_Holder holder, int position) {
 
-        PaymentHistoryModel paymentModel = paymentModelList.get(position);
+        TenantPaymentHistoryModel paymentModel = paymentModelList.get(position);
         holder.onBind(paymentModel);
     }
 
 
-    public void updateTicketListItems(List<PaymentHistoryModel> payment) {
+    public void updateTicketListItems(List<TenantPaymentHistoryModel> payment) {
         final PaymentDiffCallback diffCallback = new PaymentDiffCallback(this.paymentModelList, payment);
         final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
         this.paymentModelList.clear();

@@ -1,13 +1,12 @@
-package nyc.c4q.capstone.maintenance;
+package nyc.c4q.capstone.tenant_maintenance;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.NavUtils;
+
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,14 +18,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
+import com.github.clans.fab.FloatingActionButton;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
@@ -37,7 +35,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import nyc.c4q.capstone.MainActivity;
 import nyc.c4q.capstone.adapter.ImageAdapter;
 import nyc.c4q.capstone.R;
 import nyc.c4q.capstone.database.TenantDataBaseHelper;
@@ -66,6 +63,8 @@ public class NewRequestFragment extends Fragment {
     EditText userDescription;
     @BindView(R.id.image_request_rv)
     RecyclerView rv;
+
+
     ActionBar actionBar;
     int userPriority;
 
@@ -81,6 +80,7 @@ public class NewRequestFragment extends Fragment {
     List<Uri> hello = new ArrayList<>();
     static final int REQUEST_IMAGE_CAPTURE = 1;
     Bundle bundle;
+    FloatingActionButton fab;
 
 
     public NewRequestFragment() {
@@ -95,9 +95,8 @@ public class NewRequestFragment extends Fragment {
         bundle = getArguments();
         setHasOptionsMenu(true);
         setupActionBar();
-
-
-
+        fab = getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.GONE);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(rootView.getContext(), R.array.location_options, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         locationSpinner.setAdapter(adapter);
@@ -232,8 +231,8 @@ public class NewRequestFragment extends Fragment {
 
     @Override
     public void onDestroy() {
+        fab.setVisibility(View.VISIBLE);
         actionBar.setDisplayHomeAsUpEnabled(false);
-
         super.onDestroy();
     }
 }

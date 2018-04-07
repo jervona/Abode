@@ -1,4 +1,4 @@
-package nyc.c4q.capstone.maintenance;
+package nyc.c4q.capstone.tenant_maintenance;
 
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
@@ -18,16 +18,15 @@ import nyc.c4q.capstone.datamodels.Tickets;
  */
 
 public class SubmittedAdapter extends RecyclerView.Adapter<SubmittedViewHolder> {
-    List<Tickets> requestsList;
+    private List<Tickets> requestsList;
 
 
     public SubmittedAdapter() {
     }
 
     public SubmittedAdapter(List<Tickets> requestsList) {
-
         if (requestsList == null) {
-           this.requestsList = new ArrayList<>();
+            this.requestsList = new ArrayList<>();
         } else {
             this.requestsList = requestsList;
         }
@@ -45,12 +44,6 @@ public class SubmittedAdapter extends RecyclerView.Adapter<SubmittedViewHolder> 
         holder.onBind(tix);
     }
 
-    public void swap(List<Tickets> list){
-        requestsList =list;
-        notifyDataSetChanged();
-    }
-
-
     public void updateTicketListItems(List<Tickets> tickets) {
         final TicketsDiffCallback diffCallback = new TicketsDiffCallback(this.requestsList, tickets);
         final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
@@ -59,7 +52,7 @@ public class SubmittedAdapter extends RecyclerView.Adapter<SubmittedViewHolder> 
         diffResult.dispatchUpdatesTo(this);
     }
 
-    public void cleatList(){
+    public void cleatList() {
         requestsList = new ArrayList<>();
         notifyDataSetChanged();
     }

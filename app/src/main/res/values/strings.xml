@@ -29,6 +29,9 @@
     <string name="priority_level">Priority Level:</string>
     <string name="date_requested">Date Requested</string>
     <string name="none">None</string>
+    <string name="dashboard">DashBoard</string>
+    <string name="payment">Payment</string>
+    <string name="maintenance">Maintenance</string>
 
     <string-array name="location_options">
         <item>Bathroom</item>

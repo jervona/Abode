@@ -3,7 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context="nyc.c4q.capstone.BottomNavFragment.PaymentFragment">
+    tools:context="nyc.c4q.capstone.TenantBottomNavFragment.PaymentFragment">
 
     <TextView
         android:id="@+id/dialog_intro"

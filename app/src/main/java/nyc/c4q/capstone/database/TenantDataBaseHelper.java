@@ -22,11 +22,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import nyc.c4q.capstone.BottomNavFragment.DashBoardFragment;
-import nyc.c4q.capstone.BottomNavFragment.MaintanceFragment;
-import nyc.c4q.capstone.BottomNavFragment.PaymentFragment;
+import nyc.c4q.capstone.TenantBottomNavFragment.DashBoardFragment;
 import nyc.c4q.capstone.MainActivity;
-import nyc.c4q.capstone.datamodels.PaymentHistoryModel;
+import tenant_data_models.TenantPaymentHistoryModel;
 import nyc.c4q.capstone.datamodels.Tickets;
 import nyc.c4q.capstone.datamodels.UserInfo;
 
@@ -47,7 +45,7 @@ public class TenantDataBaseHelper {
 
     private UserInfo user;
     private List<Tickets> ticketsList;
-    private List<PaymentHistoryModel> paymentsList;
+    private List<TenantPaymentHistoryModel> paymentsList;
 
 
     private List<String> listOfUrl = new ArrayList<>();
@@ -98,7 +96,6 @@ public class TenantDataBaseHelper {
                 GenericTypeIndicator<List<Tickets>> data = new GenericTypeIndicator<List<Tickets>>() {
                 };
                 ticketsList = dataSnapshot.getValue(data);
-                DashBoardFragment.giveStuff(ticketsList, user);
                 getPayments(user.getAPT());
             }
 
@@ -114,7 +111,7 @@ public class TenantDataBaseHelper {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<List<PaymentHistoryModel>> data = new GenericTypeIndicator<List<PaymentHistoryModel>>() {
+                GenericTypeIndicator<List<TenantPaymentHistoryModel>> data = new GenericTypeIndicator<List<TenantPaymentHistoryModel>>() {
                 };
                 paymentsList = dataSnapshot.getValue(data);
             }
@@ -187,7 +184,7 @@ public class TenantDataBaseHelper {
         putImageInStorage(storageReference, uri, key);
     }
 
-    public void upLoadRent(PaymentHistoryModel rent) {
+    public void upLoadRent(TenantPaymentHistoryModel rent) {
         if (paymentsList == null) {
             paymentsList = new ArrayList<>();
             paymentsList.add(rent);
@@ -250,7 +247,7 @@ public class TenantDataBaseHelper {
         return ticketsList;
     }
 
-    public List<PaymentHistoryModel> getPayments() {
+    public List<TenantPaymentHistoryModel> getPayments() {
         return paymentsList;
     }
 

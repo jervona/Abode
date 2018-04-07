@@ -1,4 +1,4 @@
-package nyc.c4q.capstone.BottomNavFragment;
+package nyc.c4q.capstone.TenantBottomNavFragment;
 
 
 import android.app.NotificationManager;
@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -17,13 +18,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
 
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
+import com.github.clans.fab.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -36,13 +37,14 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import nyc.c4q.capstone.MainActivity;
 import nyc.c4q.capstone.R;
 import nyc.c4q.capstone.database.TenantDataBaseHelper;
 import nyc.c4q.capstone.datamodels.Tickets;
 import nyc.c4q.capstone.datamodels.UserInfo;
-import nyc.c4q.capstone.maintenance.NewRequestFragment;
-import nyc.c4q.capstone.maintenance.SubmittedAdapter;
+import nyc.c4q.capstone.tenant_maintenance.NewRequestFragment;
+import nyc.c4q.capstone.tenant_maintenance.SubmittedAdapter;
 
 
 /**
@@ -51,9 +53,12 @@ import nyc.c4q.capstone.maintenance.SubmittedAdapter;
 public class MaintanceFragment extends Fragment {
 
     View rootView;
-
     @BindView(R.id.ticket_rv)
     RecyclerView recyclerView;
+    AHBottomNavigation bottom;
+    //    @BindView(R.id.fab)
+    FloatingActionButton fab;
+
     LinearLayoutManager layoutManager;
 
     private ScrollView maintenanceScroll;
@@ -78,10 +83,15 @@ public class MaintanceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_maintenance, container, false);
-        setHasOptionsMenu(true);
+        bottom = getActivity().findViewById(R.id.bottom_navigation);
+        fab = getActivity().findViewById(R.id.fab);
         ButterKnife.bind(this, rootView);
+
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        setBottom();
+
         return rootView;
     }
 
@@ -89,45 +99,31 @@ public class MaintanceFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         db = TenantDataBaseHelper.getInstance(FirebaseDatabase.getInstance());
-        adapter = new SubmittedAdapter(ticketsList);
+        adapter = new SubmittedAdapter(db.getTicketsList());
         recyclerView.setAdapter(adapter);
         updateList();
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openNewRequest();
+            }
+        });
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.main_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.add:
-                NewRequestFragment requestFragment = new NewRequestFragment();
-                FragmentManager fragManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragManager.beginTransaction();
-                fragmentTransaction.replace(R.id.maintenance_frag, requestFragment).addToBackStack("maintenance frag");
-                fragmentTransaction.commit();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+    public void openNewRequest() {
+        NewRequestFragment requestFragment = new NewRequestFragment();
+        FragmentManager fragManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragManager.beginTransaction();
+        fragmentTransaction.replace(R.id.maintenance_frag, requestFragment).addToBackStack("maintenance frag");
+        fragmentTransaction.commit();
     }
 
     public void updateList() {
-       MainActivity.UserDBListener yoo = new MainActivity.UserDBListener() {
-           @Override
-           public void delegateUser(UserInfo user) {
-               Log.e("Main",user.getFirst_name());
-           }
-       };
-
-        Log.e(TAG, "updateList: "+String.valueOf(db.getUser().getBuilding_id()));
         data.getReference().child("Maintenance").child(String.valueOf(db.getUser().getBuilding_id())).child(db.getUser().getAPT()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<List<Tickets>> t = new GenericTypeIndicator<List<Tickets>>() {};
+                GenericTypeIndicator<List<Tickets>> t = new GenericTypeIndicator<List<Tickets>>() {
+                };
                 ticketsList = dataSnapshot.getValue(t);
                 if (ticketsList != null) {
                     Collections.reverse(ticketsList);
@@ -142,7 +138,35 @@ public class MaintanceFragment extends Fragment {
         });
     }
 
-    public void sendNotification(String a) {
+    public void setBottom() {
+        recyclerView.setHasFixedSize(true);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                float tran = bottom.getTranslationY() + dy;
+                float fabtran = fab.getTranslationY() + dy;
+                boolean scrollDown = dy > 0;
+                if (scrollDown) {
+                    fabtran = Math.min(fabtran, fab.getHeight());
+                    tran = Math.min(tran, bottom.getHeight());
+                } else {
+                    tran = Math.max(tran, 0f);
+                    fabtran = Math.max(fabtran, 0f);
+                }
+                bottom.setTranslationY(tran);
+                fab.setTranslationY(fabtran);
+            }
+        });
+    }
+
+
+    @Override
+    public void onStop() {
+        fab.setVisibility(View.GONE);
+        super.onStop();
+    }
+
+    public void sendNotification() {
         Intent intent = new Intent(rootView.getContext().getApplicationContext(), MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(rootView.getContext().getApplicationContext(), NOTIFICATION_ID, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         NotificationManager notificationManager = (NotificationManager) rootView.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
