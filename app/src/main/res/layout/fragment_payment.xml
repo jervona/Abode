@@ -29,19 +29,20 @@
             android:orientation="horizontal"
             android:gravity="center">
 
-            <TextView
-                android:id="@+id/dollarSign"
-                android:layout_width="20dp"
-                android:layout_height="wrap_content"
-                android:text="$"
-                android:textSize="30sp" />
+            <!--<TextView-->
+                <!--android:id="@+id/dollarSign"-->
+                <!--android:layout_width="20dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="$"-->
+                <!--android:textSize="30sp" />-->
 
             <TextView
                 android:id="@+id/balance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="600"
-                android:textSize="30sp" />
+                android:text="$600"
+                android:textSize="30sp"
+                android:gravity="center"/>
 
         </LinearLayout>
 
@@ -67,7 +68,7 @@
             <Button android:id="@+id/paypal_button"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:text="@string/paypal_button"
+                android:text="Pay Now"
                 />
 
         </LinearLayout>
