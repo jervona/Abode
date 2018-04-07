@@ -62,7 +62,6 @@ public class TenantSignUpActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
     }
 
-
     @OnClick(R.id.tenant_signup)
     public void checkFields() {
         if (areFieldsEmpty()) {
@@ -162,4 +161,3 @@ public class TenantSignUpActivity extends AppCompatActivity {
         return false;
     }
 }
-

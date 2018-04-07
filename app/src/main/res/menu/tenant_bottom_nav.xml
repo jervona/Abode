@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:title="@string/dashboard"
+        android:icon="@drawable/dash" />
+
+    <item
+        android:title="@string/payment"
+        android:icon="@drawable/payment" />
+
+    <item
+        android:title="@string/maintenance"
+        android:icon="@drawable/maintenance" />
+
+</menu>

@@ -51,7 +51,6 @@ public class TicketsDiffCallback extends DiffUtil.Callback {
     @Nullable
     @Override
     public Object getChangePayload(int oldItemPosition, int newItemPosition) {
-        // Implement method if you're going to use ItemAnimator
         return super.getChangePayload(oldItemPosition, newItemPosition);
     }
 }
