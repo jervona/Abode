@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.github.clans.fab.FloatingActionButton;
 import com.google.android.gms.auth.api.Auth;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
@@ -58,11 +60,7 @@ public class DashBoardFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_dash_board, container, false);
         setHasOptionsMenu(true);
         resources();
-
-
         return rootView;
-
-
     }
 
 
@@ -93,12 +91,6 @@ public class DashBoardFragment extends Fragment {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-    public static void giveStuff(List<Tickets> messages, UserInfo user) {
-
-    }
-
-
     public void resources() {
         RecyclerView recyclerView = rootView.findViewById(R.id.my_recycler_view);
         List<DashRvModel> models = new ArrayList<>();
@@ -112,6 +104,4 @@ public class DashBoardFragment extends Fragment {
         recyclerView.setAdapter(dashAdapter);
         recyclerView.setLayoutManager(linearLayoutManager);
     }
-
-
 }

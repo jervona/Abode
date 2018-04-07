@@ -96,7 +96,6 @@ public class TenantDataBaseHelper {
                 GenericTypeIndicator<List<Tickets>> data = new GenericTypeIndicator<List<Tickets>>() {
                 };
                 ticketsList = dataSnapshot.getValue(data);
-                DashBoardFragment.giveStuff(ticketsList, user);
                 getPayments(user.getAPT());
             }
 

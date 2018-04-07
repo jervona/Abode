@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +23,7 @@ import com.braintreepayments.api.dropin.DropInActivity;
 import com.braintreepayments.api.dropin.DropInRequest;
 import com.braintreepayments.api.dropin.DropInResult;
 import com.braintreepayments.api.models.PaymentMethodNonce;
+import com.github.clans.fab.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -64,7 +66,6 @@ public class PaymentFragment extends Fragment implements MainActivity.UserDBList
     EditText editText;
     @BindView(R.id.payment_history_rv)
     RecyclerView recyclerView;
-
 
     TenantDataBaseHelper db;
     FirebaseDatabase data = FirebaseDatabase.getInstance();
@@ -170,9 +171,7 @@ public class PaymentFragment extends Fragment implements MainActivity.UserDBList
             public Object clientToken;
 
             @Override
-            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, String responseString, Throwable throwable) {
-
-            }
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, String responseString, Throwable throwable) {}
 
             @Override
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, String responseString) {
@@ -199,7 +198,6 @@ public class PaymentFragment extends Fragment implements MainActivity.UserDBList
                 PaymentMethodNonce nonce = result.getPaymentMethodNonce();
                 String stringNonce = nonce.getNonce();
                 Log.e("mylog", "Result: " + stringNonce);
-
                 String num = confirmationNumber();
                 Date date = Calendar.getInstance().getTime();
                 String month = date.toString().substring(4, 7);
@@ -271,13 +269,6 @@ public class PaymentFragment extends Fragment implements MainActivity.UserDBList
 //            }
 //        });
 //    }
-
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
 
     @Override
     public void delegateUser(UserInfo user) {

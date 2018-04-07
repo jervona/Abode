@@ -7,9 +7,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -17,8 +17,7 @@ import android.widget.Toast;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
-import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
+import com.github.clans.fab.FloatingActionButton;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -26,18 +25,18 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import nyc.c4q.capstone.adapter.SectionsPageAdapter;
 import nyc.c4q.capstone.database.TenantDataBaseHelper;
+import nyc.c4q.capstone.datamodels.Tickets;
 import nyc.c4q.capstone.datamodels.UserInfo;
 import nyc.c4q.capstone.signupactivites.SignInActivity;
 
 public class MainActivity extends AppCompatActivity
-        implements GoogleApiClient.OnConnectionFailedListener {
+        implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
 
     @BindView(R.id.container)
     ViewPager viewPager;
@@ -45,6 +44,7 @@ public class MainActivity extends AppCompatActivity
     AHBottomNavigation bottom;
     @BindView(R.id.progressBar)
     ProgressBar bar;
+    FloatingActionButton fab;
 
     private static final String TAG = "MainActivity";
     public static final String ANONYMOUS = "anonymous";
@@ -59,17 +59,24 @@ public class MainActivity extends AppCompatActivity
     AHBottomNavigationAdapter navigationAdapter;
 
 
+    RecyclerView recyclerView;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
         adapter = new SectionsPageAdapter(getSupportFragmentManager());
         db = TenantDataBaseHelper.getInstance(database);
         mUsername = ANONYMOUS;
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
+        recyclerView = findViewById(R.id.ticket_rv);
+        fab = findViewById(R.id.fab);
         checkSignIn();
+        setBottomNav();
     }
 
     public void checkSignIn() {
@@ -87,13 +94,13 @@ public class MainActivity extends AppCompatActivity
                     switch (user.getStatus()) {
                         case "Tenant":
                             bar.setVisibility(View.GONE);
-                            setupViewPager(viewPager,user.getStatus());
+                            setupViewPager(viewPager, user.getStatus());
                             navigationAdapter = new AHBottomNavigationAdapter(MainActivity.this, R.menu.tenant_bottom_nav);
                             navigationAdapter.setupWithBottomNavigation(bottom);
                             setBottomNav();
                             break;
                         case "PM":
-                            setupViewPager(viewPager,user.getStatus());
+                            setupViewPager(viewPager, user.getStatus());
                             navigationAdapter = new AHBottomNavigationAdapter(MainActivity.this, R.menu.pm_bottom_nav);
                             navigationAdapter.setupWithBottomNavigation(bottom);
                             setBottomNav();
@@ -123,6 +130,11 @@ public class MainActivity extends AppCompatActivity
                 try {
                     viewPager.setCurrentItem(position);
                     bottom.setCurrentItem(position, wasSelected);
+                    if(position==2){
+                        fab.setVisibility(View.VISIBLE);
+                    } else{
+                        fab.setVisibility(View.GONE);
+                    }
                 } catch (StackOverflowError e) {
                     Log.e("Caught Error", e.getMessage());
                 }
@@ -132,7 +144,7 @@ public class MainActivity extends AppCompatActivity
 //        bottom.setNotification("10", 2);
     }
 
-    private void setupViewPager(ViewPager viewPager,String status) {
+    private void setupViewPager(ViewPager viewPager, String status) {
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
         adapter.initBottomNav(status);
         viewPager.setAdapter(adapter);
@@ -142,5 +154,17 @@ public class MainActivity extends AppCompatActivity
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.d(TAG, "onConnectionFailed:" + connectionResult);
         Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.pay:
+                bottom.setCurrentItem(1);
+                break;
+            case R.id.maintenance_card:
+                bottom.setCurrentItem(2);
+                break;
+        }
     }
 }
