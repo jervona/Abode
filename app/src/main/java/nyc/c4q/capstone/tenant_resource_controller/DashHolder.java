@@ -1,4 +1,4 @@
-package nyc.c4q.capstone.dash_controller;
+package nyc.c4q.capstone.tenant_resource_controller;
 
 import android.content.Context;
 import android.content.Intent;

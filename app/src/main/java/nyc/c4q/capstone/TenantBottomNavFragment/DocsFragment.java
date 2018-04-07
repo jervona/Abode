@@ -1,21 +1,13 @@
-package nyc.c4q.capstone.BottomNavFragment;
+package nyc.c4q.capstone.TenantBottomNavFragment;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.auth.api.Auth;
-import com.google.firebase.auth.FirebaseAuth;
-
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import nyc.c4q.capstone.MainActivity;
 import nyc.c4q.capstone.R;
-import nyc.c4q.capstone.signupactivites.SignInActivity;
 
 
 /**

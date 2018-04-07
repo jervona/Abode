@@ -5,8 +5,7 @@ import android.support.v7.util.DiffUtil;
 
 import java.util.List;
 
-import nyc.c4q.capstone.datamodels.PaymentHistoryModel;
-import nyc.c4q.capstone.datamodels.Tickets;
+import tenant_data_models.TenantPaymentHistoryModel;
 
 /**
  * Created by jervon.arnoldd on 4/1/18.
@@ -15,10 +14,10 @@ import nyc.c4q.capstone.datamodels.Tickets;
 public class PaymentDiffCallback extends DiffUtil.Callback {
 
 
-    private final List<PaymentHistoryModel> oldRentList;
-    private final List<PaymentHistoryModel> newRentList;
+    private final List<TenantPaymentHistoryModel> oldRentList;
+    private final List<TenantPaymentHistoryModel> newRentList;
 
-    public PaymentDiffCallback(List<PaymentHistoryModel> oldEmployeeList, List<PaymentHistoryModel> newEmployeeList) {
+    public PaymentDiffCallback(List<TenantPaymentHistoryModel> oldEmployeeList, List<TenantPaymentHistoryModel> newEmployeeList) {
         this.oldRentList = oldEmployeeList;
         this.newRentList = newEmployeeList;
     }
@@ -43,8 +42,8 @@ public class PaymentDiffCallback extends DiffUtil.Callback {
 
     @Override
     public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-        final PaymentHistoryModel oldPayment = oldRentList.get(oldItemPosition);
-        final PaymentHistoryModel newPayment = newRentList.get(newItemPosition);
+        final TenantPaymentHistoryModel oldPayment = oldRentList.get(oldItemPosition);
+        final TenantPaymentHistoryModel newPayment = newRentList.get(newItemPosition);
         return oldPayment.getAmount_paid().equals(newPayment.getAmount_paid());
     }
 

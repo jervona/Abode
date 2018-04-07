@@ -7,7 +7,7 @@
     android:layout_margin="5dp"
     android:padding="16dp"
     card_view:cardCornerRadius="4dp"
-    tools:context="nyc.c4q.capstone.BottomNavFragment.PaymentFragment">
+    tools:context="nyc.c4q.capstone.TenantBottomNavFragment.PaymentFragment">
 
     <LinearLayout
         android:id="@+id/container"
@@ -40,13 +40,11 @@
                 android:id="@+id/balance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="600"
                 android:textSize="30sp" />
 
         </LinearLayout>
 
         <EditText
-            android:visibility="gone"
             android:id="@+id/payment_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -59,11 +57,13 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal">
+
             <Button
                 android:id="@+id/pay_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="pay" />
+
             <Button android:id="@+id/paypal_button"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
