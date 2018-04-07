@@ -19,8 +19,18 @@
             android:layout_height="40dp"
             android:hint="@string/subject_title"
             android:maxLines="1"
+            android:gravity="center"
             android:background="@color/transparent"
             android:elevation="2dp"/>
+
+        <View
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:padding="10dp"
+            android:background="@color/lightgray"/>
+
+
 
         <TextView
             android:id="@+id/priority_view"
@@ -74,9 +84,11 @@
         <!--</LinearLayout>-->
 
         <LinearLayout
+            android:layout_margin="18dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <TextView
                 android:id="@+id/repair_location_view"
                 android:layout_width="wrap_content"
@@ -92,19 +104,21 @@
         </LinearLayout>
 
         <TextView
+            android:layout_margin="15dp"
             android:id="@+id/repair_description_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Description"/>
 
         <EditText
+            android:layout_margin="10dp"
             android:id="@+id/user_description_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="top|start"
             android:background="@color/transparent"
             android:inputType="textMultiLine"
-            android:hint="Hello"
+            android:hint="What seems to be the problem?"
             android:ems="10"
             android:lines="6"
             android:maxLength="140"/>

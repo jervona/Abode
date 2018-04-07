@@ -16,13 +16,13 @@
         android:layout_height="match_parent"
         android:background="@drawable/central2">
 
-        <ImageView
-            android:layout_marginBottom="30dp"
-            android:layout_marginLeft="110dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/finallogo"
-            />
+        <!--<ImageView-->
+            <!--android:layout_marginBottom="30dp"-->
+            <!--android:layout_marginLeft="110dp"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@drawable/finallogo"-->
+            <!--/>-->
 
     </LinearLayout>
 

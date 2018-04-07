@@ -28,17 +28,19 @@
             android:orientation="horizontal"
             android:gravity="center">
 
-            <TextView
-                android:id="@+id/dollarSign"
-                android:layout_width="20dp"
-                android:layout_height="wrap_content"
-                android:text="$"
-                android:textSize="30sp" />
+            <!--<TextView-->
+                <!--android:id="@+id/dollarSign"-->
+                <!--android:layout_width="20dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="$"-->
+                <!--android:textSize="30sp" />-->
 
             <TextView
                 android:id="@+id/balance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="$600"
+                android:gravity="center"/>
                 android:textSize="30sp" />
 
         </LinearLayout>
