@@ -1,4 +1,4 @@
-package nyc.c4q.capstone.BottomNavFragment;
+package nyc.c4q.capstone.TenantBottomNavFragment;
 
 
 import android.app.Activity;
@@ -46,9 +46,9 @@ import cz.msebera.android.httpclient.Header;
 import nyc.c4q.capstone.MainActivity;
 import nyc.c4q.capstone.R;
 import nyc.c4q.capstone.database.TenantDataBaseHelper;
-import nyc.c4q.capstone.datamodels.PaymentHistoryModel;
+import tenant_data_models.TenantPaymentHistoryModel;
 import nyc.c4q.capstone.datamodels.UserInfo;
-import nyc.c4q.capstone.payment_history_package.PaymentHistoryAdapter;
+import nyc.c4q.capstone.payment_history_packages.tenant_pay_package.Tenant_Pay_Adapter;
 
 
 /**
@@ -68,9 +68,9 @@ public class PaymentFragment extends Fragment implements MainActivity.UserDBList
 
     TenantDataBaseHelper db;
     FirebaseDatabase data = FirebaseDatabase.getInstance();
-    List<PaymentHistoryModel> payments;
-    PaymentHistoryAdapter adapter;
-    static String id;
+    List<TenantPaymentHistoryModel> payments;
+    Tenant_Pay_Adapter adapter;
+    static String id = "67b975b0d30f2";
     private static PayPalConfiguration config;
     private static final int REQUEST_CODE = 94;
 
@@ -87,18 +87,21 @@ public class PaymentFragment extends Fragment implements MainActivity.UserDBList
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
+
         config = new PayPalConfiguration()
                 .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
-                .clientId("YOUR CLIENT ID");
+                .clientId(id);
 
         return rootView;
     }
+
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         db = TenantDataBaseHelper.getInstance(FirebaseDatabase.getInstance());
-        adapter = new PaymentHistoryAdapter(db.getPayments());
+        adapter = new Tenant_Pay_Adapter(db.getPayments());
         recyclerView.setAdapter(adapter);
         updateList();
 //        vault();
@@ -120,7 +123,7 @@ public class PaymentFragment extends Fragment implements MainActivity.UserDBList
         if (!editText.getText().toString().isEmpty()) {
             Date date = Calendar.getInstance().getTime();
             String month = date.toString().substring(4, 7);
-            PaymentHistoryModel payment = new PaymentHistoryModel(month, "$" + editText.getText().toString(), num);
+            TenantPaymentHistoryModel payment = new TenantPaymentHistoryModel(month, "$" + editText.getText().toString(), num);
             db.upLoadRent(payment);
             popUp(editText.getText().toString(), num);
         } else {
@@ -134,7 +137,7 @@ public class PaymentFragment extends Fragment implements MainActivity.UserDBList
         data.getReference().child("Rent").child("7M").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<List<PaymentHistoryModel>> t = new GenericTypeIndicator<List<PaymentHistoryModel>>() {
+                GenericTypeIndicator<List<TenantPaymentHistoryModel>> t = new GenericTypeIndicator<List<TenantPaymentHistoryModel>>() {
                 };
                 payments = dataSnapshot.getValue(t);
                 if (payments != null) {
@@ -184,6 +187,7 @@ public class PaymentFragment extends Fragment implements MainActivity.UserDBList
         DropInRequest dropInRequest = new DropInRequest()
                 .clientToken("eyJ2ZXJzaW9uIjoyLCJhdXRob3JpemF0aW9uRmluZ2VycHJpbnQiOiI2YjdhZTdlMjQ1NDNjZjZmN2ViOTdkOTUwYmEyZWZiZGQ1ZDNiY2QxN2Q2YTQ4Y2IxMDVjOTcyNzgyNzQxMDU4fGNyZWF0ZWRfYXQ9MjAxOC0wNC0wM1QxNDoyOToyMC4zNzM4Mjg5MDgrMDAwMFx1MDAyNm1lcmNoYW50X2lkPTM0OHBrOWNnZjNiZ3l3MmJcdTAwMjZwdWJsaWNfa2V5PTJuMjQ3ZHY4OWJxOXZtcHIiLCJjb25maWdVcmwiOiJodHRwczovL2FwaS5zYW5kYm94LmJyYWludHJlZWdhdGV3YXkuY29tOjQ0My9tZXJjaGFudHMvMzQ4cGs5Y2dmM2JneXcyYi9jbGllbnRfYXBpL3YxL2NvbmZpZ3VyYXRpb24iLCJjaGFsbGVuZ2VzIjpbXSwiZW52aXJvbm1lbnQiOiJzYW5kYm94IiwiY2xpZW50QXBpVXJsIjoiaHR0cHM6Ly9hcGkuc2FuZGJveC5icmFpbnRyZWVnYXRld2F5LmNvbTo0NDMvbWVyY2hhbnRzLzM0OHBrOWNnZjNiZ3l3MmIvY2xpZW50X2FwaSIsImFzc2V0c1VybCI6Imh0dHBzOi8vYXNzZXRzLmJyYWludHJlZWdhdGV3YXkuY29tIiwiYXV0aFVybCI6Imh0dHBzOi8vYXV0aC52ZW5tby5zYW5kYm94LmJyYWludHJlZWdhdGV3YXkuY29tIiwiYW5hbHl0aWNzIjp7InVybCI6Imh0dHBzOi8vY2xpZW50LWFuYWx5dGljcy5zYW5kYm94LmJyYWludHJlZWdhdGV3YXkuY29tLzM0OHBrOWNnZjNiZ3l3MmIifSwidGhyZWVEU2VjdXJlRW5hYmxlZCI6dHJ1ZSwicGF5cGFsRW5hYmxlZCI6dHJ1ZSwicGF5cGFsIjp7ImRpc3BsYXlOYW1lIjoiQWNtZSBXaWRnZXRzLCBMdGQuIChTYW5kYm94KSIsImNsaWVudElkIjpudWxsLCJwcml2YWN5VXJsIjoiaHR0cDovL2V4YW1wbGUuY29tL3BwIiwidXNlckFncmVlbWVudFVybCI6Imh0dHA6Ly9leGFtcGxlLmNvbS90b3MiLCJiYXNlVXJsIjoiaHR0cHM6Ly9hc3NldHMuYnJhaW50cmVlZ2F0ZXdheS5jb20iLCJhc3NldHNVcmwiOiJodHRwczovL2NoZWNrb3V0LnBheXBhbC5jb20iLCJkaXJlY3RCYXNlVXJsIjpudWxsLCJhbGxvd0h0dHAiOnRydWUsImVudmlyb25tZW50Tm9OZXR3b3JrIjp0cnVlLCJlbnZpcm9ubWVudCI6Im9mZmxpbmUiLCJ1bnZldHRlZE1lcmNoYW50IjpmYWxzZSwiYnJhaW50cmVlQ2xpZW50SWQiOiJtYXN0ZXJjbGllbnQzIiwiYmlsbGluZ0FncmVlbWVudHNFbmFibGVkIjp0cnVlLCJtZXJjaGFudEFjY291bnRJZCI6ImFjbWV3aWRnZXRzbHRkc2FuZGJveCIsImN1cnJlbmN5SXNvQ29kZSI6IlVTRCJ9LCJtZXJjaGFudElkIjoiMzQ4cGs5Y2dmM2JneXcyYiIsInZlbm1vIjoib2ZmIn0=");
         startActivityForResult(dropInRequest.getIntent(rootView.getContext()), REQUEST_CODE);
+
     }
 
 
@@ -199,7 +203,7 @@ public class PaymentFragment extends Fragment implements MainActivity.UserDBList
                 String num = confirmationNumber();
                 Date date = Calendar.getInstance().getTime();
                 String month = date.toString().substring(4, 7);
-                PaymentHistoryModel payment = new PaymentHistoryModel(month, "$" + textView.getText().toString(), num);
+                TenantPaymentHistoryModel payment = new TenantPaymentHistoryModel(month, "$" + textView.getText().toString(), num);
                 db.upLoadRent(payment);
                 popUp(editText.getText().toString(), num);
 
@@ -234,6 +238,8 @@ public class PaymentFragment extends Fragment implements MainActivity.UserDBList
                 }
         );
     }
+
+
 
 //    void vault() {
 //        DropInResult.fetchDropInResult(rootView.getContext(), clientToken, new DropInResult.DropInResultListener() {

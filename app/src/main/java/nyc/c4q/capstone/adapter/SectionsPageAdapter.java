@@ -7,10 +7,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import nyc.c4q.capstone.BottomNavFragment.DashBoardFragment;
-import nyc.c4q.capstone.BottomNavFragment.DocsFragment;
-import nyc.c4q.capstone.BottomNavFragment.MaintanceFragment;
-import nyc.c4q.capstone.BottomNavFragment.PaymentFragment;
+import nyc.c4q.capstone.TenantBottomNavFragment.DashBoardFragment;
+import nyc.c4q.capstone.TenantBottomNavFragment.DocsFragment;
+import nyc.c4q.capstone.TenantBottomNavFragment.MaintanceFragment;
+import nyc.c4q.capstone.TenantBottomNavFragment.PaymentFragment;
 
 /**
  * Created by jervon.arnoldd on 3/18/18.

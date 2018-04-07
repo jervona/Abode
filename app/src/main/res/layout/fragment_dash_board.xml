@@ -7,7 +7,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:context="nyc.c4q.capstone.BottomNavFragment.DashBoardFragment">
+    tools:context="nyc.c4q.capstone.TenantBottomNavFragment.DashBoardFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"

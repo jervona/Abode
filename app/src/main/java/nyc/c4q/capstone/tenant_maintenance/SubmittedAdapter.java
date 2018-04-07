@@ -1,4 +1,4 @@
-package nyc.c4q.capstone.maintenance;
+package nyc.c4q.capstone.tenant_maintenance;
 
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;

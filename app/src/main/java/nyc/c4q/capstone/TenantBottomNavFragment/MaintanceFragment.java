@@ -1,4 +1,4 @@
-package nyc.c4q.capstone.BottomNavFragment;
+package nyc.c4q.capstone.TenantBottomNavFragment;
 
 
 import android.app.NotificationManager;
@@ -41,8 +41,8 @@ import nyc.c4q.capstone.R;
 import nyc.c4q.capstone.database.TenantDataBaseHelper;
 import nyc.c4q.capstone.datamodels.Tickets;
 import nyc.c4q.capstone.datamodels.UserInfo;
-import nyc.c4q.capstone.maintenance.NewRequestFragment;
-import nyc.c4q.capstone.maintenance.SubmittedAdapter;
+import nyc.c4q.capstone.tenant_maintenance.NewRequestFragment;
+import nyc.c4q.capstone.tenant_maintenance.SubmittedAdapter;
 
 
 /**

@@ -1,4 +1,4 @@
-package nyc.c4q.capstone.payment_history_package.landlord_pay_package;
+package nyc.c4q.capstone.payment_history_packages.landlord_pay_package;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

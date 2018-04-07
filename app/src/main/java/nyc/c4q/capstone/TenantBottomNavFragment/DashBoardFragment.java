@@ -1,4 +1,4 @@
-package nyc.c4q.capstone.BottomNavFragment;
+package nyc.c4q.capstone.TenantBottomNavFragment;
 
 
 import android.content.Intent;
@@ -25,8 +25,8 @@ import java.util.List;
 
 import nyc.c4q.capstone.MainActivity;
 import nyc.c4q.capstone.R;
-import nyc.c4q.capstone.dash_controller.DashAdapter;
-import nyc.c4q.capstone.dash_controller.DashRvModel;
+import nyc.c4q.capstone.tenant_resource_controller.DashAdapter;
+import nyc.c4q.capstone.tenant_resource_controller.DashRvModel;
 import nyc.c4q.capstone.database.TenantDataBaseHelper;
 import nyc.c4q.capstone.datamodels.Tickets;
 import nyc.c4q.capstone.datamodels.UserInfo;
