@@ -15,7 +15,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -67,8 +66,7 @@
             <Button android:id="@+id/paypal_button"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:text="@string/paypal_button"
-                />
+                android:text="@string/paypal_button" />
 
         </LinearLayout>
 
