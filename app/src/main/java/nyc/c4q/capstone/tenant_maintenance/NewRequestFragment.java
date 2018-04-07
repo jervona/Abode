@@ -227,7 +227,6 @@ public class NewRequestFragment extends Fragment {
     @Override
     public void onDestroy() {
         actionBar.setDisplayHomeAsUpEnabled(false);
-
         super.onDestroy();
     }
 }

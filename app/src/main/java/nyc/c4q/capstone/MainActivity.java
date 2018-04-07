@@ -7,14 +7,18 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
+import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -38,10 +42,9 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.container)
     ViewPager viewPager;
     @BindView(R.id.bottom_navigation)
-    public AHBottomNavigation bottom;
+    AHBottomNavigation bottom;
     @BindView(R.id.progressBar)
     ProgressBar bar;
-    private ArrayList<AHBottomNavigationItem> items = new ArrayList<>();
 
     private static final String TAG = "MainActivity";
     public static final String ANONYMOUS = "anonymous";
@@ -51,9 +54,9 @@ public class MainActivity extends AppCompatActivity
     private SharedPreferences preferences;
     public static GoogleApiClient googleApiClient;
     SectionsPageAdapter adapter;
-
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     TenantDataBaseHelper db;
+    AHBottomNavigationAdapter navigationAdapter;
 
 
     @Override
@@ -61,17 +64,12 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        bottom = findViewById(R.id.bottom_navigation);
-
         adapter = new SectionsPageAdapter(getSupportFragmentManager());
         db = TenantDataBaseHelper.getInstance(database);
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
         mUsername = ANONYMOUS;
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
         checkSignIn();
-//        viewPager.setVisibility(View.GONE);
-//        viewPager.setVisibility(View.GONE);
     }
 
     public void checkSignIn() {
@@ -82,22 +80,28 @@ public class MainActivity extends AppCompatActivity
         } else {
             mUsername = firebaseUser.getDisplayName();
             Log.e("User", firebaseUser.getUid());
+            bar.setVisibility(View.VISIBLE);
             db.getUserInfoFromDataBase(firebaseUser.getUid(), new UserDBListener() {
                 @Override
                 public void delegateUser(UserInfo user) {
                     switch (user.getStatus()) {
                         case "Tenant":
+                            bar.setVisibility(View.GONE);
                             setupViewPager(viewPager,user.getStatus());
-                            setBottomNav(setTenantBottomNav());
+                            navigationAdapter = new AHBottomNavigationAdapter(MainActivity.this, R.menu.tenant_bottom_nav);
+                            navigationAdapter.setupWithBottomNavigation(bottom);
+                            setBottomNav();
                             break;
                         case "PM":
                             setupViewPager(viewPager,user.getStatus());
-                            setBottomNav(setPMBottomNav());
+                            navigationAdapter = new AHBottomNavigationAdapter(MainActivity.this, R.menu.pm_bottom_nav);
+                            navigationAdapter.setupWithBottomNavigation(bottom);
+                            setBottomNav();
                             break;
                     }
                 }
             });
-//            bar.setVisibility(View.VISIBLE);
+
         }
         googleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
@@ -109,27 +113,23 @@ public class MainActivity extends AppCompatActivity
         void delegateUser(UserInfo user);
     }
 
-    public void setBottomNav(ArrayList<AHBottomNavigationItem> items) {
-        bottom.addItems(items);
+    public void setBottomNav() {
         bottom.setCurrentItem(0);
         bottom.setDefaultBackgroundColor(Color.WHITE);
         bottom.setAccentColor(Color.BLACK);
-//        bottom.setAccentColor(Color.parseColor("#52c7b8"));
-//        bottom.setColoredModeColors(Color.WHITE,Color.BLACK);
-//        bottom.setAccentColor(Color.parseColor("#52c7b8"));
         bottom.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
             public boolean onTabSelected(int position, boolean wasSelected) {
                 try {
                     viewPager.setCurrentItem(position);
                     bottom.setCurrentItem(position, wasSelected);
-                    Log.e(TAG, adapter.getCount() + "");
                 } catch (StackOverflowError e) {
                     Log.e("Caught Error", e.getMessage());
                 }
                 return false;
             }
         });
+//        bottom.setNotification("10", 2);
     }
 
     private void setupViewPager(ViewPager viewPager,String status) {
@@ -143,27 +143,4 @@ public class MainActivity extends AppCompatActivity
         Log.d(TAG, "onConnectionFailed:" + connectionResult);
         Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
     }
-
-
-    private ArrayList<AHBottomNavigationItem> setTenantBottomNav(){
-        ArrayList<AHBottomNavigationItem> tenant = new ArrayList<>();
-        tenant.add(new AHBottomNavigationItem("DashBoard", R.drawable.dash));
-        tenant.add(new AHBottomNavigationItem("Payment", R.drawable.payment));
-        tenant.add(new AHBottomNavigationItem("Maintenance", R.drawable.maintenance));
-        return tenant;
-    }
-
-    private ArrayList<AHBottomNavigationItem> setPMBottomNav(){
-        ArrayList<AHBottomNavigationItem> pm = new ArrayList<>();
-        pm.add(new AHBottomNavigationItem("DashBoard", R.drawable.dash));
-        pm.add(new AHBottomNavigationItem("Payment", R.drawable.payment));
-        pm.add(new AHBottomNavigationItem("Maintenance", R.drawable.maintenance));
-        pm.add(new AHBottomNavigationItem("Docs", R.mipmap.building));
-        return pm;
-    }
-
-
-
-
-
 }

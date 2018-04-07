@@ -89,7 +89,7 @@ public class MaintanceFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         db = TenantDataBaseHelper.getInstance(FirebaseDatabase.getInstance());
-        adapter = new SubmittedAdapter(ticketsList);
+        adapter = new SubmittedAdapter(db.getTicketsList());
         recyclerView.setAdapter(adapter);
         updateList();
     }
@@ -116,14 +116,6 @@ public class MaintanceFragment extends Fragment {
     }
 
     public void updateList() {
-       MainActivity.UserDBListener yoo = new MainActivity.UserDBListener() {
-           @Override
-           public void delegateUser(UserInfo user) {
-               Log.e("Main",user.getFirst_name());
-           }
-       };
-
-        Log.e(TAG, "updateList: "+String.valueOf(db.getUser().getBuilding_id()));
         data.getReference().child("Maintenance").child(String.valueOf(db.getUser().getBuilding_id())).child(db.getUser().getAPT()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -132,7 +124,9 @@ public class MaintanceFragment extends Fragment {
                 if (ticketsList != null) {
                     Collections.reverse(ticketsList);
                     adapter.updateTicketListItems(ticketsList);
+
                 }
+
             }
 
             @Override
@@ -142,7 +136,7 @@ public class MaintanceFragment extends Fragment {
         });
     }
 
-    public void sendNotification(String a) {
+    public void sendNotification() {
         Intent intent = new Intent(rootView.getContext().getApplicationContext(), MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(rootView.getContext().getApplicationContext(), NOTIFICATION_ID, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         NotificationManager notificationManager = (NotificationManager) rootView.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
