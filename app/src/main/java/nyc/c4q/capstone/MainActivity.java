@@ -8,11 +8,15 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
@@ -58,6 +62,9 @@ public class MainActivity extends AppCompatActivity
     TenantDataBaseHelper db;
     AHBottomNavigationAdapter navigationAdapter;
 
+    RelativeLayout.LayoutParams layoutparams;
+    TextView textview;
+
 
     RecyclerView recyclerView;
 
@@ -77,6 +84,7 @@ public class MainActivity extends AppCompatActivity
         fab = findViewById(R.id.fab);
         checkSignIn();
         setBottomNav();
+        setAppBar();
     }
 
     public void checkSignIn() {
@@ -131,9 +139,9 @@ public class MainActivity extends AppCompatActivity
                 try {
                     viewPager.setCurrentItem(position);
                     bottom.setCurrentItem(position, wasSelected);
-                    if(position==2){
+                    if (position == 2) {
                         fab.setVisibility(View.VISIBLE);
-                    } else{
+                    } else {
                         fab.setVisibility(View.GONE);
                     }
                 } catch (StackOverflowError e) {
@@ -167,5 +175,19 @@ public class MainActivity extends AppCompatActivity
                 bottom.setCurrentItem(2);
                 break;
         }
+    }
+
+    public void setAppBar() {
+        ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+        layoutparams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        textview = new TextView(getApplicationContext());
+        textview.setLayoutParams(layoutparams);
+        textview.setText(getResources().getString(R.string.app_name));
+        textview.setTextColor(Color.WHITE);
+        textview.setGravity(Gravity.CENTER);
+        textview.setTextSize(20);
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        actionBar.setCustomView(textview);
     }
 }
