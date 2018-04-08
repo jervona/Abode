@@ -7,10 +7,14 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import nyc.c4q.capstone.LandlordDashBoard;
+import nyc.c4q.capstone.LandlordMaintenance;
 import nyc.c4q.capstone.TenantBottomNavFragment.DashBoardFragment;
 import nyc.c4q.capstone.TenantBottomNavFragment.DocsFragment;
 import nyc.c4q.capstone.TenantBottomNavFragment.MaintanceFragment;
 import nyc.c4q.capstone.TenantBottomNavFragment.PaymentFragment;
+import nyc.c4q.capstone.payment_history_packages.landlord_pay_package.LandlordPay_Fragment;
+
 
 /**
  * Created by jervon.arnoldd on 3/18/18.
@@ -27,9 +31,9 @@ public class SectionsPageAdapter extends FragmentPagerAdapter {
                 mFragmentList.add(new MaintanceFragment());
                 break;
             case "PM":
-                mFragmentList.add(new DashBoardFragment());
-                mFragmentList.add(new PaymentFragment());
-                mFragmentList.add(new MaintanceFragment());
+                mFragmentList.add(new LandlordDashBoard());
+                mFragmentList.add(new LandlordPay_Fragment());
+                mFragmentList.add(new LandlordMaintenance());
                 mFragmentList.add(new DocsFragment());
                 break;
         }
