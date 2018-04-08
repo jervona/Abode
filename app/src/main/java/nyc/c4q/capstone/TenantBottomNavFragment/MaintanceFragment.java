@@ -68,7 +68,6 @@ public class MaintanceFragment extends Fragment {
     String TAG = "MaintenanceFragment";
     List<Tickets> ticketsList;
     FirebaseDatabase data = FirebaseDatabase.getInstance();
-
     private static final int NOTIFICATION_ID = 555;
     String NOTIFICATION_CHANNEL = "C4Q Notifications";
     FirebaseStorage storage = FirebaseStorage.getInstance();
