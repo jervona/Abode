@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +25,7 @@ import com.braintreepayments.api.dropin.DropInRequest;
 import com.braintreepayments.api.dropin.DropInResult;
 import com.braintreepayments.api.models.PaymentMethodNonce;
 import com.github.clans.fab.FloatingActionButton;
+import com.google.android.gms.common.SignInButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -48,6 +50,7 @@ import cz.msebera.android.httpclient.Header;
 import nyc.c4q.capstone.MainActivity;
 import nyc.c4q.capstone.R;
 import nyc.c4q.capstone.database.TenantDataBaseHelper;
+import nyc.c4q.capstone.signupactivites.SignInActivity;
 import tenant_data_models.TenantPaymentHistoryModel;
 import nyc.c4q.capstone.datamodels.UserInfo;
 import nyc.c4q.capstone.payment_history_packages.tenant_pay_package.Tenant_Pay_Adapter;
@@ -59,6 +62,8 @@ import nyc.c4q.capstone.payment_history_packages.tenant_pay_package.Tenant_Pay_A
 public class PaymentFragment extends Fragment implements MainActivity.UserDBListener {
 
     private View rootView;
+
+    Dialog confirmationPopup;
 
     @BindView(R.id.balance)
     TextView textView;
@@ -118,19 +123,19 @@ public class PaymentFragment extends Fragment implements MainActivity.UserDBList
         return confirmation;
     }
 
-    @OnClick(R.id.pay_button)
-    public void makePayment() {
-        String num = confirmationNumber();
-        if (!editText.getText().toString().isEmpty()) {
-            Date date = Calendar.getInstance().getTime();
-            String month = date.toString().substring(4, 7);
-            TenantPaymentHistoryModel payment = new TenantPaymentHistoryModel(month, "$" + editText.getText().toString(), num);
-            db.upLoadRent(payment);
-            popUp(editText.getText().toString(), num);
-        } else {
-            Toast.makeText(rootView.getContext(), "Please Enter an Amount", Toast.LENGTH_SHORT).show();
-        }
-    }
+//    @OnClick(R.id.pay_button)
+//    public void makePayment() {
+//        String num = confirmationNumber();
+//        if (!editText.getText().toString().isEmpty()) {
+//            Date date = Calendar.getInstance().getTime();
+//            String month = date.toString().substring(4, 7);
+//            TenantPaymentHistoryModel payment = new TenantPaymentHistoryModel(month, "$" + editText.getText().toString(), num);
+//            db.upLoadRent(payment);
+//            popUp(editText.getText().toString(), num);
+//        } else {
+//            Toast.makeText(rootView.getContext(), "Please Enter an Amount", Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
     public void updateList() throws NullPointerException {
 
@@ -154,15 +159,16 @@ public class PaymentFragment extends Fragment implements MainActivity.UserDBList
         });
     }
 
-    public void popUp(String s, String num) {
-        Dialog dialog = new Dialog(rootView.getContext());
-        dialog.setContentView(R.layout.fragment_pay);
-        dialog.setTitle("    Payment Confirmation");
-        TextView confirmation = (TextView) dialog.findViewById(R.id.confirmation);
-        TextView amount = (TextView) dialog.findViewById(R.id.amount_paid);
-        confirmation.setText(num);
-        amount.setText(s);
-        dialog.show();
+    public void popUp(String amountPay, String confirmationNum) {
+        confirmationPopup = new Dialog(rootView.getContext());
+        confirmationPopup.setTitle("    Payment Confirmation");
+        View view = getLayoutInflater().inflate(R.layout.fragment_pay, null);
+        final TextView confirmation = (TextView) view.findViewById(R.id.confirmation);
+        final TextView amount = (TextView) view.findViewById(R.id.amount_paid);
+        confirmation.setText(confirmationNum);
+        amount.setText(amountPay);
+        confirmationPopup.setContentView(view);
+        confirmationPopup.show();
     }
 
     public void testing() {
@@ -201,9 +207,9 @@ public class PaymentFragment extends Fragment implements MainActivity.UserDBList
                 String num = confirmationNumber();
                 Date date = Calendar.getInstance().getTime();
                 String month = date.toString().substring(4, 7);
-                TenantPaymentHistoryModel payment = new TenantPaymentHistoryModel(month, "$" + textView.getText().toString(), num);
+                TenantPaymentHistoryModel payment = new TenantPaymentHistoryModel(month, "$" + editText.getText().toString(), num);
                 db.upLoadRent(payment);
-                popUp(editText.getText().toString(), num);
+                popUp("$" + editText.getText().toString(), num);
 
                 // use the result to update your UI and send the payment method nonce to your server
             } else if (resultCode == Activity.RESULT_CANCELED) {

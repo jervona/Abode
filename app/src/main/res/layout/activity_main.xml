@@ -20,8 +20,10 @@
         android:layout_gravity="right|bottom"
         android:layout_marginBottom="70dp"
         android:src="@drawable/ic_add"
+        app:tint="@color/colorAccent"
         android:visibility="gone"
-        app:useCompatPadding="true" />
+        app:useCompatPadding="true"
+        android:backgroundTint="@color/colorAccent"/>
 
     <com.aurelhubert.ahbottomnavigation.AHBottomNavigation
         android:id="@+id/bottom_navigation"
