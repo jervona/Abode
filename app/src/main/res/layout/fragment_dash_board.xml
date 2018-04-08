@@ -55,7 +55,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Current Balance Due May 1st: $1,200"
+                    android:text="Current Balance Due 5/1/18: $1,200"
                     android:textColor="#1DBFA1"
                     android:textStyle="bold" />
 
@@ -64,13 +64,14 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:text="Previous Payment Received April 1st: $1,200"
+                    android:text="Previous Payment Received 4/1/18: $1,200"
                     android:textColor="@android:color/darker_gray" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Pay Now"
+                    android:textStyle="bold"
                     android:textColor="@color/colorPrimaryYellow"/>
             </LinearLayout>
         </android.support.v7.widget.CardView>
