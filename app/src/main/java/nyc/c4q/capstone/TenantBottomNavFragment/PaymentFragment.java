@@ -164,9 +164,9 @@ public class PaymentFragment extends Fragment implements MainActivity.UserDBList
         confirmationPopup.setTitle("    Payment Confirmation");
         View view = getLayoutInflater().inflate(R.layout.fragment_pay, null);
         final TextView confirmation = (TextView) view.findViewById(R.id.confirmation);
-        final TextView amount = (TextView) view.findViewById(R.id.amount_paid);
+//        final TextView amount = (TextView) view.findViewById(R.id.amount_paid);
         confirmation.setText(confirmationNum);
-        amount.setText(amountPay);
+//        amount.setText(amountPay);
         confirmationPopup.setContentView(view);
         confirmationPopup.show();
     }
@@ -206,6 +206,8 @@ public class PaymentFragment extends Fragment implements MainActivity.UserDBList
                 Log.e("mylog", "Result: " + stringNonce);
                 String num = confirmationNumber();
                 Date date = Calendar.getInstance().getTime();
+                String hello =data.toString();
+                Log.e("Date",hello);
                 String month = date.toString().substring(4, 7);
                 TenantPaymentHistoryModel payment = new TenantPaymentHistoryModel(month, "$" + editText.getText().toString(), num);
                 db.upLoadRent(payment);
