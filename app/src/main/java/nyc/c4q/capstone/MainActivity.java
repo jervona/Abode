@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -62,9 +61,8 @@ public class MainActivity extends AppCompatActivity
     TenantDataBaseHelper db;
     AHBottomNavigationAdapter navigationAdapter;
 
-    RelativeLayout.LayoutParams layoutparams;
     TextView textview;
-
+    RelativeLayout.LayoutParams layoutparams;
 
     RecyclerView recyclerView;
 
@@ -74,7 +72,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
+        setAppBar();
         adapter = new SectionsPageAdapter(getSupportFragmentManager());
         db = TenantDataBaseHelper.getInstance(database);
         mUsername = ANONYMOUS;

@@ -24,7 +24,6 @@ public class TenantPaymentHistoryModel {
         return month;
     }
 
-
     public String getAmount_paid() {
         return amount_paid;
     }
@@ -32,8 +31,6 @@ public class TenantPaymentHistoryModel {
     public String getConf(){
         return conf;
     }
-
-
 }
 
 

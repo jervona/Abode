@@ -24,6 +24,7 @@ import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.github.clans.fab.FloatingActionButton;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
@@ -64,7 +65,6 @@ public class NewRequestFragment extends Fragment {
     @BindView(R.id.image_request_rv)
     RecyclerView rv;
 
-
     ActionBar actionBar;
     int userPriority;
 
@@ -80,7 +80,7 @@ public class NewRequestFragment extends Fragment {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     Bundle bundle;
     FloatingActionButton fab;
-
+    AHBottomNavigation bottom;
 
     public NewRequestFragment() {
         // Required empty public constructor
@@ -96,6 +96,9 @@ public class NewRequestFragment extends Fragment {
         setupActionBar();
         fab = getActivity().findViewById(R.id.fab);
         fab.setVisibility(View.GONE);
+        bottom = getActivity().findViewById(R.id.bottom_navigation);
+        bottom.setVisibility(View.GONE);
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(rootView.getContext(), R.array.location_options, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         locationSpinner.setAdapter(adapter);
@@ -232,6 +235,7 @@ public class NewRequestFragment extends Fragment {
     public void onDestroy() {
         fab.setVisibility(View.VISIBLE);
         actionBar.setDisplayHomeAsUpEnabled(false);
+        bottom.setVisibility(View.VISIBLE);
         super.onDestroy();
     }
 }
