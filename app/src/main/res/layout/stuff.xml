@@ -6,207 +6,88 @@
     android:layout_height="match_parent"
     tools:layout_editor_absoluteY="81dp">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/pay"
-        android:layout_width="340dp"
-        android:layout_height="150dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:onClick="onClick"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/amount_paid"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical">
+            android:text="Thank You"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryYellow"
+            android:textSize="30sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Payments"
-                android:textStyle="bold" />
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_gravity="center"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="43dp"
+            android:background="@drawable/success"
+            android:foregroundGravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/paydash" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_margin="10dp"
-                android:background="@color/lightgray" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Current Balance Due May 1st: $1,200"
-                android:textColor="#1DBFA1"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="5dp"
-                android:text="Previous Payment Received April 1st: $1,200"
-                android:textColor="@android:color/darker_gray" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pay Now"
-                android:textColor="@color/colorPrimaryYellow" />
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
-
-
-    <android.support.v7.widget.CardView
-        android:id="@+id/maintenance_card"
-        android:layout_width="160dp"
-        android:layout_height="190dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="2dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:onClick="onClick"
-        app:layout_constraintEnd_toStartOf="@+id/cardView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pay">
-
-        <LinearLayout
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="108dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Payment Received"
+            android:textSize="20sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="4dp"
-                android:text="@string/maintenance_requests"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:background="@drawable/maintdash"
-                android:padding="10dp" />
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_margin="10dp"
-                android:background="@color/lightgray" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="Pending Tickets"
-                android:textColor="@android:color/darker_gray" />
-
-            <TextView
-
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="Scheduled Tickets"
-                android:textColor="@android:color/darker_gray" />
-
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
-
-
-    <android.support.v7.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="160dp"
-        android:layout_height="190dp"
-        android:layout_marginEnd="22dp"
-        android:layout_marginTop="8dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pay">
-
-        <LinearLayout
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="136dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Confirmation Code:"
+            android:textSize="25sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="4dp"
-                android:text="@string/documents"
-                android:textStyle="bold" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="171dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="@string/confirmation"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:background="@drawable/docdash"
-                android:padding="10dp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_margin="10dp"
-                android:background="@color/lightgray" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="5dp"
-                android:text="@string/click_here_for_lease_agreement"
-                android:textColor="@android:color/darker_gray" />
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
-
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="208dp"
-        android:gravity="center"
-        android:text="@string/building_resources"
-        android:textAlignment="center"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/cardView"
-        app:layout_constraintHorizontal_bias="0.483"
-        app:layout_constraintStart_toStartOf="@+id/maintenance_card"
-        app:layout_constraintTop_toBottomOf="@+id/pay" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/my_recycler_view"
-        android:layout_width="350dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="10dp"
-        android:scrollbars="horizontal"
-        app:layout_constraintEnd_toEndOf="@+id/cardView"
-        app:layout_constraintStart_toStartOf="@+id/maintenance_card"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+    </android.support.constraint.ConstraintLayout>
 
 
 </android.support.constraint.ConstraintLayout>
