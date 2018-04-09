@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context="nyc.c4q.capstone.MainActivity">
 
-
     <com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager
         android:id="@+id/container"
         android:layout_width="match_parent"
@@ -21,6 +20,7 @@
         android:layout_marginBottom="70dp"
         android:src="@drawable/ic_add"
 
+        app:tint="@color/colorAccent"
         android:visibility="gone"
         app:useCompatPadding="true"
         app:fab_colorNormal="@color/colorAccent"/>

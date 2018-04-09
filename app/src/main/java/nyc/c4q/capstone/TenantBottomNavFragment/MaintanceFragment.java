@@ -56,7 +56,7 @@ public class MaintanceFragment extends Fragment {
     @BindView(R.id.ticket_rv)
     RecyclerView recyclerView;
     AHBottomNavigation bottom;
-    //    @BindView(R.id.fab)
+
     FloatingActionButton fab;
 
     LinearLayoutManager layoutManager;
@@ -82,7 +82,7 @@ public class MaintanceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_maintenance, container, false);
-        bottom = getActivity().findViewById(R.id.bottom_navigation);
+        bottom = ((MainActivity)getActivity())          .findViewById(R.id.bottom_navigation);
         fab = getActivity().findViewById(R.id.fab);
         ButterKnife.bind(this, rootView);
 

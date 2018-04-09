@@ -32,6 +32,8 @@
     <string name="dashboard">DashBoard</string>
     <string name="payment">Payment</string>
     <string name="maintenance">Maintenance</string>
+    <string name="pay">Pay</string>
+
 
     <string-array name="location_options">
         <item>Bathroom</item>

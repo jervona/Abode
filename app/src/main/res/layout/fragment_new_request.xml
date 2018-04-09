@@ -1,193 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/new_request_frag"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical"
-    tools:context="nyc.c4q.capstone.tenant_maintenance.NewRequestFragment">
+    android:background="@color/white">
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <EditText
             android:id="@+id/subject_title_view"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/transparent"
+            android:elevation="2dp"
             android:hint="@string/subject_title"
             android:maxLines="1"
-            android:gravity="center"
-            android:background="@color/transparent"
-            android:elevation="2dp"/>
-
-        <View
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:padding="10dp"
-            android:background="@color/lightgray"/>
-
-
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/priority_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="42dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:gravity="center"
-            android:text="@string/priority_level" />
-
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="horizontal">-->
-
-            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:id="@+id/radio_priority"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/radio_urgent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/urgent"/>
-
-                <RadioButton
-                    android:id="@+id/radio_moderate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/moderate"/>
-
-            </RadioGroup>
+            android:text="@string/priority_level"
+            app:layout_constraintEnd_toEndOf="@+id/subject_title_view"
+            app:layout_constraintStart_toStartOf="@+id/subject_title_view"
+            app:layout_constraintTop_toBottomOf="@+id/subject_title_view" />
 
 
-        <View
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:padding="10dp"
-            android:background="@color/lightgray"/>
-
-            <!--<android.support.v7.widget.AppCompatCheckBox-->
-                <!--android:id="@+id/urgent_checkbox"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_weight="1"-->
-                <!--android:text="Urgent"/>-->
-
-            <!--<android.support.v7.widget.AppCompatCheckBox-->
-                <!--android:id="@+id/moderate_checkbox"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_weight="1"-->
-                <!--android:text="Moderate"/>-->
-
-        <!--</LinearLayout>-->
-
-        <LinearLayout
-            android:layout_margin="18dp"
-            android:layout_width="match_parent"
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/radio_priority"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@+id/priority_view"
+            app:layout_constraintStart_toStartOf="@+id/priority_view"
+            app:layout_constraintTop_toBottomOf="@+id/priority_view">
 
-            <TextView
-                android:id="@+id/repair_location_view"
+            <RadioButton
+                android:id="@+id/radio_urgent"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:textAlignment="center"
-                android:layout_weight="1"
-                android:text="Location: "/>
-            <Spinner
-                android:id="@+id/location_spinner"
-                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"/>
+                android:layout_weight="1"
+                android:text="@string/urgent" />
 
+            <RadioButton
+                android:id="@+id/radio_moderate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/moderate" />
 
-        </LinearLayout>
+        </RadioGroup>
 
-        <View
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:padding="10dp"
-            android:background="@color/lightgray"/>
 
         <TextView
-            android:layout_margin="15dp"
+            android:id="@+id/repair_location_view"
+            android:layout_width="84dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="Location: "
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="@+id/radio_priority"
+            app:layout_constraintTop_toBottomOf="@+id/radio_priority" />
+
+        <Spinner
+            android:id="@+id/location_spinner"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="68dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="2"
+            app:layout_constraintStart_toEndOf="@+id/repair_location_view"
+            app:layout_constraintTop_toBottomOf="@+id/radio_priority" />
+
+        <TextView
             android:id="@+id/repair_description_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Description"/>
+            android:layout_height="21dp"
+            android:layout_margin="15dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="8dp"
+            android:text="Description"
+            app:layout_constraintEnd_toEndOf="@+id/priority_view"
+            app:layout_constraintTop_toBottomOf="@+id/repair_location_view" />
+
 
         <EditText
-            android:layout_margin="10dp"
             android:id="@+id/user_description_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="top|start"
+            android:layout_margin="10dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
             android:background="@color/transparent"
-            android:inputType="textMultiLine"
-            android:hint="What seems to be the problem?"
             android:ems="10"
+            android:gravity="top|start"
+            android:hint="What seems to be the problem?"
+            android:inputType="textMultiLine"
             android:lines="6"
             android:maxLength="140"
-            />
+            app:layout_constraintEnd_toEndOf="@+id/radio_priority"
+            app:layout_constraintStart_toStartOf="@+id/radio_priority"
+            app:layout_constraintTop_toBottomOf="@+id/repair_description_view" />
 
 
-        <View
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:padding="10dp"
-            android:background="@color/lightgray"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/image_request_rv"
+            android:layout_width="330dp"
+            android:layout_height="100dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/user_description_view"
+            app:layout_constraintHorizontal_bias="0.8"
+            app:layout_constraintStart_toEndOf="@+id/add_photo_button"
+            app:layout_constraintTop_toBottomOf="@+id/user_description_view">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-
-
-            <ImageView
-                android:id="@+id/add_photo_button"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                ads:srcCompat="@drawable/ic_photo_camera_black_24dp"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/image_request_rv"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                </android.support.v7.widget.RecyclerView>
-
-            </LinearLayout>
-
-        </LinearLayout>
+        </android.support.v7.widget.RecyclerView>
 
         <Button
             android:id="@+id/submit_request_button"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Submit"/>
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="108dp"
+            android:text="Submit"
+            app:layout_constraintEnd_toEndOf="@+id/image_request_rv"
+            app:layout_constraintHorizontal_bias="0.526"
+            app:layout_constraintStart_toStartOf="@+id/add_photo_button"
+            app:layout_constraintTop_toBottomOf="@+id/user_description_view" />
 
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/add_photo_button"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@+id/user_description_view"
+            app:layout_constraintTop_toBottomOf="@+id/user_description_view"
+            app:srcCompat="@drawable/ic_photo_camera_black_24dp" />
+    </android.support.constraint.ConstraintLayout>
+
 
 </FrameLayout>
