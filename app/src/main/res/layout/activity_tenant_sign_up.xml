@@ -23,64 +23,66 @@
         android:id="@+id/tenantTitle"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:textSize="20sp"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
         android:text="Tenant Sign-Up Page "/>
 
         <EditText
             android:id="@+id/tenant_firstname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:hint="First Name"/>
 
         <EditText
             android:id="@+id/tenant_lastname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:hint="Last Name"/>
         <EditText
             android:id="@+id/tenant_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:hint="Email"/>
 
         <EditText
             android:id="@+id/tenant_aptNum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
-            android:textAllCaps="true"
+            android:textSize="20sp"
             android:hint="Apartment Number"/>
 
         <EditText
             android:id="@+id/tenant_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:hint="Phone Number"/>
+
 
         <EditText
             android:id="@+id/tenantPW"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:textSize="20sp"
+            android:inputType="textPassword"
             android:hint="Password"/>
 
         <EditText
             android:id="@+id/tenant_confirmPW"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:textSize="20sp"
+            android:inputType="textPassword"
             android:hint="Confirm Password"/>
 
         <EditText
             android:id="@+id/verification_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:hint="Verification Code"/>
 
         <Button
@@ -88,7 +90,9 @@
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Submit"/>
+            android:text="Submit"
+            android:textColor="#FFFFFF"
+            android:background="@color/colorAccent"/>
 
     </LinearLayout>
 
