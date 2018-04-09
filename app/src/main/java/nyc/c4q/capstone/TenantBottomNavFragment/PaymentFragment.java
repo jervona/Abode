@@ -93,7 +93,6 @@ public class PaymentFragment extends Fragment implements MainActivity.UserDBList
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
-
         config = new PayPalConfiguration()
                 .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
                 .clientId(id);
@@ -150,7 +149,6 @@ public class PaymentFragment extends Fragment implements MainActivity.UserDBList
                     Collections.reverse(payments);
                     adapter.updateTicketListItems(payments);
                 }
-
             }
 
             @Override
