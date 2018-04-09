@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     card_view:cardCornerRadius="@dimen/cardview_default_radius"
+    android:background="@drawable/pending_border"
     card_view:cardUseCompatPadding="true"
     card_view:layout_constraintRight_toRightOf="parent">
 
@@ -32,10 +33,13 @@
 
         <Button
             android:id="@+id/status"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="130dp"
+            android:layout_height="30dp"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true" />
+            android:layout_alignParentTop="true"
+            android:background="@drawable/status_button"
+            android:hint="status"
+            android:textSize="10sp"/>
 
         <TextView
             android:id="@+id/title"
