@@ -62,10 +62,14 @@
 
             <Button android:id="@+id/paypal_button"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
+                android:bottomRightRadius="20dp"
+                android:bottomLeftRadius="20dp"
+                android:topLeftRadius="20dp"
+                android:topRightRadius="20dp"
                 android:text="PAY NOW"
                 android:textColor="#FFFFFF"
-                android:background="@color/colorAccent"/>
+                android:background="@drawable/selector"/>
 
         </LinearLayout>
 
