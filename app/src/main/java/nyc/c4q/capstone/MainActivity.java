@@ -188,4 +188,9 @@ public class MainActivity extends AppCompatActivity
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         actionBar.setCustomView(textview);
     }
+
+    public void enableFab(boolean enable){
+
+    }
+
 }

@@ -75,10 +75,10 @@ public class TenantDataBaseHelper {
                 assert user != null;
                 listener.delegateUser(user);
 
-              if(user.getStatus().equals("Tenant")) {
-                  String id = String.valueOf(user.getBuilding_id());
-                  getMaintenance(id, user.getAPT());
-              }
+                if (user.getStatus().equals("Tenant")) {
+                    String id = String.valueOf(user.getBuilding_id());
+                    getMaintenance(id, user.getAPT());
+                }
             }
 
             @Override

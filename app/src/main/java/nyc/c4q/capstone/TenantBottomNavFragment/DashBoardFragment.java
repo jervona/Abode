@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -25,8 +27,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import nyc.c4q.capstone.MainActivity;
 import nyc.c4q.capstone.R;
+import nyc.c4q.capstone.tenant_maintenance.NewRequestFragment;
 import nyc.c4q.capstone.tenant_resource_controller.DashAdapter;
 import nyc.c4q.capstone.tenant_resource_controller.DashRvModel;
 import nyc.c4q.capstone.database.TenantDataBaseHelper;
@@ -59,6 +64,7 @@ public class DashBoardFragment extends Fragment {
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_dash_board, container, false);
         setHasOptionsMenu(true);
+        ButterKnife.bind(this, rootView);
         resources();
         return rootView;
     }
@@ -91,6 +97,18 @@ public class DashBoardFragment extends Fragment {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+//    @OnClick(R.id.doc_cardView)
+//    public void openNewRequest() {
+//        DocsFragment docFragment = new DocsFragment();
+//        FragmentManager fragManager = getActivity().getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragManager.beginTransaction();
+//        fragmentTransaction.replace(R.id.dash_frag, docFragment).addToBackStack("maintenance frag");
+//        fragmentTransaction.commit();
+//    }
+
+
+
     public void resources() {
         RecyclerView recyclerView = rootView.findViewById(R.id.my_recycler_view);
         List<DashRvModel> models = new ArrayList<>();
