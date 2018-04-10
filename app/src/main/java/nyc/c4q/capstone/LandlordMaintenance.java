@@ -18,7 +18,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -34,12 +35,13 @@ import nyc.c4q.capstone.tenant_maintenance.SubmittedAdapter;
 public class LandlordMaintenance extends Fragment {
     View rootView;
     @BindView(R.id.landlord_maintenance_rv)
-    RecyclerView landlordRV;
-    LandlordMainAdapter adapter;
+    RecyclerView recyclerView;
+
+    SubmittedAdapter adapter;
     LinearLayoutManager layoutManager;
     FirebaseDatabase data = FirebaseDatabase.getInstance();
     TenantDataBaseHelper db;
-    List<Tickets> ticketsList;
+    private HashMap<String,List<Tickets>> ticketsList;
     String TAG = "LandlordMaintenance";
 
 
@@ -48,14 +50,14 @@ public class LandlordMaintenance extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_landlord_maintenance, container, false);
         ButterKnife.bind(this, rootView);
 
         layoutManager = new LinearLayoutManager(getContext());
-        landlordRV.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(layoutManager);
 
         return rootView;
 
@@ -65,21 +67,24 @@ public class LandlordMaintenance extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         db = TenantDataBaseHelper.getInstance(FirebaseDatabase.getInstance());
-        adapter = new LandlordMainAdapter(db.getTicketsList());
-        landlordRV.setAdapter(adapter);
-
+        adapter = new SubmittedAdapter(db.getTicketsList());
+        recyclerView.setAdapter(adapter);
+        updateList();
     }
 
     public void updateList() {
-        data.getReference().child("Maintenance").child(String.valueOf(db.getUser().getBuilding_id())).child(db.getUser().getAPT()).addValueEventListener(new ValueEventListener() {
+       final List<Tickets> hello = new ArrayList<>();
+        data.getReference().child("Maintenance").child("1521310103").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<List<Tickets>> t = new GenericTypeIndicator<List<Tickets>>() {
+                GenericTypeIndicator<HashMap<String,List<Tickets>>> t = new GenericTypeIndicator<HashMap<String,List<Tickets>>>() {
                 };
                 ticketsList = dataSnapshot.getValue(t);
                 if (ticketsList != null) {
-                    Collections.reverse(ticketsList);
-                    adapter.updateTicketListItems(ticketsList);
+                    for (String key:ticketsList.keySet()){
+                       hello.addAll(ticketsList.get(key));
+                    }
+                    adapter.updateTicketListItems(hello);
                 }
             }
 

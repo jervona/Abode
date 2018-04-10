@@ -1,9 +1,11 @@
 package nyc.c4q.capstone.signupactivites;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,6 +31,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import nyc.c4q.capstone.MainActivity;
@@ -37,7 +42,9 @@ import nyc.c4q.capstone.R;
 public class SignInActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener {
 
-
+    private static final String EMAIL_PATTERN = "^[a-zA-Z0-9#_~!$&'()*+,;=:.\"(),:;<>@\\[\\]\\\\]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*$";
+    private Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+    private Matcher matcher;
     Dialog loginBuilder;
     private FirebaseAuth firebaseAuth;
     private GoogleApiClient googleApiClient;
@@ -50,7 +57,7 @@ public class SignInActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_sign_in);
         ButterKnife.bind(this);
         setupGoogleSignIn();
-        hideSoftKeyboard();
+
     }
 
     public void setupGoogleSignIn() {
@@ -93,20 +100,32 @@ public class SignInActivity extends AppCompatActivity implements
     public void login() {
         loginBuilder = new Dialog(SignInActivity.this);
         View view = getLayoutInflater().inflate(R.layout.login, null);
-        final EditText email = (EditText) view.findViewById(R.id.editText_email);
-        final EditText password = (EditText) view.findViewById(R.id.editText_password);
+        final TextInputLayout emaileWrapper = (TextInputLayout) view.findViewById(R.id.usernameWrapper);
+        final TextInputLayout passwordWrapper = (TextInputLayout) view.findViewById(R.id.passwordWrapper);
+        emaileWrapper.setHint("Username");
+        passwordWrapper.setHint("Password");
         Button button = (Button) view.findViewById(R.id.login_button);
         SignInButton googleSignIn = (SignInButton) view.findViewById(R.id.google_sign_in_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                if (!email.getText().toString().isEmpty() && !password.getText().toString().isEmpty()) {
-                    signUser(email.getText().toString(), password.getText().toString());
+            public void onClick(View v) {
+                hideKeyboard();
+
+                String username = emaileWrapper.getEditText().getText().toString();
+                String password = passwordWrapper.getEditText().getText().toString();
+
+                if (!validateEmail(username)) {
+                    emaileWrapper.setError("Not a valid email address!");
+                } else if (!validatePassword(password)) {
+                    passwordWrapper.setError("Not a valid password!");
                 } else {
-                    Toast.makeText(SignInActivity.this, "Please fill any empty fields", Toast.LENGTH_LONG).show();
+                    emaileWrapper.setErrorEnabled(false);
+                    passwordWrapper.setErrorEnabled(false);
+                    signUser(username, password);
                 }
             }
         });
+
         googleSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,7 +134,9 @@ public class SignInActivity extends AppCompatActivity implements
         });
         loginBuilder.setContentView(view);
         loginBuilder.show();
-    }
+
+        }
+
 
     public void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
@@ -177,9 +198,21 @@ public class SignInActivity extends AppCompatActivity implements
                 });
     }
 
-    public void hideSoftKeyboard() {
-        InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(INPUT_METHOD_SERVICE);
-        assert imm != null;
-//        imm.hideSoftInputFromWindow(password.getWindowToken(), 0);
+    private void hideKeyboard() {
+        View view = getCurrentFocus();
+        if (view != null) {
+            ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).
+                    hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
     }
+
+    public boolean validateEmail(String email) {
+        matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    public boolean validatePassword(String password) {
+        return password.length() > 5;
+    }
+
 }

@@ -173,15 +173,11 @@ public class NewRequestFragment extends Fragment {
 
     public void getTixRequestData() {
         if (bundle != null) {
-            locationSpinner.setEnabled(false);
-//            subjectTitle.setEnabled(false);
-//            userDescription.setEnabled(false);
-            urgentoption.setEnabled(false);
-            moderateOption.setEnabled(false);
-
+            locationSpinner.setOnKeyListener(null);
+            moderateOption.setKeyListener(null);
+            urgentoption.setKeyListener(null);
             subjectTitle.setKeyListener(null);
             userDescription.setKeyListener(null);
-
 
             submit.setVisibility(View.GONE);
             String tixData = bundle.getString("Tix_data");
