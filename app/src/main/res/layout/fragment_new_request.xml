@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/light_gray"
+   >
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -43,51 +44,56 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="@+id/priority_view"
-            app:layout_constraintStart_toStartOf="@+id/priority_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/priority_view">
 
             <RadioButton
-                android:id="@+id/radio_urgent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/urgent" />
+            android:id="@+id/radio_urgent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            android:text="@string/urgent" />
 
             <RadioButton
-                android:id="@+id/radio_moderate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/moderate" />
+            android:id="@+id/radio_moderate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/moderate" />
 
         </RadioGroup>
 
 
         <TextView
             android:id="@+id/repair_location_view"
-            android:layout_width="84dp"
+            android:layout_width="116dp"
             android:layout_height="40dp"
-            android:layout_marginStart="36dp"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="Location: "
             android:textAlignment="center"
-            android:gravity="center"
             android:textSize="15sp"
-            app:layout_constraintStart_toStartOf="@+id/radio_priority"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/radio_priority" />
 
         <Spinner
             android:id="@+id/location_spinner"
             android:layout_width="150dp"
             android:layout_height="40dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginStart="68dp"
             android:layout_marginTop="8dp"
             android:layout_weight="2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.382"
             app:layout_constraintStart_toEndOf="@+id/repair_location_view"
             app:layout_constraintTop_toBottomOf="@+id/radio_priority" />
 
@@ -109,6 +115,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:background="@color/transparent"
             android:ems="10"
@@ -117,8 +124,8 @@
             android:inputType="textMultiLine"
             android:lines="6"
             android:maxLength="140"
-            app:layout_constraintEnd_toEndOf="@+id/radio_priority"
-            app:layout_constraintStart_toStartOf="@+id/radio_priority"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/repair_description_view" />
 
 

@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -64,6 +65,8 @@ public class NewRequestFragment extends Fragment {
     EditText userDescription;
     @BindView(R.id.image_request_rv)
     RecyclerView rv;
+    @BindView(R.id.submit_request_button)
+    Button submit;
 
     ActionBar actionBar;
     int userPriority;
@@ -74,7 +77,7 @@ public class NewRequestFragment extends Fragment {
     private static final int TAKE_PICTURE = 1;
     private Uri imageUri;
     String TAG = "MaintenanceFragment";
-    String location;
+    int location;
     List<Intent> listOfPhotos;
     List<Uri> hello = new ArrayList<>();
     static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -122,7 +125,8 @@ public class NewRequestFragment extends Fragment {
         locationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                location = (String) parent.getItemAtPosition(position);
+                location = position;
+
             }
 
             @Override
@@ -130,7 +134,6 @@ public class NewRequestFragment extends Fragment {
             }
         });
         getTixRequestData();
-
         return rootView;
     }
 
@@ -170,11 +173,23 @@ public class NewRequestFragment extends Fragment {
 
     public void getTixRequestData() {
         if (bundle != null) {
+            locationSpinner.setEnabled(false);
+//            subjectTitle.setEnabled(false);
+//            userDescription.setEnabled(false);
+            urgentoption.setEnabled(false);
+            moderateOption.setEnabled(false);
+
+            subjectTitle.setKeyListener(null);
+            userDescription.setKeyListener(null);
+
+
+            submit.setVisibility(View.GONE);
             String tixData = bundle.getString("Tix_data");
             Gson gson = new Gson();
             Tickets data = gson.fromJson(tixData, Tickets.class);
             subjectTitle.setText(data.getTitle());
             userDescription.setText(data.getDescription());
+            locationSpinner.setSelection(data.getLocation());
 
             switch (data.getPriority()) {
                 case 1:

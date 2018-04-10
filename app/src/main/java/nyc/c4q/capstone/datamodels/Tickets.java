@@ -11,7 +11,7 @@ public class Tickets {
 
     private String ticket_number;
     private long time;
-    private String location;
+    private int location;
     private String apt;
     private String description;
     private String status;
@@ -20,7 +20,7 @@ public class Tickets {
     private int priority;
 
 
-    public Tickets(String ticket_number, long time, String location, String apt, String title,String description, String status, int priority){
+    public Tickets(String ticket_number, long time, int location, String apt, String title,String description, String status, int priority){
        this.title=title;
         this.ticket_number = ticket_number;
         this.time = time;
@@ -42,7 +42,7 @@ public class Tickets {
         return time;
     }
 
-    public String getLocation() {
+    public int getLocation() {
         return location;
     }
 

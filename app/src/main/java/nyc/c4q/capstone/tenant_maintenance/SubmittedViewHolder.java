@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.storage.FirebaseStorage;
 import com.google.gson.Gson;
 
 import java.text.DateFormat;
@@ -30,20 +29,29 @@ import nyc.c4q.capstone.datamodels.Tickets;
 
 class SubmittedViewHolder extends RecyclerView.ViewHolder {
 
-    @BindView(R.id.ticket_num)
-    TextView ticketNum;
-    @BindView(R.id.title)
+//    @BindView(R.id.ticket_num)
+//    TextView ticketNum;
+//    @BindView(R.id.title)
+//    TextView title;
+//    @BindView(R.id.description)
+//    TextView description;
+//    @BindView(R.id.date)
+//    TextView date;
+//    @BindView(R.id.status)
+//    Button status;
+//    @BindView(R.id.card_view)
+//    CardView card;
+//    @BindView(R.id.user_priority)
+//    TextView userPriority;
+
+    @BindView(R.id.note_item_title)
     TextView title;
-    @BindView(R.id.description)
+    @BindView(R.id.note_item_body)
     TextView description;
-    @BindView(R.id.date)
-    TextView date;
     @BindView(R.id.status)
-    Button status;
+    TextView status;
     @BindView(R.id.card_view)
     CardView card;
-    @BindView(R.id.user_priority)
-    TextView userPriority;
 
     private static final String TIX_KEY = "Tix data";
 
@@ -58,22 +66,22 @@ class SubmittedViewHolder extends RecyclerView.ViewHolder {
         DateFormat df = new SimpleDateFormat("MM:dd:yy");
         String timeSTamp = df.format(cal);
         String num = String.valueOf(tix.getTime());
-        ticketNum.setText(num);
+//        ticketNum.setText(num);
         title.setText(tix.getTitle());
         description.setText(tix.getDescription());
-        date.setText(timeSTamp);
-
-        switch (tix.getPriority()){
-            case 0:
-                userPriority.setText(R.string.none);
-                break;
-            case 1:
-                userPriority.setText(R.string.urgent);
-                break;
-            case 2:
-                userPriority.setText(R.string.moderate);
-                break;
-        }
+//        date.setText(timeSTamp);
+//
+//        switch (tix.getPriority()){
+//            case 0:
+//                userPriority.setText(R.string.none);
+//                break;
+//            case 1:
+//                userPriority.setText(R.string.urgent);
+//                break;
+//            case 2:
+//                userPriority.setText(R.string.moderate);
+//                break;
+//        }
 
         switch (tix.getStatus()) {
             case "Pending":
@@ -81,11 +89,11 @@ class SubmittedViewHolder extends RecyclerView.ViewHolder {
                 status.setText("Pending");
                 break;
             case "Completed":
-                status.setBackgroundColor(Color.DKGRAY);
+                status.setBackgroundColor(Color.parseColor("#169e31"));
                 status.setText("Completed");
                 break;
             case "Submitted":
-                status.setBackgroundColor(Color.GREEN);
+                status.setBackgroundColor(Color.parseColor("#e57709"));
                 status.setText("Submitted");
                 break;
         }

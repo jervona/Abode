@@ -22,7 +22,7 @@
             android:text="Ticket #" />
 
         <TextView
-            android:id="@+id/ticket_num"
+            android:id="@+id/user_priority"
             android:maxLines="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
             android:text="@string/priority_level" />
 
         <TextView
-            android:id="@+id/user_priority"
+            android:id="@+id/ticket_num"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:gravity="center"
