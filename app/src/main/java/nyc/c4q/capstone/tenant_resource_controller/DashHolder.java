@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,7 +31,13 @@ public class DashHolder extends RecyclerView.ViewHolder {
 
     public void onBind(DashRvModel data) {
         this.dash_rv_model = data;
-        resource_pic.setImageResource(dash_rv_model.getResource_icon());
+       try {
+           resource_pic.setImageResource(dash_rv_model.getResource_icon());
+       } catch (OutOfMemoryError e){
+           Log.e("Got the Error",e.getMessage());
+           Log.e("Got the Error",dash_rv_model.getResource_name());
+
+       }
         resource_text.setText(dash_rv_model.getResource_name());
         resource_pic.setOnClickListener(new View.OnClickListener() {
             @Override

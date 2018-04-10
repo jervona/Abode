@@ -27,7 +27,7 @@
     <string name="urgent">Urgent</string>
     <string name="moderate">Moderate</string>
     <string name="priority_level">Priority Level:</string>
-    <string name="date_requested">Date Requested</string>
+    <string name="date_requested">Date Requested:</string>
     <string name="none">None</string>
     <string name="dashboard">DashBoard</string>
     <string name="payment">Payment</string>
