@@ -90,7 +90,8 @@
             android:layout_height="wrap_content"
             android:text="Submit"
             android:textColor="#FFFFFF"
-            android:background="@color/colorAccent"/>
+            android:background ="@drawable/selector"
+            />
 
     </LinearLayout>
 

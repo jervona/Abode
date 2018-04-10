@@ -144,7 +144,8 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Schedule"/>
+            android:text="Schedule"
+            android:background="@drawable/selector"/>
 
     </LinearLayout>
 
