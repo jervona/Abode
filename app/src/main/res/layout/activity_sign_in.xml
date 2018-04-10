@@ -60,7 +60,8 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="200dp"
-            android:text="@string/log_in" />
+            android:background="@drawable/selector"
+             android:text="@string/log_in" />
 
         <Button
             android:id="@+id/sign_up"
@@ -74,6 +75,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="5dp"
+            android:background="@drawable/selector"
             android:text="@string/sign_up" />
 
 

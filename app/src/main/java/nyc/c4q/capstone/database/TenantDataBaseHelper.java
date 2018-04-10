@@ -95,7 +95,7 @@ public class TenantDataBaseHelper {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 GenericTypeIndicator<List<Tickets>> data = new GenericTypeIndicator<List<Tickets>>() {
                 };
-                ticketsList = dataSnapshot.getValue(data);
+                //ticketsList = dataSnapshot.getValue(data);
                 getPayments(user.getAPT());
             }
 

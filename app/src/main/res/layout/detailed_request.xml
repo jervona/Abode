@@ -182,6 +182,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:background="@drawable/selector"
             android:text="Submit"/>
 
     </LinearLayout>
