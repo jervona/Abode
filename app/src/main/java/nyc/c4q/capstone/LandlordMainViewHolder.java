@@ -1,70 +1,106 @@
 package nyc.c4q.capstone;
 
 import android.graphics.Color;
+import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import nyc.c4q.capstone.datamodels.Tickets;
+import nyc.c4q.capstone.tenant_maintenance.NewRequestFragment;
 
 /**
  * Created by c4q on 4/7/18.
  */
 
 public class LandlordMainViewHolder extends RecyclerView.ViewHolder {
-    @BindView(R.id.user_priority)
-    TextView tixNum;
+
+    @BindView(R.id.note_item_title)
+    TextView title;
+    @BindView(R.id.note_item_body)
+    TextView description;
     @BindView(R.id.status)
-    Button status;
-    @BindView(R.id.tenant_name)
-    TextView tenantName;
-    @BindView(R.id.tenants_apt)
-    TextView aptNum;
-    @BindView(R.id.tenant_issue)
-    TextView tenantIssue;
-    @BindView(R.id.date)
-    TextView dateRequested;
-    @BindView(R.id.ticket_num)
-    TextView userPriority;
+    TextView status;
+    @BindView(R.id.card_view)
+    CardView card;
 
-    public LandlordMainViewHolder(View itemView) {
+    private static final String TIX_KEY = "Tix data";
+
+    LandlordMainViewHolder(View itemView) {
         super(itemView);
-        ButterKnife.bind(itemView);
-
+        ButterKnife.bind(this, itemView);
     }
 
-    public void onBind(Tickets tix) {
-        tixNum.setText(tix.getTicket_number());
-        aptNum.setText(tix.getApt());
-        tenantIssue.setText(tix.getTitle());
-        userPriority.setText(tix.getPriority());
+    void onBind(final Tickets tix) {
 
-        switch (tix.getPriority()) {
-            case 0:
-                userPriority.setText(R.string.none);
-                break;
-            case 1:
-                userPriority.setText(R.string.moderate);
-                break;
-            case 2:
-                userPriority.setText(R.string.urgent);
-                break;
-        }
+        Date cal = new Date(tix.getTime());
+        DateFormat df = new SimpleDateFormat("MM:dd:yy");
+        String timeSTamp = df.format(cal);
+        String num = String.valueOf(tix.getTime());
+//        ticketNum.setText(num);
+        title.setText(tix.getTitle());
+        description.setText(tix.getDescription());
+//        date.setText(timeSTamp);
+//
+//        switch (tix.getPriority()){
+//            case 0:
+//                userPriority.setText(R.string.none);
+//                break;
+//            case 1:
+//                userPriority.setText(R.string.urgent);
+//                break;
+//            case 2:
+//                userPriority.setText(R.string.moderate);
+//                break;
+//        }
 
         switch (tix.getStatus()) {
             case "Pending":
                 status.setBackgroundColor(Color.YELLOW);
+                status.setText("Pending");
                 break;
             case "Completed":
-                status.setBackgroundColor(Color.DKGRAY);
+                status.setBackgroundColor(Color.parseColor("#169e31"));
+                status.setText("Completed");
                 break;
             case "Submitted":
-                status.setBackgroundColor(Color.GREEN);
+                status.setBackgroundColor(Color.parseColor("#e57709"));
+                status.setText("Submitted");
                 break;
         }
 
+        card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(itemView.getContext(), "Your request details", Toast.LENGTH_SHORT).show();
+//                NewRequestFragment requestFragment = new NewRequestFragment();
+//                FragmentManager manager = ((AppCompatActivity) itemView.getContext()).getSupportFragmentManager();
+//                Bundle bundle = new Bundle();
+//                Gson gson = new Gson();
+//                String tixToString = gson.toJson(tix);
+//                bundle.putString("Tix_data", tixToString);
+//                requestFragment.setArguments(bundle);
+//                FragmentTransaction transaction = manager.beginTransaction();
+//                transaction.replace(R.id.landlord_maintenance, requestFragment).addToBackStack("maintenance tix");
+//                transaction.commit();
+            }
+        });
     }
+
 }
+
+

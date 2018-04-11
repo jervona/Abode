@@ -19,6 +19,7 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class LandlordMaintenance extends Fragment {
     @BindView(R.id.landlord_maintenance_rv)
     RecyclerView recyclerView;
 
-    SubmittedAdapter adapter;
+    LandlordMainAdapter adapter;
     LinearLayoutManager layoutManager;
     FirebaseDatabase data = FirebaseDatabase.getInstance();
     TenantDataBaseHelper db;
@@ -67,31 +68,48 @@ public class LandlordMaintenance extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         db = TenantDataBaseHelper.getInstance(FirebaseDatabase.getInstance());
-        adapter = new SubmittedAdapter(db.getTicketsList());
+        adapter = new LandlordMainAdapter(db.getTicketsList());
         recyclerView.setAdapter(adapter);
         updateList();
     }
 
     public void updateList() {
-       final List<Tickets> hello = new ArrayList<>();
         data.getReference().child("Maintenance").child("1521310103").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                final List<Tickets> listOfTickets = new ArrayList<>();
                 GenericTypeIndicator<HashMap<String,List<Tickets>>> t = new GenericTypeIndicator<HashMap<String,List<Tickets>>>() {
                 };
                 ticketsList = dataSnapshot.getValue(t);
                 if (ticketsList != null) {
                     for (String key:ticketsList.keySet()){
-                       hello.addAll(ticketsList.get(key));
+                         listOfTickets.addAll(ticketsList.get(key));
                     }
-                    adapter.updateTicketListItems(hello);
+                    checkingForPending(listOfTickets);
+                    Collections.reverse(listOfTickets);
+                    adapter.updateTicketListItems(listOfTickets);
                 }
             }
+
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.e(TAG, "onCancelled: " + databaseError.getDetails());
             }
         });
+    }
+
+    private void checkingForPending(List<Tickets> tickets) {
+     int num=0;
+        for (Tickets tix:tickets) {
+            if (tix.getStatus().equals("Pending")){
+                num++;
+            }
+            Notification notification =Notification.getInstance();
+            notification.setNum(num);
+            notification.setPath("Maintenance");
+            assert ((MainActivity)getActivity()) != null;
+            ((MainActivity)getActivity()).setBottomNotification();
+        }
     }
 }

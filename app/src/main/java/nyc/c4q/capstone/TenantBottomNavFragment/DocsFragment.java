@@ -33,7 +33,7 @@ public class DocsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootview = inflater.inflate(R.layout.fragment_docs, container, false);
-        setupActionBar();
+
         return rootview;
     }
 
@@ -50,7 +50,7 @@ public class DocsFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-        actionBar.setDisplayHomeAsUpEnabled(false);
+
         super.onDestroy();
     }
 }
