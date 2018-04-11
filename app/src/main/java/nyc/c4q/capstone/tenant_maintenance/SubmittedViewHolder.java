@@ -29,21 +29,6 @@ import nyc.c4q.capstone.datamodels.Tickets;
 
 class SubmittedViewHolder extends RecyclerView.ViewHolder {
 
-//    @BindView(R.id.ticket_num)
-//    TextView ticketNum;
-//    @BindView(R.id.title)
-//    TextView title;
-//    @BindView(R.id.description)
-//    TextView description;
-//    @BindView(R.id.date)
-//    TextView date;
-//    @BindView(R.id.status)
-//    Button status;
-//    @BindView(R.id.card_view)
-//    CardView card;
-    @BindView(R.id.user_priority)
-    TextView userPriority;
-
     @BindView(R.id.note_item_title)
     TextView title;
     @BindView(R.id.note_item_body)
@@ -52,8 +37,6 @@ class SubmittedViewHolder extends RecyclerView.ViewHolder {
     TextView status;
     @BindView(R.id.card_view)
     CardView card;
-    @BindView(R.id.apt_number)
-    TextView aptNum;
 
     private static final String TIX_KEY = "Tix data";
 
@@ -71,35 +54,7 @@ class SubmittedViewHolder extends RecyclerView.ViewHolder {
 //        ticketNum.setText(num);
         title.setText(tix.getTitle());
         description.setText(tix.getDescription());
-        aptNum.setText(tix.getApt());
 //        date.setText(timeSTamp);
-//
-        switch (tix.getPriority()){
-            case 0:
-                userPriority.setText(R.string.none);
-                break;
-            case 1:
-                userPriority.setText(R.string.urgent);
-                break;
-            case 2:
-                userPriority.setText(R.string.moderate);
-                break;
-        }
-
-        switch (tix.getStatus()) {
-            case "Pending":
-                status.setBackgroundColor(Color.YELLOW);
-                status.setText("Pending");
-                break;
-            case "Completed":
-                status.setBackgroundColor(Color.parseColor("#169e31"));
-                status.setText("Completed");
-                break;
-            case "Submitted":
-                status.setBackgroundColor(Color.parseColor("#e57709"));
-                status.setText("Submitted");
-                break;
-        }
 
         card.setOnClickListener(new View.OnClickListener() {
             @Override
