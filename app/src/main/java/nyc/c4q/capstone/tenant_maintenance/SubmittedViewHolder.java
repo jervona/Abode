@@ -55,6 +55,22 @@ class SubmittedViewHolder extends RecyclerView.ViewHolder {
         title.setText(tix.getTitle());
         description.setText(tix.getDescription());
 //        date.setText(timeSTamp);
+//
+
+        switch (tix.getStatus()) {
+            case "Pending":
+                status.setBackgroundColor(Color.YELLOW);
+                status.setText("Pending");
+                break;
+            case "Completed":
+                status.setBackgroundColor(Color.parseColor("#169e31"));
+                status.setText("Completed");
+                break;
+            case "Submitted":
+                status.setBackgroundColor(Color.parseColor("#e57709"));
+                status.setText("Submitted");
+                break;
+        }
 
         switch (tix.getStatus()) {
             case "Pending":
