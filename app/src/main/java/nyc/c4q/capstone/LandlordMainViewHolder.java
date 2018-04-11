@@ -29,10 +29,14 @@ import nyc.c4q.capstone.tenant_maintenance.NewRequestFragment;
 
 public class LandlordMainViewHolder extends RecyclerView.ViewHolder {
 
-    @BindView(R.id.note_item_title)
+    @BindView(R.id.issue_title)
     TextView title;
-    @BindView(R.id.note_item_body)
+    @BindView(R.id.issue_description)
     TextView description;
+    @BindView(R.id.apt_number)
+    TextView aptNum;
+    @BindView(R.id.user_priority)
+    TextView userPriority;
     @BindView(R.id.status)
     TextView status;
     @BindView(R.id.card_view)
@@ -51,52 +55,51 @@ public class LandlordMainViewHolder extends RecyclerView.ViewHolder {
         DateFormat df = new SimpleDateFormat("MM:dd:yy");
         String timeSTamp = df.format(cal);
         String num = String.valueOf(tix.getTime());
-//        ticketNum.setText(num);
         title.setText(tix.getTitle());
         description.setText(tix.getDescription());
-//        date.setText(timeSTamp);
-//
-//        switch (tix.getPriority()){
-//            case 0:
-//                userPriority.setText(R.string.none);
-//                break;
-//            case 1:
-//                userPriority.setText(R.string.urgent);
-//                break;
-//            case 2:
-//                userPriority.setText(R.string.moderate);
-//                break;
-//        }
+        aptNum.setText(tix.getApt());
+
+        switch (tix.getPriority()){
+            case 0:
+                userPriority.setText(R.string.none);
+                break;
+            case 1:
+                userPriority.setText(R.string.urgent);
+                break;
+            case 2:
+                userPriority.setText(R.string.moderate);
+                break;
+        }
 
         switch (tix.getStatus()) {
             case "Pending":
-                status.setBackgroundColor(Color.YELLOW);
                 status.setText("Pending");
+                status.setTextColor(Color.parseColor("#F1C40F"));
                 break;
             case "Completed":
-                status.setBackgroundColor(Color.parseColor("#169e31"));
                 status.setText("Completed");
+                status.setTextColor(Color.parseColor("#169e31"));
                 break;
             case "Submitted":
-                status.setBackgroundColor(Color.parseColor("#e57709"));
-                status.setText("Submitted");
+                status.setText("Scheduled");
+                status.setTextColor(Color.parseColor("#E67E22"));
                 break;
         }
 
         card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(itemView.getContext(), "Your request details", Toast.LENGTH_SHORT).show();
-//                NewRequestFragment requestFragment = new NewRequestFragment();
-//                FragmentManager manager = ((AppCompatActivity) itemView.getContext()).getSupportFragmentManager();
-//                Bundle bundle = new Bundle();
-//                Gson gson = new Gson();
-//                String tixToString = gson.toJson(tix);
-//                bundle.putString("Tix_data", tixToString);
-//                requestFragment.setArguments(bundle);
-//                FragmentTransaction transaction = manager.beginTransaction();
-//                transaction.replace(R.id.landlord_maintenance, requestFragment).addToBackStack("maintenance tix");
-//                transaction.commit();
+                Toast.makeText(itemView.getContext(), "Apartment " + tix.getApt() + " request details", Toast.LENGTH_SHORT).show();
+                MaintenanceDetails maintenanceDetails = new MaintenanceDetails();
+                FragmentManager manager = ((AppCompatActivity) itemView.getContext()).getSupportFragmentManager();
+                Bundle bundle = new Bundle();
+                Gson gson = new Gson();
+                String tixToString = gson.toJson(tix);
+                bundle.putString("Maintenance_data", tixToString);
+                 maintenanceDetails.setArguments(bundle);
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.replace(R.id.landlord_maintenance, maintenanceDetails).addToBackStack("maintenance tix");
+                transaction.commit();
             }
         });
     }
