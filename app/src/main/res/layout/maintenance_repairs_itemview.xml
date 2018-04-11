@@ -17,30 +17,15 @@
         android:orientation="vertical"
         android:padding="10dp">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/note_item_title"
             android:layout_width="match_parent"
+            android:textSize="20sp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/note_item_title"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:textSize="20sp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:maxLines="1"
-                android:textStyle="bold"
-                tools:text="Hello word title" />
-
-            <Button
-                android:id="@+id/status"
-                android:layout_width="130dp"
-                android:layout_height="30dp"
-                android:background="@drawable/status_button"
-                android:textSize="20sp"
-                />
-
-        </LinearLayout>
+            android:layout_marginBottom="8dp"
+            android:maxLines="1"
+            android:textStyle="bold"
+            tools:text="Hello word title" />
 
         <TextView
             android:id="@+id/note_item_body"
@@ -50,6 +35,63 @@
             android:maxLines="3"
             android:textSize="20sp"
             tools:text="Here is the description text which may be unusually long  and contain a lot of spacess and even new lines" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/apt"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:text="apt number"/>
+
+            <TextView
+                android:id="@+id/priority"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:text="priority"/>
+
+            <TextView
+                android:id="@+id/status_display"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:text="status"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/apt_number"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:hint="apt #"/>
+
+            <TextView
+                android:id="@+id/user_priority"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:hint="priority level"/>
+
+            <Button
+                android:id="@+id/status"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:background="@drawable/status_button"
+                android:textSize="20sp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
