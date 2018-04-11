@@ -29,7 +29,7 @@ public class LandlordMainAdapter extends RecyclerView.Adapter<LandlordMainViewHo
 
     @Override
     public LandlordMainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_landlord_maintenance, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.maintenance_repairs_itemview, parent, false);
         return new LandlordMainViewHolder(view);
     }
 

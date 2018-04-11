@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity
     RelativeLayout.LayoutParams layoutparams;
 
     RecyclerView recyclerView;
+    private boolean enable;
 
 
     @Override
@@ -104,8 +105,10 @@ public class MainActivity extends AppCompatActivity
                             navigationAdapter = new AHBottomNavigationAdapter(MainActivity.this, R.menu.tenant_bottom_nav);
                             navigationAdapter.setupWithBottomNavigation(bottom);
                             setBottomNav();
+                            enable = true;
                             break;
                         case "PM":
+                            enable = false;
                             bar.setVisibility(View.GONE);
                             setupViewPager(viewPager, user.getStatus());
                             navigationAdapter = new AHBottomNavigationAdapter(MainActivity.this, R.menu.pm_bottom_nav);
@@ -137,18 +140,14 @@ public class MainActivity extends AppCompatActivity
                 try {
                     viewPager.setCurrentItem(position);
                     bottom.setCurrentItem(position, wasSelected);
-                    if (position == 2) {
-                        fab.setVisibility(View.VISIBLE);
-                    } else {
-                        fab.setVisibility(View.GONE);
-                    }
+                    setFabDisplay(position);
                 } catch (StackOverflowError e) {
                     Log.e("Caught Error", e.getMessage());
                 }
                 return false;
             }
         });
-//        bottom.setNotification("10", 2);
+
     }
 
     private void setupViewPager(ViewPager viewPager, String status) {
@@ -189,8 +188,27 @@ public class MainActivity extends AppCompatActivity
         actionBar.setCustomView(textview);
     }
 
-    public void enableFab(boolean enable){
-
+    public void setFabDisplay(int position) {
+        if (enable) {
+            if (position == 2) {
+                fab.setVisibility(View.VISIBLE);
+            } else {
+                fab.setVisibility(View.GONE);
+            }
+        }
     }
 
+    public void setBottomNotification() {
+        Notification notification =Notification.getInstance();
+        switch (notification.getPath()) {
+            case "Payment":
+                bottom.setNotification(String.valueOf(notification.getNum()), 1);
+                break;
+            case "Maintenance":
+                bottom.setNotification(String.valueOf(notification.getNum()), 2);
+                break;
+
+
+        }
+    }
 }
