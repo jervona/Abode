@@ -51,7 +51,7 @@
         <Button
             android:id="@+id/login_button"
             android:layout_height="wrap_content"
-            android:layout_width="150dp"
+            android:layout_width="match_parent"
             android:bottomRightRadius="20dp"
             android:bottomLeftRadius="20dp"
             android:topLeftRadius="20dp"
@@ -66,7 +66,7 @@
         <Button
             android:id="@+id/sign_up"
             android:layout_height="wrap_content"
-            android:layout_width="150dp"
+            android:layout_width="match_parent"
             android:bottomRightRadius="20dp"
             android:bottomLeftRadius="20dp"
             android:topLeftRadius="20dp"
