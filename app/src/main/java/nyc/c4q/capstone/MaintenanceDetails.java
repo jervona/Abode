@@ -19,6 +19,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
@@ -58,6 +59,7 @@ public class MaintenanceDetails extends Fragment {
     Bundle bundle;
     int userPriority;
     int location;
+    AHBottomNavigation bottom;
     ActionBar actionBar;
 
     public MaintenanceDetails() {
@@ -73,6 +75,8 @@ public class MaintenanceDetails extends Fragment {
         bundle = getArguments();
         imageRV.setLayoutManager(new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.HORIZONTAL, false));
         setHasOptionsMenu(true);
+        bottom = getActivity().findViewById(R.id.bottom_navigation);
+        bottom.setVisibility(View.GONE);
         setupActionBar();
         setPriorityOptions();
         setLocationSpinner();
@@ -177,6 +181,7 @@ public class MaintenanceDetails extends Fragment {
     @Override
     public void onDestroy() {
         actionBar.setDisplayHomeAsUpEnabled(false);
+        bottom.setVisibility(View.VISIBLE);
         super.onDestroy();
     }
 
