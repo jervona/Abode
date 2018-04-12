@@ -35,6 +35,10 @@ class SubmittedViewHolder extends RecyclerView.ViewHolder {
     TextView description;
     @BindView(R.id.status)
     TextView status;
+    @BindView(R.id.date)
+    TextView date;
+    @BindView(R.id.user_priority)
+    TextView userPriority;
     @BindView(R.id.card_view)
     CardView card;
 
@@ -51,10 +55,36 @@ class SubmittedViewHolder extends RecyclerView.ViewHolder {
         DateFormat df = new SimpleDateFormat("MM:dd:yy");
         String timeSTamp = df.format(cal);
         String num = String.valueOf(tix.getTime());
-//        ticketNum.setText(num);
         title.setText(tix.getTitle());
         description.setText(tix.getDescription());
-//        date.setText(timeSTamp);
+        date.setText(timeSTamp);
+
+        switch (tix.getPriority()){
+            case 0:
+                userPriority.setText(R.string.none);
+                break;
+            case 1:
+                userPriority.setText(R.string.urgent);
+                break;
+            case 2:
+                userPriority.setText(R.string.moderate);
+                break;
+        }
+
+        switch (tix.getStatus()) {
+            case "Pending":
+                status.setTextColor(Color.parseColor("#F1C40F"));
+                status.setText("Pending");
+                break;
+            case "Completed":
+                status.setTextColor(Color.parseColor("#169e31"));
+                status.setText("Completed");
+                break;
+            case "Submitted":
+                status.setTextColor(Color.parseColor("#E67E22"));
+                status.setText("Scheduled");
+                break;
+        }
 
         switch (tix.getStatus()) {
             case "Pending":
