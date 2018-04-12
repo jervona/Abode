@@ -34,6 +34,9 @@
     <string name="maintenance">Maintenance</string>
     <string name="pay">Pay</string>
     <string name="validating_email"><![CDATA[^[a-zA-Z0-9#_~!$&\'()*+,;=:.\"(),:;<>@\\[\\]\\\\]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*$]]></string>
+    <string name="apt_number">apt number</string>
+    <string name="priority">priority</string>
+    <string name="status">status</string>
 
 
     <string-array name="location_options">
