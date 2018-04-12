@@ -206,7 +206,7 @@ public class PaymentFragment extends Fragment implements MainActivity.UserDBList
                 Date date = Calendar.getInstance().getTime();
                 String hello =data.toString();
                 Log.e("Date",hello);
-                String month = date.toString().substring(4, 7);
+                String month = date.toString().substring(0, 7);
                 TenantPaymentHistoryModel payment = new TenantPaymentHistoryModel(month, "$" + editText.getText().toString(), num);
                 db.upLoadRent(payment);
                 popUp("$" + editText.getText().toString(), num);

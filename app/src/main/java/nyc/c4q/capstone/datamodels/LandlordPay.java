@@ -13,9 +13,9 @@ public class LandlordPay {
     private String addressLine2;
     private String amount;
     private String confirmation;
-    private Date date;
+    private String date;
 
-    public LandlordPay(String tenantName, String addressLine, String addressLine2, String amount, String confirmation, Date date) {
+    public LandlordPay(String tenantName, String addressLine, String addressLine2, String amount, String confirmation, String date) {
         this.tenantName = tenantName;
         this.addressLine = addressLine;
         this.addressLine2 = addressLine2;
@@ -44,7 +44,7 @@ public class LandlordPay {
         return confirmation;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 

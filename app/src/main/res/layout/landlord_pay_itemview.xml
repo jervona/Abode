@@ -10,11 +10,12 @@
         android:padding="@dimen/cardview_default_radius"
         android:elevation="@dimen/cardview_default_radius"
         app:cardMaxElevation="2sp"
-
         app:cardElevation="2sp"
         app:cardUseCompatPadding="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:contentPadding="12dp"
+        >
 
         <LinearLayout
             android:orientation="vertical"
@@ -23,32 +24,46 @@
 
        <TextView
            android:id="@+id/tenant"
+           android:textSize="40sp"
+           android:padding="8dp"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
-           android:text="tenant name"/>
+           android:layout_gravity="center"
+           android:text="tenant name"
+           android:textStyle="bold" />
 
         <TextView
             android:id="@+id/address"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="address line 1" />
+            android:layout_gravity="center"
+            android:textSize="25sp"
+            android:text="address line 1"
+            android:textStyle="italic"/>
 
         <TextView
             android:id="@+id/address2"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" address line 2 "/>
+            android:layout_gravity="center"
+            android:textSize="25sp"
+            android:text=" address line 2 "
+            android:textStyle="italic"/>
 
         <TextView
             android:id="@+id/landlord_pay_confirmation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:layout_gravity="center"
             android:text="confirmation number"/>
 
         <TextView
             android:id="@+id/date_paid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:layout_gravity="center"
             android:text="Date paid"/>
 
         </LinearLayout>
