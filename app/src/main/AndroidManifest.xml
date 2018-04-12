@@ -29,10 +29,20 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".signupactivites.SignInActivity" />
-        <activity android:name=".signupactivites.LandLordSignUpActivity" />
-        <activity android:name=".signupactivites.TenantSignUpActivity"></activity>
+            android:windowSoftInputMode="adjustPan"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".signupactivites.SignInActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".signupactivites.LandLordSignUpActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".signupactivites.TenantSignUpActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
+
+        </activity>
     </application>
 
 </manifest>

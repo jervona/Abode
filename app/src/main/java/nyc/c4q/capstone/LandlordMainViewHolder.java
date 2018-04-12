@@ -73,23 +73,22 @@ public class LandlordMainViewHolder extends RecyclerView.ViewHolder {
 
         switch (tix.getStatus()) {
             case "Pending":
-                status.setText("Pending");
                 status.setTextColor(Color.parseColor("#F1C40F"));
+                status.setText("Pending");
                 break;
             case "Completed":
-                status.setText("Completed");
                 status.setTextColor(Color.parseColor("#169e31"));
+                status.setText("Completed");
                 break;
             case "Submitted":
-                status.setText("Scheduled");
                 status.setTextColor(Color.parseColor("#E67E22"));
+                status.setText("Scheduled");
                 break;
         }
 
         card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(itemView.getContext(), "Apartment " + tix.getApt() + " request details", Toast.LENGTH_SHORT).show();
                 MaintenanceDetails maintenanceDetails = new MaintenanceDetails();
                 FragmentManager manager = ((AppCompatActivity) itemView.getContext()).getSupportFragmentManager();
                 Bundle bundle = new Bundle();
