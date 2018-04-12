@@ -150,11 +150,26 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="108dp"
+            android:background="@drawable/selector"
             android:text="Submit"
             app:layout_constraintEnd_toEndOf="@+id/image_request_rv"
             app:layout_constraintHorizontal_bias="0.526"
             app:layout_constraintStart_toStartOf="@+id/add_photo_button"
-            app:layout_constraintTop_toBottomOf="@+id/user_description_view" />
+            app:layout_constraintTop_toBottomOf="@+id/user_description_view" />/
+
+
+        <!--android:id="@+id/submit_request_button"-->
+            <!--android:layout_width="300dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:layout_marginEnd="8dp"-->
+            <!--android:layout_marginStart="8dp"-->
+            <!--android:layout_marginTop="108dp"-->
+            <!--android:text="Submit"-->
+            <!--app:layout_constraintEnd_toEndOf="@+id/image_request_rv"-->
+            <!--app:layout_constraintHorizontal_bias="0.526"-->
+            <!--app:layout_constraintStart_toStartOf="@+id/add_photo_button"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/user_description_view" />-->
 
         <ImageView
             android:id="@+id/add_photo_button"
