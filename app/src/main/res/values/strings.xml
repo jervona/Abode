@@ -37,6 +37,7 @@
     <string name="apt_number">Apt Number</string>
     <string name="priority">Priority</string>
     <string name="status">Status</string>
+    <string name="docs">Docs</string>
 
 
     <string-array name="location_options">

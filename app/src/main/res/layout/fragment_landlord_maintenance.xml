@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/landlord_maintenance"
-    tools:context="nyc.c4q.capstone.LandlordMaintenance">
+    tools:context="nyc.c4q.capstone.LandLord.LandlordBottonNav.LandlordMaintenance">
 
     <!-- TODO: Update blank fragment layout -->
    <android.support.v7.widget.RecyclerView
