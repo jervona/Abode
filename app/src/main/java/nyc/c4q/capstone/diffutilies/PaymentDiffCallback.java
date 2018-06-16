@@ -35,8 +35,8 @@ public class PaymentDiffCallback extends DiffUtil.Callback {
 
     @Override
     public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-        return oldRentList.get(oldItemPosition).getConf() == newRentList.get(
-                newItemPosition).getConf();
+        return oldRentList.get(oldItemPosition).getConf().equals(newRentList.get(
+                newItemPosition).getConf());
     }
 
 

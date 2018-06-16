@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import nyc.c4q.capstone.TenantBottomNavFragment.DashBoardFragment;
 import nyc.c4q.capstone.MainActivity;
 import tenant_data_models.TenantPaymentHistoryModel;
 import nyc.c4q.capstone.datamodels.Tickets;
@@ -78,6 +77,7 @@ public class TenantDataBaseHelper {
                 if (user.getStatus().equals("Tenant")) {
                     String id = String.valueOf(user.getBuilding_id());
                     getMaintenance(id, user.getAPT());
+                    queryPayments();
                 }
             }
 
@@ -96,7 +96,6 @@ public class TenantDataBaseHelper {
                 GenericTypeIndicator<List<Tickets>> data = new GenericTypeIndicator<List<Tickets>>() {
                 };
                 //ticketsList = dataSnapshot.getValue(data);
-                getPayments(user.getAPT());
             }
 
             @Override
@@ -106,8 +105,8 @@ public class TenantDataBaseHelper {
         });
     }
 
-    private void getPayments(String apt) {
-        Query query = database.getReference("Rent").child(user.getAPT());
+    private void queryPayments() {
+        Query query = database.getReference("Rent").child(String.valueOf(user.getBuilding_id())).child(user.getAPT());
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -191,7 +190,7 @@ public class TenantDataBaseHelper {
         } else {
             paymentsList.add(rent);
         }
-        database.getReference().child("Rent").child(user.getAPT()).setValue(paymentsList).addOnCompleteListener(new OnCompleteListener<Void>() {
+        database.getReference().child("Rent").child(String.valueOf(user.getBuilding_id())).child(user.getAPT()).setValue(paymentsList).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
 

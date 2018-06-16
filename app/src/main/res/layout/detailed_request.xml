@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context="nyc.c4q.capstone.tenant_maintenance.NewRequestFragment">
+    tools:context=".Tenant.tenant_maintenance.NewRequestFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

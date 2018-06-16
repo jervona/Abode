@@ -32,9 +32,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import nyc.c4q.capstone.adapter.SectionsPageAdapter;
+import nyc.c4q.capstone.adapters.SectionsPageAdapter;
 import nyc.c4q.capstone.database.TenantDataBaseHelper;
-import nyc.c4q.capstone.datamodels.Tickets;
 import nyc.c4q.capstone.datamodels.UserInfo;
 import nyc.c4q.capstone.signupactivites.SignInActivity;
 

@@ -7,7 +7,7 @@
     android:layout_margin="5dp"
     android:padding="16dp"
     card_view:cardCornerRadius="4dp"
-    tools:context="nyc.c4q.capstone.TenantBottomNavFragment.PaymentFragment">
+    tools:context=".Tenant.TenantBottomNavFragment.PaymentFragment">
 
     <LinearLayout
         android:id="@+id/container"
