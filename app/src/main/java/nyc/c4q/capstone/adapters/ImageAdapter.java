@@ -1,6 +1,6 @@
 package nyc.c4q.capstone.adapters;
 
-import android.net.Uri;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,18 +24,23 @@ import nyc.c4q.capstone.R;
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageHolder> {
 
 
-    private List<Uri> uriList;
+    private List<Bitmap> bitmapList;
     private List<String> repairPhoto;
 
-    public ImageAdapter() {
-    }
 
-    public ImageAdapter(List<Uri> uriList) {
-        this.uriList = uriList;
+
+    public ImageAdapter(List<Bitmap> uriList) {
+        this.bitmapList = uriList;
     }
 
     public ImageAdapter(ArrayList<String> repairPhoto) {
         this.repairPhoto = repairPhoto;
+    }
+
+
+    public void addBitmapPhoto(Bitmap bitmap){
+        bitmapList.add(bitmap);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -47,9 +52,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageHolder>
     @Override
     public void onBindViewHolder(ImageHolder holder, int position) {
 
-        if (uriList != null) {
-            uriList.get(position);
-            holder.onBindUri(uriList.get(position));
+        if (bitmapList != null) {
+            bitmapList.get(position);
+            holder.onBindUri(bitmapList.get(position));
         }
         if (repairPhoto != null) {
             repairPhoto.get(position);
@@ -63,8 +68,10 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageHolder>
         if (repairPhoto != null) {
             return repairPhoto.size();
         }
-        return uriList.size();
+        return bitmapList.size();
     }
+
+
 
     class ImageHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
@@ -77,11 +84,8 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageHolder>
             storage = FirebaseStorage.getInstance();
         }
 
-        void onBindUri(Uri uri) {
-            Glide.with(itemView.getContext())
-                    .load(uri)
-                    .centerCrop()
-                    .into(imageView);
+        void onBindUri(Bitmap bitmap) {
+            imageView.setImageBitmap(bitmap);
         }
 
 

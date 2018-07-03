@@ -99,7 +99,7 @@ public class PaymentFragment extends Fragment implements MainActivity.UserDBList
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         db = TenantDataBaseHelper.getInstance(FirebaseDatabase.getInstance());
-        adapter = new Tenant_Pay_Adapter(db.getPayments());
+        adapter = new Tenant_Pay_Adapter();
         recyclerView.setAdapter(adapter);
         updateList();
     }
@@ -118,8 +118,8 @@ public class PaymentFragment extends Fragment implements MainActivity.UserDBList
 //        if (!editText.getText().toString().isEmpty()) {
 //            Date date = Calendar.getInstance().getTime();
 //            String month = date.toString().substring(4, 7);
-//            TenantPaymentHistoryModel payment = new TenantPaymentHistoryModel(month, "$" + editText.getText().toString(), num);
-//            db.upLoadRent(payment);
+//            TenantPaymentHistoryModel Payment = new TenantPaymentHistoryModel(month, "$" + editText.getText().toString(), num);
+//            db.upLoadRent(Payment);
 //            popUp(editText.getText().toString(), num);
 //        } else {
 //            Toast.makeText(rootView.getContext(), "Please Enter an Amount", Toast.LENGTH_SHORT).show();
@@ -130,8 +130,7 @@ public class PaymentFragment extends Fragment implements MainActivity.UserDBList
         data.getReference().child("Rent").child(String.valueOf(db.getUser().getBuilding_id())).child("7M").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<List<TenantPaymentHistoryModel>> t = new GenericTypeIndicator<List<TenantPaymentHistoryModel>>() {
-                };
+                GenericTypeIndicator<List<TenantPaymentHistoryModel>> t = new GenericTypeIndicator<List<TenantPaymentHistoryModel>>() {};
                 payments = dataSnapshot.getValue(t);
                 if (payments != null) {
                     Collections.reverse(payments);
@@ -140,8 +139,7 @@ public class PaymentFragment extends Fragment implements MainActivity.UserDBList
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         });
     }
 
@@ -149,7 +147,7 @@ public class PaymentFragment extends Fragment implements MainActivity.UserDBList
         confirmationPopup = new Dialog(rootView.getContext());
         confirmationPopup.setTitle("    Payment Confirmation");
         View view = getLayoutInflater().inflate(R.layout.fragment_pay, null);
-        final TextView confirmation = (TextView) view.findViewById(R.id.confirmation);
+        final TextView confirmation = view.findViewById(R.id.confirmation);
         confirmation.setText(confirmationNum);
         confirmationPopup.setContentView(view);
         confirmationPopup.show();
@@ -177,7 +175,6 @@ public class PaymentFragment extends Fragment implements MainActivity.UserDBList
         DropInRequest dropInRequest = new DropInRequest()
                 .clientToken("eyJ2ZXJzaW9uIjoyLCJhdXRob3JpemF0aW9uRmluZ2VycHJpbnQiOiI2YjdhZTdlMjQ1NDNjZjZmN2ViOTdkOTUwYmEyZWZiZGQ1ZDNiY2QxN2Q2YTQ4Y2IxMDVjOTcyNzgyNzQxMDU4fGNyZWF0ZWRfYXQ9MjAxOC0wNC0wM1QxNDoyOToyMC4zNzM4Mjg5MDgrMDAwMFx1MDAyNm1lcmNoYW50X2lkPTM0OHBrOWNnZjNiZ3l3MmJcdTAwMjZwdWJsaWNfa2V5PTJuMjQ3ZHY4OWJxOXZtcHIiLCJjb25maWdVcmwiOiJodHRwczovL2FwaS5zYW5kYm94LmJyYWludHJlZWdhdGV3YXkuY29tOjQ0My9tZXJjaGFudHMvMzQ4cGs5Y2dmM2JneXcyYi9jbGllbnRfYXBpL3YxL2NvbmZpZ3VyYXRpb24iLCJjaGFsbGVuZ2VzIjpbXSwiZW52aXJvbm1lbnQiOiJzYW5kYm94IiwiY2xpZW50QXBpVXJsIjoiaHR0cHM6Ly9hcGkuc2FuZGJveC5icmFpbnRyZWVnYXRld2F5LmNvbTo0NDMvbWVyY2hhbnRzLzM0OHBrOWNnZjNiZ3l3MmIvY2xpZW50X2FwaSIsImFzc2V0c1VybCI6Imh0dHBzOi8vYXNzZXRzLmJyYWludHJlZWdhdGV3YXkuY29tIiwiYXV0aFVybCI6Imh0dHBzOi8vYXV0aC52ZW5tby5zYW5kYm94LmJyYWludHJlZWdhdGV3YXkuY29tIiwiYW5hbHl0aWNzIjp7InVybCI6Imh0dHBzOi8vY2xpZW50LWFuYWx5dGljcy5zYW5kYm94LmJyYWludHJlZWdhdGV3YXkuY29tLzM0OHBrOWNnZjNiZ3l3MmIifSwidGhyZWVEU2VjdXJlRW5hYmxlZCI6dHJ1ZSwicGF5cGFsRW5hYmxlZCI6dHJ1ZSwicGF5cGFsIjp7ImRpc3BsYXlOYW1lIjoiQWNtZSBXaWRnZXRzLCBMdGQuIChTYW5kYm94KSIsImNsaWVudElkIjpudWxsLCJwcml2YWN5VXJsIjoiaHR0cDovL2V4YW1wbGUuY29tL3BwIiwidXNlckFncmVlbWVudFVybCI6Imh0dHA6Ly9leGFtcGxlLmNvbS90b3MiLCJiYXNlVXJsIjoiaHR0cHM6Ly9hc3NldHMuYnJhaW50cmVlZ2F0ZXdheS5jb20iLCJhc3NldHNVcmwiOiJodHRwczovL2NoZWNrb3V0LnBheXBhbC5jb20iLCJkaXJlY3RCYXNlVXJsIjpudWxsLCJhbGxvd0h0dHAiOnRydWUsImVudmlyb25tZW50Tm9OZXR3b3JrIjp0cnVlLCJlbnZpcm9ubWVudCI6Im9mZmxpbmUiLCJ1bnZldHRlZE1lcmNoYW50IjpmYWxzZSwiYnJhaW50cmVlQ2xpZW50SWQiOiJtYXN0ZXJjbGllbnQzIiwiYmlsbGluZ0FncmVlbWVudHNFbmFibGVkIjp0cnVlLCJtZXJjaGFudEFjY291bnRJZCI6ImFjbWV3aWRnZXRzbHRkc2FuZGJveCIsImN1cnJlbmN5SXNvQ29kZSI6IlVTRCJ9LCJtZXJjaGFudElkIjoiMzQ4cGs5Y2dmM2JneXcyYiIsInZlbm1vIjoib2ZmIn0=");
         startActivityForResult(dropInRequest.getIntent(rootView.getContext()), REQUEST_CODE);
-
     }
 
 
@@ -201,7 +198,7 @@ public class PaymentFragment extends Fragment implements MainActivity.UserDBList
                 popUp("$" + editText.getText().toString(), num);
                 editText.setText("");
                 updateList();
-                // use the result to update your UI and send the payment method nonce to your server
+                // use the result to update your UI and send the Payment method nonce to your server
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 // the user canceled
                 Toast.makeText(rootView.getContext(), "Payment Canceled", Toast.LENGTH_SHORT).show();
@@ -220,9 +217,7 @@ public class PaymentFragment extends Fragment implements MainActivity.UserDBList
         client.post("http://your-server/checkout", params,
                 new AsyncHttpResponseHandler() {
                     @Override
-                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-
-                    }
+                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {}
 
                     @Override
                     public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
@@ -249,16 +244,16 @@ public class PaymentFragment extends Fragment implements MainActivity.UserDBList
 //
 //                    PaymentMethodType paymentMethodType = result.getPaymentMethodType();
 //                    if (paymentMethodType == PaymentMethodType.ANDROID_PAY || paymentMethodType == PaymentMethodType.GOOGLE_PAYMENT) {
-//                        // The last payment method the user used was Android Pay or Google Pay.
+//                        // The last Payment method the user used was Android Pay or Google Pay.
 //                        // The Android/Google Pay flow will need to be performed by the
 //                        // user again at the time of checkout.
 //                    } else {
-//                        // Use the payment method show in your UI and charge the user
+//                        // Use the Payment method show in your UI and charge the user
 //                        // at the time of checkout.
 //                        PaymentMethodNonce paymentMethod = result.getPaymentMethodNonce();
 //                    }
 //                } else {
-//                    // there was no existing payment method
+//                    // there was no existing Payment method
 //                }
 //            }
 //        });
@@ -266,6 +261,6 @@ public class PaymentFragment extends Fragment implements MainActivity.UserDBList
 
     @Override
     public void delegateUser(UserInfo user) {
-        Log.e("payment", user.getFirst_name());
+        Log.e("Payment", user.getFirst_name());
     }
 }

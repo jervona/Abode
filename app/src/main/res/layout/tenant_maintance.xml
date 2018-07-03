@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nyc.c4q.capstone.MaintenanceView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/maintenance_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_add"
+            app:fab_colorNormal="@color/colorAccent"
+            app:tint="@color/colorAccent"
+            app:useCompatPadding="true"
+            android:layout_gravity="right|bottom"
+            android:onClick="onClick"/>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+
+
+
+</nyc.c4q.capstone.MaintenanceView>

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import nyc.c4q.capstone.R;
@@ -18,8 +19,13 @@ public class DashAdapter extends RecyclerView.Adapter<DashHolder> {
 
     private List<DashRvModel> dash_rv_modelList;
 
-    public DashAdapter(List<DashRvModel> dash_rv_modelList) {
-        this.dash_rv_modelList = dash_rv_modelList;
+    public DashAdapter() {
+        dash_rv_modelList=new ArrayList<>();
+        dash_rv_modelList.add(new DashRvModel(R.drawable.recycling, "Recycling Info", "http://www1.nyc.gov/site/hpd/renters/harassment.page"));
+        dash_rv_modelList.add(new DashRvModel(R.drawable.smoke, "NYC Smoking Resource", "http://www1.nyc.gov/nyc-resources/service/2493/smoking"));
+        dash_rv_modelList.add(new DashRvModel(R.drawable.judge, "Housing Court Questions", "http://housingcourtanswers.org/"));
+        dash_rv_modelList.add(new DashRvModel(R.drawable.nyc_logo, "NYC Rent Increase Info", "http://www1.nyc.gov/nyc-resources/service/2069/new-york-city-rent-increase"));
+        dash_rv_modelList.add(new DashRvModel(R.drawable.nyc_logo, "Are you Being Harassedd", "http://www1.nyc.gov/site/hpd/renters/harassment.page"));
     }
 
     @Override
@@ -32,7 +38,6 @@ public class DashAdapter extends RecyclerView.Adapter<DashHolder> {
     public void onBindViewHolder(DashHolder holder, int position) {
         DashRvModel dash_rv_model = dash_rv_modelList.get(position);
         holder.onBind(dash_rv_model);
-
     }
 
     @Override

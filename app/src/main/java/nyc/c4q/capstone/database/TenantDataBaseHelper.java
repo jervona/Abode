@@ -16,12 +16,17 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import durdinapps.rxfirebase2.RxFirebaseDatabase;
+import durdinapps.rxfirebase2.RxFirebaseStorage;
 import nyc.c4q.capstone.MainActivity;
 import tenant_data_models.TenantPaymentHistoryModel;
 import nyc.c4q.capstone.datamodels.Tickets;
@@ -36,7 +41,6 @@ import static android.content.ContentValues.TAG;
 public class TenantDataBaseHelper {
 
     private FirebaseDatabase database;
-    private StorageReference storageReference;
     private String maintenanceData = "Maintenance";
     private String tenanetsData = "Tenanets";
     private String propertiesData = "Properties";
@@ -50,7 +54,6 @@ public class TenantDataBaseHelper {
     private List<String> listOfUrl = new ArrayList<>();
 
     private static TenantDataBaseHelper instance;
-
 
     private TenantDataBaseHelper(FirebaseDatabase database) {
         this.database = database;
@@ -172,15 +175,20 @@ public class TenantDataBaseHelper {
 //                });
 //    }
 
-    public void upLoadPhoto(Intent data) {
+    public String upLoadPhoto(Intent data) {
+        final String[] url = new String[1];
         final Uri uri = data.getData();
         long time = Calendar.getInstance().getTimeInMillis();
         String key = String.valueOf(time);
-        storageReference = FirebaseStorage.getInstance()
+        assert uri != null;
+        StorageReference storageReference = FirebaseStorage.getInstance()
                 .getReference(FirebaseAuth.getInstance().getUid())
                 .child(key)
                 .child(uri.getLastPathSegment());
-        putImageInStorage(storageReference, uri, key);
+        RxFirebaseStorage.putFile(storageReference, uri)
+                .subscribe(taskSnapshot -> url[0] = taskSnapshot.getMetadata().getDownloadUrl().toString(),
+                        throwable -> Log.e("Error Occured", throwable.getMessage()));
+        return url[0];
     }
 
     public void upLoadRent(TenantPaymentHistoryModel rent) {
@@ -196,38 +204,36 @@ public class TenantDataBaseHelper {
 
             }
         });
-
     }
 
-    private void putImageInStorage(StorageReference storageReference, Uri uri, final String key) {
-        storageReference.putFile(uri).addOnCompleteListener(
-                new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            listOfUrl.add(task.getResult().getMetadata().getDownloadUrl().toString());
-                        } else {
-                            Log.e(TAG, "Image upload task was not successful.", task.getException());
-                        }
+    private String putImageInStorage(StorageReference storageReference, Uri uri, final String key) {
+        final StorageTask<UploadTask.TaskSnapshot> taskSnapshotStorageTask = storageReference.putFile(uri).addOnCompleteListener(
+                (Task<UploadTask.TaskSnapshot> task) -> {
+                    if (task.isSuccessful()) {
+                        listOfUrl.add(task.getResult().getMetadata().getDownloadUrl().toString());
+                    } else {
+                        Log.e(TAG, "Image upload task was not successful.", task.getException());
                     }
                 });
+        return taskSnapshotStorageTask.getResult().getMetadata().getDownloadUrl().toString();
     }
 
     public void createNewTicket(final Tickets ticket) {
-        ticket.setImageURl(listOfUrl);
+        String buildingID = String.valueOf(user.getBuilding_id());
+//        ticket.setImageURl(listOfUrl);
+
+
+
+
         if (ticketsList == null) {
             ticketsList = new ArrayList<>();
             ticketsList.add(ticket);
         } else {
             ticketsList.add(ticket);
         }
-        String buildingID = String.valueOf(user.getBuilding_id());
         database.getReference().child(maintenanceData).child(buildingID).child(user.getAPT())
-                .setValue(ticketsList).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
+                .setValue(ticketsList).addOnCompleteListener(task -> {
 
-            }
         });
     }
 
