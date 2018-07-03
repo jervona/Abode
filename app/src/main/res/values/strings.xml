@@ -37,7 +37,18 @@
     <string name="apt_number">Apt Number</string>
     <string name="priority">Priority</string>
     <string name="status">Status</string>
+
+
+
     <string name="docs">Docs</string>
+    <string name="pay_now">PAY NOW</string>
+    <string name="enter_payment_amount">Enter Payment Amount</string>
+    <string name="_600">$600</string>
+    <string name="balance_due">Balance Due :</string>
+    <string name="current_balance_due_may_1st_1_200">Current Balance Due May 1st: $1,200</string>
+    <string name="previous_payment_received_april_1st_1_200">Previous Payment Received April 1st: $1,200</string>
+    <string name="view_pending_tickets">View Pending Tickets</string>
+    <string name="view_scheduled_tickets">View Scheduled Tickets</string>
 
 
     <string-array name="location_options">

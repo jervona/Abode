@@ -112,7 +112,6 @@ public class LandlordMaintenance extends Fragment {
             notification.setNum(num);
             notification.setPath("Maintenance");
             assert ((MainActivity)getActivity()) != null;
-            ((MainActivity)getActivity()).setBottomNotification();
         }
     }
 }
