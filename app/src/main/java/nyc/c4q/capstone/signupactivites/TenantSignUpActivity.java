@@ -94,23 +94,19 @@ public class TenantSignUpActivity extends AppCompatActivity {
 
     private void createUser(final String email, String password) {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            user = firebaseAuth.getCurrentUser();
-                            Log.e("Running inside creat", ".....");
-                            checkDataBaseForBuilding(verification.getText().toString());
-                        } else {
-                            Log.w("LandLordSignUpActivity", "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(TenantSignUpActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                        }
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        user = firebaseAuth.getCurrentUser();
+                        Log.e("Running inside creat", ".....");
+                        checkDataBaseForBuilding(verification.getText().toString());
+                    } else {
+                        Log.w("LandLordSignUpActivity", "createUserWithEmail:failure", task.getException());
+                        Toast.makeText(TenantSignUpActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
     private void checkDataBaseForBuilding(final String code) {
-        Log.e("Running", ".....");
         final Query query = FirebaseDatabase.getInstance().getReference("Properties");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

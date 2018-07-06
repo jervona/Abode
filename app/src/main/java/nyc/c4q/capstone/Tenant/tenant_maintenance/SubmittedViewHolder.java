@@ -20,6 +20,7 @@ import java.util.Date;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import nyc.c4q.capstone.R;
+import nyc.c4q.capstone.NewRequestFragment;
 import nyc.c4q.capstone.datamodels.Tickets;
 
 /**
@@ -41,15 +42,12 @@ class SubmittedViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.card_view)
     CardView card;
 
-    private static final String TIX_KEY = "Tix data";
-
     SubmittedViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
 
     void onBind(final Tickets tix) {
-
         Date cal = new Date(tix.getTime());
         DateFormat df = new SimpleDateFormat("MM:dd:yy");
         String timeSTamp = df.format(cal);
@@ -85,21 +83,18 @@ class SubmittedViewHolder extends RecyclerView.ViewHolder {
                 break;
         }
 
-        card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(itemView.getContext(), "Your request details", Toast.LENGTH_SHORT).show();
-                NewRequestFragment requestFragment = new NewRequestFragment();
-                FragmentManager manager = ((AppCompatActivity) itemView.getContext()).getSupportFragmentManager();
-                Bundle bundle = new Bundle();
-                Gson gson = new Gson();
-                String tixToString = gson.toJson(tix);
-                bundle.putString("Tix_data", tixToString);
-                requestFragment.setArguments(bundle);
-                FragmentTransaction transaction = manager.beginTransaction();
-                transaction.replace(R.id.maintenance_frag, requestFragment).addToBackStack("maintenance tix");
-                transaction.commit();
-            }
+        card.setOnClickListener(view -> {
+            Toast.makeText(itemView.getContext(), "Your request details", Toast.LENGTH_SHORT).show();
+            NewRequestFragment requestFragment = new NewRequestFragment();
+            FragmentManager manager = ((AppCompatActivity) itemView.getContext()).getSupportFragmentManager();
+            Bundle bundle = new Bundle();
+            Gson gson = new Gson();
+            String tixToString = gson.toJson(tix);
+            bundle.putString("Tix_data", tixToString);
+            requestFragment.setArguments(bundle);
+            FragmentTransaction transaction = manager.beginTransaction();
+            transaction.replace(R.id.whole_view, requestFragment).addToBackStack("maintenance tix");
+            transaction.commit();
         });
     }
 

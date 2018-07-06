@@ -36,15 +36,11 @@ public class DashHolder extends RecyclerView.ViewHolder {
        } catch (OutOfMemoryError e){
            Log.e("Got the Error",e.getMessage());
            Log.e("Got the Error",dash_rv_model.getResource_name());
-
        }
         resource_text.setText(dash_rv_model.getResource_name());
-        resource_pic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(dash_rv_model.getUrl()));
-                context.startActivity(intent);
-            }
+        resource_pic.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(dash_rv_model.getUrl()));
+            context.startActivity(intent);
         });
     }
 }

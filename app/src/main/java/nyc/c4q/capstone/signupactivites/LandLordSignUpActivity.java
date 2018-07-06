@@ -85,33 +85,30 @@ public class LandLordSignUpActivity extends AppCompatActivity {
 
     private void createUser(final String email, String password) {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = firebaseAuth.getCurrentUser();
-                            UserInfo userInfo = new UserInfo(user.getUid()
-                                    , firstName.getText().toString()
-                                    , lastName.getText().toString()
-                                    , phone.getText().toString()
-                                    , email
-                                    , "PM");
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser user = firebaseAuth.getCurrentUser();
+                        UserInfo userInfo = new UserInfo(user.getUid()
+                                , firstName.getText().toString()
+                                , lastName.getText().toString()
+                                , phone.getText().toString()
+                                , email
+                                , "PM");
 
-                            FirebaseDatabase.getInstance().getReference().child("user").child(user.getUid()).setValue(userInfo).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Log.e("Im Funning","..........");
-                                        startActivity(new Intent(LandLordSignUpActivity.this, MainActivity.class));
-                                        finish();
-                                    }
+                        FirebaseDatabase.getInstance().getReference().child("user").child(user.getUid()).setValue(userInfo).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Log.e("Im Funning","..........");
+                                    startActivity(new Intent(LandLordSignUpActivity.this, MainActivity.class));
+                                    finish();
                                 }
-                            });
+                            }
+                        });
 
-                        } else {
-                            Log.w("LandLordSignUpActivity", "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(LandLordSignUpActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                        }
+                    } else {
+                        Log.w("LandLordSignUpActivity", "createUserWithEmail:failure", task.getException());
+                        Toast.makeText(LandLordSignUpActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }

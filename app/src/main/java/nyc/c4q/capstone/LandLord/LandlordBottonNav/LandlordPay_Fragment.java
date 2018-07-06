@@ -136,7 +136,7 @@ public class LandlordPay_Fragment extends Fragment {
         notification.setNum(number);
         notification.setPath("Payment");
         assert ((MainActivity) getActivity()) != null;
-        ((MainActivity) getActivity()).setBottomNotification();
+
         oldSize=num;
     }
 }

@@ -22,12 +22,8 @@ public class Tenant_Pay_Adapter extends RecyclerView.Adapter<Tenant_Pay_Holder> 
 
     private List<TenantPaymentHistoryModel> paymentModelList;
 
-    public Tenant_Pay_Adapter(List<TenantPaymentHistoryModel> paymentModelList) {
-        if (paymentModelList == null) {
+    public Tenant_Pay_Adapter() {
             this.paymentModelList = new ArrayList<>();
-        } else {
-            this.paymentModelList = paymentModelList;
-        }
     }
 
     @Override
@@ -38,7 +34,6 @@ public class Tenant_Pay_Adapter extends RecyclerView.Adapter<Tenant_Pay_Holder> 
 
     @Override
     public void onBindViewHolder(Tenant_Pay_Holder holder, int position) {
-
         TenantPaymentHistoryModel paymentModel = paymentModelList.get(position);
         holder.onBind(paymentModel);
     }

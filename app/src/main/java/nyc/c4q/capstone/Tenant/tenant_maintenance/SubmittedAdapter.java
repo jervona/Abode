@@ -22,6 +22,7 @@ public class SubmittedAdapter extends RecyclerView.Adapter<SubmittedViewHolder> 
 
 
     public SubmittedAdapter() {
+        this.requestsList = new ArrayList<>();
     }
 
     public SubmittedAdapter(List<Tickets> requestsList) {
@@ -51,7 +52,6 @@ public class SubmittedAdapter extends RecyclerView.Adapter<SubmittedViewHolder> 
         this.requestsList.addAll(tickets);
         diffResult.dispatchUpdatesTo(this);
     }
-
 
     @Override
     public int getItemCount() {
