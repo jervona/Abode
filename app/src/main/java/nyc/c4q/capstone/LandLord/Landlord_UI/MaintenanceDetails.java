@@ -143,17 +143,14 @@ public class MaintenanceDetails extends Fragment {
     }
 
     public void setPriorityOptions(){
-        priorityOptions.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int checked) {
-                switch (checked){
-                    case R.id.radio_urgent:
-                        userPriority = 1;
-                        break;
-                    case R.id.radio_moderate:
-                        userPriority = 2;
-                        break;
-                }
+        priorityOptions.setOnCheckedChangeListener((radioGroup, checked) -> {
+            switch (checked){
+                case R.id.radio_urgent:
+                    userPriority = 1;
+                    break;
+                case R.id.radio_moderate:
+                    userPriority = 2;
+                    break;
             }
         });
 

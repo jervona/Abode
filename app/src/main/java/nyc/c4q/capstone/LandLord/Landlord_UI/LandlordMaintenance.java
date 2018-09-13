@@ -29,7 +29,6 @@ import nyc.c4q.capstone.LandLord.maintenance_recycleview.LandlordMainAdapter;
 import nyc.c4q.capstone.MainActivity;
 import nyc.c4q.capstone.Notification;
 import nyc.c4q.capstone.R;
-import nyc.c4q.capstone.database.TenantDataBaseHelper;
 import nyc.c4q.capstone.datamodels.Tickets;
 
 
@@ -44,7 +43,6 @@ public class LandlordMaintenance extends Fragment {
     LandlordMainAdapter adapter;
     LinearLayoutManager layoutManager;
     FirebaseDatabase data = FirebaseDatabase.getInstance();
-    TenantDataBaseHelper db;
     private HashMap<String,List<Tickets>> ticketsList;
     String TAG = "LandlordMaintenance";
 
@@ -70,8 +68,7 @@ public class LandlordMaintenance extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        db = TenantDataBaseHelper.getInstance(FirebaseDatabase.getInstance());
-        adapter = new LandlordMainAdapter(db.getTicketsList());
+        adapter = new LandlordMainAdapter();
         recyclerView.setAdapter(adapter);
         updateList();
     }
@@ -88,7 +85,6 @@ public class LandlordMaintenance extends Fragment {
                     for (String key:ticketsList.keySet()){
                          listOfTickets.addAll(ticketsList.get(key));
                     }
-                    checkingForPending(listOfTickets);
                     Collections.reverse(listOfTickets);
                     adapter.updateTicketListItems(listOfTickets);
                 }
@@ -102,16 +98,4 @@ public class LandlordMaintenance extends Fragment {
         });
     }
 
-    private void checkingForPending(List<Tickets> tickets) {
-     int num=0;
-        for (Tickets tix:tickets) {
-            if (tix.getStatus().equals("Pending")){
-                num++;
-            }
-            Notification notification =Notification.getInstance();
-            notification.setNum(num);
-            notification.setPath("Maintenance");
-            assert ((MainActivity)getActivity()) != null;
-        }
-    }
 }

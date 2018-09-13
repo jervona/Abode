@@ -33,8 +33,7 @@ import nyc.c4q.capstone.LandLord.payment_recycleview.Landlord_Pay_Adapter;
 import nyc.c4q.capstone.MainActivity;
 import nyc.c4q.capstone.Notification;
 import nyc.c4q.capstone.R;
-import nyc.c4q.capstone.database.TenantDataBaseHelper;
-import tenant_data_models.TenantPaymentHistoryModel;
+import nyc.c4q.capstone.datamodels.TenantPaymentHistoryModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,16 +43,8 @@ public class LandlordPay_Fragment extends Fragment {
 
     View rootView;
     Landlord_Pay_Adapter adapter;
-
-    int oldSize=1;
-
-    @BindView(R.id.landlord_payment_rv)
-    RecyclerView recyclerView;
-
-    @BindView(R.id.piechart)
-    PieChart mPieChart;
-
-    TenantDataBaseHelper db;
+    @BindView(R.id.landlord_payment_rv) RecyclerView recyclerView;
+    @BindView(R.id.piechart) PieChart mPieChart;
     FirebaseDatabase data = FirebaseDatabase.getInstance();
     HashMap<String, List<TenantPaymentHistoryModel>> payments;
 
@@ -83,8 +74,7 @@ public class LandlordPay_Fragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        db = TenantDataBaseHelper.getInstance(FirebaseDatabase.getInstance());
-        adapter = new Landlord_Pay_Adapter(db.getPayments());
+        adapter = new Landlord_Pay_Adapter();
         recyclerView.setAdapter(adapter);
         updateList();
     }
@@ -107,9 +97,7 @@ public class LandlordPay_Fragment extends Fragment {
                     Collections.reverse(landlordPayList);
                     adapter.updateTicketListItems(landlordPayList);
                     int size = landlordPayList.size();
-                    oldSize= landlordPayList.size();
                     updatePieChart(size);
-                    checkingForPayment(size);
                 }
 
             }
@@ -128,16 +116,6 @@ public class LandlordPay_Fragment extends Fragment {
         mPieChart.addPieSlice(new PieModel("Pending Rent", 25, Color.parseColor("#56B7F1")));
         mPieChart.addPieSlice(new PieModel("Late", 5, Color.parseColor("#CDA67F")));
         mPieChart.startAnimation();
-    }
-
-    private void checkingForPayment(int num) {
-        int number = num-oldSize;
-        Notification notification = Notification.getInstance();
-        notification.setNum(number);
-        notification.setPath("Payment");
-        assert ((MainActivity) getActivity()) != null;
-
-        oldSize=num;
     }
 }
 

@@ -46,6 +46,9 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.disposables.Disposable;
 import nyc.c4q.capstone.adapters.ImageAdapter;
 import nyc.c4q.capstone.datamodels.Tickets;
 
@@ -54,7 +57,7 @@ import static android.app.Activity.RESULT_OK;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NewRequestFragment extends Fragment{
+public class NewRequestFragment extends Fragment {
 
     @BindView(R.id.subject_title_view)
     EditText subjectTitle;
@@ -106,6 +109,7 @@ public class NewRequestFragment extends Fragment{
         } else {
             adapter = new ImageAdapter(bitmapList);
         }
+
         setupActionBar();
         bottom = getActivity().findViewById(R.id.bottom_navigation);
         bottom.setVisibility(View.GONE);
@@ -150,7 +154,7 @@ public class NewRequestFragment extends Fragment{
                 actionBar.setDisplayHomeAsUpEnabled(true);
             }
         } catch (Exception e) {
-            Log.e("actionBar Error,", e.getMessage());
+            Log.e(TAG,"ActionBar Error, "+ e.getMessage());
         }
     }
 
@@ -160,8 +164,8 @@ public class NewRequestFragment extends Fragment{
         urgentoption.setKeyListener(null);
         subjectTitle.setKeyListener(null);
         userDescription.setKeyListener(null);
-
         submit.setVisibility(View.GONE);
+
         String tixData = bundle.getString("Tix_data");
         Gson gson = new Gson();
         Tickets data = gson.fromJson(tixData, Tickets.class);
@@ -192,11 +196,11 @@ public class NewRequestFragment extends Fragment{
                 .setOnClickListener((dialog1, view) -> {
                     switch (view.getId()) {
                         case R.id.camera:
-                            Log.e("Camera","ckicked");
+                            Log.e("Camera", "ckicked");
                             dispatchTakePictureIntent();
                             break;
                         case R.id.library:
-                            Log.e("library","ckicked");
+                            Log.e("library", "ckicked");
                             getPicture();
                             break;
                     }
@@ -204,7 +208,6 @@ public class NewRequestFragment extends Fragment{
                 .create();
         dialog.show();
     }
-
 
     public void dispatchTakePictureIntent() {
         Log.e(TAG, "dispatchTakePictureIntent()");
@@ -223,7 +226,7 @@ public class NewRequestFragment extends Fragment{
     @OnClick(R.id.submit_request_button)
     public void newTicketWithPhones() {
         long time = Calendar.getInstance().getTimeInMillis();
-        Tickets tickets = new Tickets("1"
+        Tickets ticket = new Tickets("1"
                 , time
                 , location
                 , helper.getUser().getAPT()
@@ -232,16 +235,24 @@ public class NewRequestFragment extends Fragment{
                 , "Pending"
                 , userPriority);
 
+        Observable.fromIterable(bitmapList)
+                .flatMap(bitmap -> helper.uploadImageToCloud(bitmap))
+                .flatMap(taskSnapshot -> Observable.just(taskSnapshot.getMetadata().getDownloadUrl().toString()))
+                .toList()
+                .map(strings -> {
+                    ticket.setImageURl(strings);
+                    return helper.createNewTicket(ticket);
+                })
+                .subscribe(completableObservable -> {
 
+                },throwable -> {
 
-
-
-
-        helper.createNewTicket(tickets)
-                .doOnError(throwable -> Log.e("Error", throwable.getMessage()))
-                .doOnComplete(() -> getActivity().onBackPressed())
-                .subscribe();
+                });
     }
+
+//    private ObservableSource<? extends R> uploadImageToCloud() {
+//
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -263,8 +274,8 @@ public class NewRequestFragment extends Fragment{
                 final Uri imageUri = data.getData();
                 final InputStream imageStream = rootView.getContext().getContentResolver().openInputStream(imageUri);
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                Log.e(TAG, "lib"+ selectedImage.toString());
-                adapter.addBitmapPhoto(selectedImage);
+                bitmapList.add(selectedImage);
+                Log.e(TAG, "lib" + selectedImage.toString());
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -273,13 +284,9 @@ public class NewRequestFragment extends Fragment{
             Bundle extras = data.getExtras();
             assert extras != null;
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            Log.e(TAG, "cam"+ imageBitmap.toString());
-            adapter.addBitmapPhoto(imageBitmap);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            assert imageBitmap != null;
-            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-            byte[] imageData = baos.toByteArray();
+            bitmapList.add(imageBitmap);
         }
+        adapter.updatedList(bitmapList);
     }
 
     @Override

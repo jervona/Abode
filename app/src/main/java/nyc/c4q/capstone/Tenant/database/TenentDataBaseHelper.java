@@ -1,5 +1,7 @@
 package nyc.c4q.capstone;
 
+import android.graphics.Bitmap;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -7,6 +9,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -35,9 +38,9 @@ public class TenentDataBaseHelper {
     private FirebaseAuth firebaseAuth;
     private DatabaseReference maintenanceRef;
     private DatabaseReference paymentHistoryRef;
+
     private List<TenantPaymentHistoryModel> paymentsList;
     private List<Tickets> ticketsList;
-    private List<String> listOfUrl = new ArrayList<>();
 
     @Inject
     TenentDataBaseHelper(FirebaseDatabase database,FirebaseAuth firebaseAuth) {
@@ -91,14 +94,16 @@ public class TenentDataBaseHelper {
                 .toObservable();
     }
 
-    Observable<UploadTask.TaskSnapshot> upLoadPhoto(byte[] data) {
+    Observable<UploadTask.TaskSnapshot> uploadImageToCloud(Bitmap data) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        data.compress(Bitmap.CompressFormat.JPEG, 80, baos);
+        byte[] imageData = baos.toByteArray();
         long time = Calendar.getInstance().getTimeInMillis();
         String key = String.valueOf(time);
         StorageReference storageReference = FirebaseStorage.getInstance()
                 .getReference(firebaseAuth.getUid())
                 .child(key);
-
-        return RxFirebaseStorage.putBytes(storageReference, data)
+        return RxFirebaseStorage.putBytes(storageReference, imageData)
                 .toObservable()
                 .doOnNext(taskSnapshot -> taskSnapshot.getMetadata().getDownloadUrl().toString());
     }
