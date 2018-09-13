@@ -27,7 +27,6 @@ import org.eazegraph.lib.charts.PieChart;
 import org.eazegraph.lib.models.PieModel;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -35,10 +34,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import nyc.c4q.capstone.MainActivity;
 import nyc.c4q.capstone.R;
-import nyc.c4q.capstone.database.TenantDataBaseHelper;
-import nyc.c4q.capstone.datamodels.Tickets;
+import nyc.c4q.capstone.datamodels.TenantPaymentHistoryModel;
 import nyc.c4q.capstone.signupactivites.SignInActivity;
-import tenant_data_models.TenantPaymentHistoryModel;
 
 
 /**
@@ -50,9 +47,6 @@ public class LandlordDashBoard extends Fragment {
     @BindView(R.id.dashpie)
     PieChart mPieChart;
 
-
-    int oldtrack=0;
-    TenantDataBaseHelper db;
     FirebaseDatabase data = FirebaseDatabase.getInstance();
     HashMap<String, List<TenantPaymentHistoryModel>> payments;
 
@@ -78,7 +72,6 @@ public class LandlordDashBoard extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        db = TenantDataBaseHelper.getInstance(FirebaseDatabase.getInstance());
         updateList();
     }
 
@@ -94,7 +87,6 @@ public class LandlordDashBoard extends Fragment {
             case R.id.sign_out:
                 FirebaseAuth.getInstance().signOut();
                 Auth.GoogleSignInApi.signOut(MainActivity.googleApiClient);
-                MainActivity.mUsername = MainActivity.ANONYMOUS;
                 startActivity(new Intent(getActivity(), SignInActivity.class));
                 getActivity().finish();
                 return true;
@@ -121,7 +113,6 @@ public class LandlordDashBoard extends Fragment {
                     int size = landlordPayList.size();
                     updatePieChart(size);
                 }
-
             }
 
             @Override
